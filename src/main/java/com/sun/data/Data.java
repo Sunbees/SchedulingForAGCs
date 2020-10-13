@@ -55,6 +55,7 @@ public class Data {
         double[] end_y = new double[]{70, 50, 20, 10};
         double[] end_z = new double[]{5, 5, 5, 5};
 
+        // 测试三个任务的情况
         //int[] type = new int[]{1, 1, 2};
         //double[] startTime = new double[]{10, 3, 5};
         //double[] start_x = new double[]{80, 60, 55};
@@ -65,6 +66,7 @@ public class Data {
         //double[] end_y = new double[]{70, 50, 20};
         //double[] end_z = new double[]{5, 5, 5};
 
+        // 测试两个任务的情况
         //int[] type = new int[]{1, 1};
         //double[] startTime = new double[]{10, 3};
         //double[] start_x = new double[]{80, 60};
