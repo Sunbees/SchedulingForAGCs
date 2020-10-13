@@ -270,7 +270,7 @@ public class Collision {
             }
         }
 
-        // 处理crane1
+        // 先处理crane1
         if (isPrint) {
             System.out.print(crane1.getId() + "(" + crane1.getTaskNo() + ")" + ":" + crane1.getLocation() + "->");
 
@@ -542,7 +542,6 @@ public class Collision {
         Location startPoint = taskMap.get(curTask).getStart();
         double startTime = taskMap.get(curTask).getStartTime();
         int taskType = taskMap.get(curTask).getType();
-        double minTime = Integer.MAX_VALUE;
         List<Crane> allocatedList = new ArrayList<>();
         List<Crane> usedList = new ArrayList<>();
 
@@ -582,8 +581,7 @@ public class Collision {
                 run(craneList, deltaTime, isPrint, track);
             }
             Crane usedCrane = usedList.get(0);
-            for (int i = 0; i < allocatedList.size(); i++) {
-                Crane last_crane = allocatedList.get(i);
+            for (Crane last_crane : allocatedList) {
                 if (!hasCollision(last_crane, usedCrane, startPoint)) {
                     return last_crane;
                 }

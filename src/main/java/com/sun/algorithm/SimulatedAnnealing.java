@@ -27,7 +27,7 @@ public class SimulatedAnnealing {
     public void initSolution() {
         Solution solution = Data.solution;
         currentSolution = solution.genIndividual();
-        System.out.println("最初距离：" + currentSolution.getConsumeTime());
+        //System.out.println("最初距离：" + currentSolution.getConsumeTime());
     }
 
     public Solution anneal() {

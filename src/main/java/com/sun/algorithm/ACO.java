@@ -68,6 +68,7 @@ public class ACO {
                 ants[i].init(alpha, 3);
             }
         }
+        bestSolution.getConsumeTime();
         return bestSolution;
     }
 
