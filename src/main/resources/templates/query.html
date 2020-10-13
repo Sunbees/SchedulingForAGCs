@@ -45,57 +45,28 @@
     <form th:action="@{/query}" method="post">
         <div id="inputs">
             <div id="crane">
+                <h2>
+                    <button id="addC" type="button" class="btn btn-success">添加Crane</button>
+                    <button id="removeC" type="button" class="btn btn-danger">删除Crane</button>
+                </h2>
                 <div class="row">
                     <p>Crane-L</p>
                     <div class="col-md-3">
                         <label class="form-inline">位置
-                            <input type="text" class="form-control" form-control-sm name="cranes[0].crane_Location" placeholder="初始位置（x,y,z）">
+                            <input type="text" class="form-control" form-control-sm name="cranes[0].crane_Location"
+                                   placeholder="初始位置（x,y,z）">
                         </label>
                     </div>
                     <div class="col-md-3">
                         <label class="form-inline">速度
-                            <input type="text" class="form-control" form-control-sm name="cranes[0].crane_Velocity" placeholder="行驶速度（Vx,Vy,Vz）">
+                            <input type="text" class="form-control" form-control-sm name="cranes[0].crane_Velocity"
+                                   placeholder="行驶速度（Vx,Vy,Vz）">
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="form-inline">类别
-                            <input type="text" class="form-control" form-control-sm name="cranes[0].type" placeholder="可以执行任务的类别">
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <p>Crane-M</p>
-                    <div class="col-md-3">
-                        <label class="form-inline">位置
-                            <input type="text" class="form-control" form-control-sm name="cranes[1].crane_Location" placeholder="初始位置（x,y,z）">
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-inline">速度
-                            <input type="text" class="form-control" form-control-sm name="cranes[1].crane_Velocity" placeholder="行驶速度（Vx,Vy,Vz）">
-                        </label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-inline">类别
-                            <input type="text" class="form-control" form-control-sm name="cranes[1].type" placeholder="可以执行任务的类别">
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <p>Crane-R</p>
-                    <div class="col-md-3">
-                        <label class="form-inline">位置
-                            <input type="text" class="form-control" form-control-sm name="cranes[2].crane_Location" placeholder="初始位置（x,y,z）">
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-inline">速度
-                            <input type="text" class="form-control" form-control-sm name="cranes[2].crane_Velocity" placeholder="行驶速度（Vx,Vy,Vz）">
-                        </label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-inline">类别
-                            <input type="text" class="form-control" form-control-sm name="cranes[2].type" placeholder="可以执行任务的类别">
+                            <input type="text" class="form-control" form-control-sm name="cranes[0].type"
+                                   placeholder="可以执行任务的类别">
                         </label>
                     </div>
                 </div>
@@ -109,22 +80,26 @@
                     <p>0</p>
                     <div class="col-md-2">
                         <label class="form-inline">任务类别：
-                            <input type="text" class="form-control" form-control-sm name="tasks[0].type" placeholder="结束位置坐标">
+                            <input type="text" class="form-control" form-control-sm name="tasks[0].type"
+                                   placeholder="结束位置坐标">
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="form-inline">开始时间：
-                            <input type="text" class="form-control" form-control-sm name="tasks[0].startTime" placeholder="开始时间">
+                            <input type="text" class="form-control" form-control-sm name="tasks[0].startTime"
+                                   placeholder="开始时间">
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="form-inline">开始位置：
-                            <input type="text" class="form-control" form-control-sm name="tasks[0].startLocation" placeholder="开始位置坐标">
+                            <input type="text" class="form-control" form-control-sm name="tasks[0].startLocation"
+                                   placeholder="开始位置坐标">
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="form-inline">结束位置：
-                            <input type="text" class="form-control" form-control-sm name="tasks[0].endLocation" placeholder="结束位置坐标">
+                            <input type="text" class="form-control" form-control-sm name="tasks[0].endLocation"
+                                   placeholder="结束位置坐标">
                         </label>
                     </div>
                 </div>
@@ -132,29 +107,34 @@
                     <p>1</p>
                     <div class="col-md-2">
                         <label class="form-inline">任务类别：
-                            <input type="text" class="form-control" form-control-sm name="tasks[1].type" placeholder="结束位置坐标">
+                            <input type="text" class="form-control" form-control-sm name="tasks[1].type"
+                                   placeholder="结束位置坐标">
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="form-inline">开始时间：
-                            <input type="text" class="form-control" form-control-sm name="tasks[1].startTime" placeholder="开始时间">
+                            <input type="text" class="form-control" form-control-sm name="tasks[1].startTime"
+                                   placeholder="开始时间">
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="form-inline">开始位置：
-                            <input type="text" class="form-control" form-control-sm name="tasks[1].startLocation" placeholder="开始位置坐标">
+                            <input type="text" class="form-control" form-control-sm name="tasks[1].startLocation"
+                                   placeholder="开始位置坐标">
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="form-inline">结束位置：
-                            <input type="text" class="form-control" form-control-sm name="tasks[1].endLocation" placeholder="结束位置坐标">
+                            <input type="text" class="form-control" form-control-sm name="tasks[1].endLocation"
+                                   placeholder="结束位置坐标">
                         </label>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 offset-md-1">
-            <select class="form-control" name="algorithmType" style="text-align:center;text-align-last:center;padding-left:5px; margin:-0rem 0;">
+            <select class="form-control" name="algorithmType"
+                    style="text-align:center;text-align-last:center;padding-left:5px; margin:-0rem 0;">
                 <option th:value="0" th:text="模拟退火"></option>
                 <option th:value="1" th:text="遗传算法"></option>
                 <option th:value="2" th:text="蚁群算法"></option>
@@ -169,49 +149,91 @@
 </main>
 <script type="text/javascript">
     let i = 2;
+
     function addRow() {
-            $("#task").append(`
-        <div class="row"><p>`+(i)+`</p>
+        $("#task").append(`
+        <div class="row"><p>` + (i) + `</p>
                 <div class="col-md-2">
                     <label class="form-inline">类别：
                         <input type="text" class="form-control" form-control-sm name="tasks[` + i +
-                `].type" placeholder="任务类别">
+            `].type" placeholder="任务类别">
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="form-inline">开始时间：
                         <input type="text" class="form-control" form-control-sm name="tasks[` + i +
-                `].startTime" placeholder="开始时间">
+            `].startTime" placeholder="开始时间">
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="form-inline">开始位置：
                         <input type="text" class="form-control" form-control-sm name="tasks[` + i +
-                `].startLocation" placeholder="开始位置坐标">
+            `].startLocation" placeholder="开始位置坐标">
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="form-inline">结束位置：
                         <input type="text" class="form-control" form-control-sm name="tasks[` + i +
-                `].endLocation" placeholder="结束位置坐标">
+            `].endLocation" placeholder="结束位置坐标">
                     </label>
                 </div>
         </div>
         `)
-            ++i
+        ++i
     }
+
     // for(let j=0;j<18;j++){
     //     addRow();
     // }
     $("#add").click(addRow)
 
-    $("#remove").click(()=>{
-        if(i<=0){
+    $("#remove").click(() => {
+        if (i <= 0) {
             alert("已经没有了")
             return
         }
         $("#inputs #task .row").last().remove()
         --i
+    })
+
+    let cI = 1
+
+    function addCrane() {
+        if(cI>2){
+            alert("最多支持三台行车模拟！！！")
+            return
+        }
+        $("#crane").append(`
+        <div class="row">
+            <p>` + ((cI == 1) ? 'Crane-M' : 'Crane-R') + `</p>
+            <div class="col-md-3">
+                <label class="form-inline">位置
+                    <input type="text" class="form-control" form-control-sm name="cranes[` + cI + `].crane_Location" placeholder="初始位置（x,y,z）">
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label class="form-inline">速度
+                    <input type="text" class="form-control" form-control-sm name="cranes[` + cI + `].crane_Velocity" placeholder="行驶速度（Vx,Vy,Vz）">
+                </label>
+            </div>
+            <div class="col-md-2">
+                <label class="form-inline">类别
+                    <input type="text" class="form-control" form-control-sm name="cranes[` + cI + `].type" placeholder="可以执行任务的类别">
+                </label>
+            </div>
+        </div>
+        `)
+        ++cI
+    }
+    $("#addC").click(addCrane)
+
+    $("#removeC").click(()=>{
+        if(cI<2){
+            alert("不能再少了！")
+            return
+        }
+        $("#inputs #crane .row").last().remove()
+        --cI
     })
 </script>
 </body>

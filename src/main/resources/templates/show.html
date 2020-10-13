@@ -18,10 +18,10 @@
                 <th scope="col" style="width:3%">时间</th>
                 <th scope="col" style="width:7%">AGC-left</th>
                 <th scope="col" style="width:2%">执行任务编号</th>
-                <th scope="col" style="width:7%">AGC-middle</th>
-                <th scope="col" style="width:2%">执行任务编号</th>
-                <th scope="col" style="width:7%">AGC-right</th>
-                <th scope="col" style="width:2%">执行任务编号</th>
+                <th th:if="${path.size()>1}" scope="col" style="width:7%">AGC-middle</th>
+                <th th:if="${path.size()>1}" scope="col" style="width:2%">执行任务编号</th>
+                <th th:if="${path.size()>2}" scope="col" style="width:7%">AGC-right</th>
+                <th th:if="${path.size()>2}" scope="col" style="width:2%">执行任务编号</th>
 
             </tr>
             </thead>
@@ -29,10 +29,10 @@
                 <th scope="row">[[${t}]]</th>
                 <td th:text="${path.get('AGC-left')[stat.index]}"></td>
                 <td th:text="${taskNo.get('AGC-left')[stat.index]}"></td>
-                <td th:text="${path.get('AGC-middle')[stat.index]}"></td>
-                <td th:text="${taskNo.get('AGC-middle')[stat.index]}"></td>
-                <td th:text="${path.get('AGC-right')[stat.index]}"></td>
-                <td th:text="${taskNo.get('AGC-right')[stat.index]}"></td>
+                <td th:if="${path.size()>1}" th:text="${path.get('AGC-middle')[stat.index]}"></td>
+                <td th:if="${path.size()>1}" th:text="${taskNo.get('AGC-middle')[stat.index]}"></td>
+                <td th:if="${path.size()>2}" th:text="${path.get('AGC-right')[stat.index]}"></td>
+                <td th:if="${path.size()>2}" th:text="${taskNo.get('AGC-right')[stat.index]}"></td>
             </tr>
         </table>
     </div>

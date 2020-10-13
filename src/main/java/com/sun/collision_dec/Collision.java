@@ -250,20 +250,24 @@ public class Collision {
         Location terminal1 = crane1.getToDoList().peek();
         Location destination1 = calDestination(start1, terminal1, crane1, usedTime);
 
-        Location start2 = crane2.getLocation();
+        Location start2 = null;
         Location destination2 = null;
-        if (crane2.isUsed()) {
-            Location terminal2 = crane2.getToDoList().peek();
-            destination2 = calDestination(start2, terminal2, crane2, usedTime);
+        if (crane2 != null) {
+            start2 = crane2.getLocation();
+            if (crane2.isUsed()) {
+                Location terminal2 = crane2.getToDoList().peek();
+                destination2 = calDestination(start2, terminal2, crane2, usedTime);
+            }
         }
         Location start3 = null;
-        if(crane3 != null) {
-            start3 = crane3.getLocation();
-        }
         Location destination3 = null;
-        if (crane3 != null &&crane3.isUsed()) {
-            Location terminal3 = crane3.getToDoList().peek();
-            destination3 = calDestination(start3, terminal3, crane3, usedTime);
+
+        if (crane3 != null) {
+            start3 = crane3.getLocation();
+            if (crane3.isUsed()) {
+                Location terminal3 = crane3.getToDoList().peek();
+                destination3 = calDestination(start3, terminal3, crane3, usedTime);
+            }
         }
 
         // 处理crane1
@@ -292,198 +296,202 @@ public class Collision {
             }
         }
         // 检测crane1和crane2是否会发生碰撞
-        if (crane2.isUsed()) {
-            if (sign(destination1.getX() - start1.getX()) == 0) {
-                if (isBetweenWithSafe(start2.getX(), start1.getX(), destination2.getX(), crane1, crane2)) {
+        if (crane2 != null) {
+            if (crane2.isUsed()) {
+                if (sign(destination1.getX() - start1.getX()) == 0) {
+                    if (isBetweenWithSafe(start2.getX(), start1.getX(), destination2.getX(), crane1, crane2)) {
+                        if ((crane2.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
+                                (crane2.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
+                            destination2.setX(destination1.getX() + 2 * safeDistance * sign(start2.getX() - destination1.getX()));
+                        } else {
+                            destination2.setX(destination1.getX() + 1 * safeDistance * sign(start2.getX() - destination1.getX()));
+                        }
+                    }
+                } else if (((start1.getX() - destination1.getX()) * (start2.getX() - destination2.getX())) <= 0 && (isBetweenWithSafe(start1.getX(), destination2.getX(), destination1.getX(), crane1, crane2) || isBetweenWithSafe(start1.getX(), start2.getX(), destination1.getX(), crane1, crane2))) {
                     if ((crane2.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
                             (crane2.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
-                        destination2.setX(destination1.getX() + 2 * safeDistance * sign(start2.getX() - destination1.getX()));
+                        if (sign(destination1.getX() - start1.getX()) != 0)
+                            destination2.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
                     } else {
-                        destination2.setX(destination1.getX() + 1 * safeDistance * sign(start2.getX() - destination1.getX()));
+                        if (sign(destination1.getX() - start1.getX()) != 0)
+                            destination2.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
                     }
                 }
-            } else if (((start1.getX() - destination1.getX()) * (start2.getX() - destination2.getX())) <= 0 && (isBetweenWithSafe(start1.getX(), destination2.getX(), destination1.getX(), crane1, crane2) || isBetweenWithSafe(start1.getX(), start2.getX(), destination1.getX(), crane1, crane2))) {
+                if (isPrint) {
+                    System.out.print(crane2.getId() + "(" + crane2.getTaskNo() + ")" + ":" + crane2.getLocation() + "->");
+                }
+                crane2.setLocation(destination2);
+                if (isPrint) {
+                    System.out.println(crane2.getLocation());
+                }
+                if (isTrack) {
+                    track.getPath().get(crane2.getId()).add(destination2.clone());
+                    track.getTaskNo().get(crane2.getId()).add(crane2.getTaskNo());
+                }
+                if (crane2.getToDoList().peek().equals(destination2)) {
+                    if (destination2.getZ() == 20) {
+                        crane2.getToDoList().poll();
+                    } else {
+                        crane2.getToDoList().peek().setZ(20);
+                    }
+                    if (crane2.getToDoList().isEmpty()) {
+                        crane2.setUsed(false);
+                        taskMap.get(crane2.getTaskNo()).setEndTime(nowTime);
+                    }
+                }
+            } else if (Math.abs(start1.getX() - destination1.getX()) >= 1e-3 && isBetweenWithSafe(start1.getX(), crane2.getLocation().getX(), destination1.getX(), crane1, crane2)) {
+                if (isPrint) {
+                    System.out.print(crane2.getId() + ": " + crane2.getLocation() + "->");
+                }
                 if ((crane2.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
                         (crane2.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
-                    if (sign(destination1.getX() - start1.getX()) != 0)
-                        destination2.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
+                    crane2.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+                    if (isPrint) {
+                        System.out.println(crane2.getLocation());
+                    }
+                    if (isTrack) {
+                        track.getPath().get(crane2.getId()).add(crane2.getLocation().clone());
+                        track.getTaskNo().get(crane2.getId()).add(-1);
+                    }
                 } else {
-                    if (sign(destination1.getX() - start1.getX()) != 0)
-                        destination2.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
-                }
-            }
-            if (isPrint) {
-                System.out.print(crane2.getId() + "(" + crane2.getTaskNo() + ")" + ":" + crane2.getLocation() + "->");
-            }
-            crane2.setLocation(destination2);
-            if (isPrint) {
-                System.out.println(crane2.getLocation());
-            }
-            if (isTrack) {
-                track.getPath().get(crane2.getId()).add(destination2.clone());
-                track.getTaskNo().get(crane2.getId()).add(crane2.getTaskNo());
-            }
-            if (crane2.getToDoList().peek().equals(destination2)) {
-                if (destination2.getZ() == 20) {
-                    crane2.getToDoList().poll();
-                } else {
-                    crane2.getToDoList().peek().setZ(20);
-                }
-                if (crane2.getToDoList().isEmpty()) {
-                    crane2.setUsed(false);
-                    taskMap.get(crane2.getTaskNo()).setEndTime(nowTime);
-                }
-            }
-        } else if (Math.abs(start1.getX() - destination1.getX()) >= 1e-3 && isBetweenWithSafe(start1.getX(), crane2.getLocation().getX(), destination1.getX(), crane1, crane2)) {
-            if (isPrint) {
-                System.out.print(crane2.getId() + ": " + crane2.getLocation() + "->");
-            }
-            if ((crane2.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
-                    (crane2.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
-                crane2.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
-                if (isPrint) {
-                    System.out.println(crane2.getLocation());
-                }
-                if (isTrack) {
-                    track.getPath().get(crane2.getId()).add(crane2.getLocation().clone());
-                    track.getTaskNo().get(crane2.getId()).add(-1);
+                    crane2.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+                    if (isPrint) {
+                        System.out.println(crane2.getLocation());
+                    }
+                    if (isTrack) {
+                        track.getPath().get(crane2.getId()).add(crane2.getLocation().clone());
+                        track.getTaskNo().get(crane2.getId()).add(-1);
+                    }
                 }
             } else {
-                crane2.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
-                if (isPrint) {
-                    System.out.println(crane2.getLocation());
-                }
                 if (isTrack) {
-                    track.getPath().get(crane2.getId()).add(crane2.getLocation().clone());
+                    track.getPath().get(crane2.getId()).add(start2.clone());
                     track.getTaskNo().get(crane2.getId()).add(-1);
                 }
-            }
-        } else {
-            if (isTrack) {
-                track.getPath().get(crane2.getId()).add(start2.clone());
-                track.getTaskNo().get(crane2.getId()).add(-1);
             }
         }
         // 先处理crane3
-        if (crane3 != null &&crane3.isUsed()) {
-            // 检测crane3和crane2是否会发生碰撞
-            if (crane2.isUsed() && sign(destination2.getX() - start2.getX()) == 0) {
-                if (isBetweenWithSafe(start3.getX(), start2.getX(), destination3.getX(), crane2, crane3)) {
+        if(crane3 != null) {
+            if (crane3.isUsed()) {
+                // 检测crane3和crane2是否会发生碰撞
+                if (crane2.isUsed() && sign(destination2.getX() - start2.getX()) == 0) {
+                    if (isBetweenWithSafe(start3.getX(), start2.getX(), destination3.getX(), crane2, crane3)) {
+                        if ((crane3.getId().equals("AGC-left") && crane2.getId().equals("AGC-right")) ||
+                                (crane3.getId().equals("AGC-right") && crane2.getId().equals("AGC-left"))) {
+                            destination3.setX(destination2.getX() + 2 * safeDistance * sign(start3.getX() - destination2.getX()));
+                        } else {
+                            destination3.setX(destination2.getX() + 1 * safeDistance * sign(start3.getX() - destination2.getX()));
+                        }
+                    }
+
+                } else if (crane2.isUsed() && ((start2.getX() - destination2.getX()) * (start3.getX() - destination3.getX())) <= 0 && (isBetweenWithSafe(start2.getX(), destination3.getX(), destination2.getX(), crane2, crane3) || isBetweenWithSafe(start2.getX(), start3.getX(), destination2.getX(), crane2, crane3))) {
                     if ((crane3.getId().equals("AGC-left") && crane2.getId().equals("AGC-right")) ||
                             (crane3.getId().equals("AGC-right") && crane2.getId().equals("AGC-left"))) {
-                        destination3.setX(destination2.getX() + 2 * safeDistance * sign(start3.getX() - destination2.getX()));
+                        if (sign(destination2.getX() - start2.getX()) != 0)
+                            destination3.setX(destination2.getX() + 2 * safeDistance * sign(destination2.getX() - start2.getX()));
                     } else {
-                        destination3.setX(destination2.getX() + 1 * safeDistance * sign(start3.getX() - destination2.getX()));
+                        if (sign(destination2.getX() - start2.getX()) != 0)
+                            destination3.setX(destination2.getX() + safeDistance * sign(destination2.getX() - start2.getX()));
                     }
                 }
-
-            } else if (crane2.isUsed() && ((start2.getX() - destination2.getX()) * (start3.getX() - destination3.getX())) <= 0 && (isBetweenWithSafe(start2.getX(), destination3.getX(), destination2.getX(), crane2, crane3) || isBetweenWithSafe(start2.getX(), start3.getX(), destination2.getX(), crane2, crane3))) {
-                if ((crane3.getId().equals("AGC-left") && crane2.getId().equals("AGC-right")) ||
-                        (crane3.getId().equals("AGC-right") && crane2.getId().equals("AGC-left"))) {
-                    if (sign(destination2.getX() - start2.getX()) != 0)
-                        destination3.setX(destination2.getX() + 2 * safeDistance * sign(destination2.getX() - start2.getX()));
-                } else {
-                    if (sign(destination2.getX() - start2.getX()) != 0)
-                        destination3.setX(destination2.getX() + safeDistance * sign(destination2.getX() - start2.getX()));
-                }
-            }
-            // 检测crane3和crane1是否会发生碰撞
-            if (sign(destination1.getX() - start1.getX()) == 0) {
-                if (isBetweenWithSafe(start3.getX(), start1.getX(), destination3.getX(), crane1, crane3)) {
+                // 检测crane3和crane1是否会发生碰撞
+                if (sign(destination1.getX() - start1.getX()) == 0) {
+                    if (isBetweenWithSafe(start3.getX(), start1.getX(), destination3.getX(), crane1, crane3)) {
+                        if ((crane3.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
+                                (crane3.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
+                            destination3.setX(destination1.getX() + 2 * safeDistance * sign(start3.getX() - destination1.getX()));
+                        } else {
+                            destination3.setX(destination1.getX() + 1 * safeDistance * sign(start3.getX() - destination1.getX()));
+                        }
+                    }
+                } else if ((start1.getX() - destination1.getX()) * (start3.getX() - destination3.getX()) <= 0 && (isBetweenWithSafe(start1.getX(), destination3.getX(), destination1.getX(), crane1, crane3) || isBetweenWithSafe(start1.getX(), start3.getX(), destination1.getX(), crane1, crane3))) {
                     if ((crane3.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
                             (crane3.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
-                        destination3.setX(destination1.getX() + 2 * safeDistance * sign(start3.getX() - destination1.getX()));
+                        if (sign(destination1.getX() - start1.getX()) != 0)
+                            destination3.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
                     } else {
-                        destination3.setX(destination1.getX() + 1 * safeDistance * sign(start3.getX() - destination1.getX()));
+                        if (sign(destination1.getX() - start1.getX()) != 0)
+                            destination3.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
                     }
                 }
-            } else if ((start1.getX() - destination1.getX()) * (start3.getX() - destination3.getX()) <= 0 && (isBetweenWithSafe(start1.getX(), destination3.getX(), destination1.getX(), crane1, crane3) || isBetweenWithSafe(start1.getX(), start3.getX(), destination1.getX(), crane1, crane3))) {
-                if ((crane3.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
-                        (crane3.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
-                    if (sign(destination1.getX() - start1.getX()) != 0)
-                        destination3.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
-                } else {
-                    if (sign(destination1.getX() - start1.getX()) != 0)
-                        destination3.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
+                if (isPrint) {
+                    System.out.print(crane3.getId() + "(" + crane3.getTaskNo() + ")" + ":" + crane3.getLocation() + "->");
                 }
-            }
-            if (isPrint) {
-                System.out.print(crane3.getId() + "(" + crane3.getTaskNo() + ")" + ":" + crane3.getLocation() + "->");
-            }
-            crane3.setLocation(destination3);
-            if (isPrint) {
-                System.out.println(crane3.getLocation());
-            }
-            if (isTrack) {
-                track.getPath().get(crane3.getId()).add(destination3.clone());
-                track.getTaskNo().get(crane3.getId()).add(crane3.getTaskNo());
-            }
-            if (crane3.getToDoList().peek().equals(destination3)) {
-                if (destination3.getZ() == 20) {
-                    crane3.getToDoList().poll();
-                } else {
-                    crane3.getToDoList().peek().setZ(20);
-                }
-                if (crane3.getToDoList().isEmpty()) {
-                    crane3.setUsed(false);
-                    taskMap.get(crane3.getTaskNo()).setEndTime(nowTime);
-                }
-            }
-        } else if (crane3 != null &&Math.abs(start1.getX() - destination1.getX()) >= 1e-3 && isBetweenWithSafe(start1.getX(), crane3.getLocation().getX(), destination1.getX(), crane1, crane3)) {
-            if (isPrint) {
-                System.out.print(crane3.getId() + ": " + crane3.getLocation() + "->");
-            }
-            if ((crane3.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
-                    (crane3.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
-                crane3.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
+                crane3.setLocation(destination3);
                 if (isPrint) {
                     System.out.println(crane3.getLocation());
                 }
                 if (isTrack) {
-                    track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
-                    track.getTaskNo().get(crane3.getId()).add(-1);
+                    track.getPath().get(crane3.getId()).add(destination3.clone());
+                    track.getTaskNo().get(crane3.getId()).add(crane3.getTaskNo());
                 }
-            } else if(crane3 != null){
-                crane3.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
-                if (isPrint) {
-                    System.out.println(crane3.getLocation());
+                if (crane3.getToDoList().peek().equals(destination3)) {
+                    if (destination3.getZ() == 20) {
+                        crane3.getToDoList().poll();
+                    } else {
+                        crane3.getToDoList().peek().setZ(20);
+                    }
+                    if (crane3.getToDoList().isEmpty()) {
+                        crane3.setUsed(false);
+                        taskMap.get(crane3.getTaskNo()).setEndTime(nowTime);
+                    }
                 }
-                if (isTrack) {
-                    track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
-                    track.getTaskNo().get(crane3.getId()).add(-1);
-                }
-            }
-        } else if (crane3 != null &&crane2.isUsed() && Math.abs(start2.getX() - destination2.getX()) >= 1e-3 && isBetweenWithSafe(start2.getX(), crane3.getLocation().getX(), destination2.getX(), crane2, crane3)) { // 若已经与crane1之间有了冲突，不用考虑更低优先级的crane2
-            //if (isPrint) {
-            //    System.out.print(crane3.getId() + ": " + crane3.getLocation() + "->");
-            //}
-            if ((crane3.getId().equals("AGC-left") && crane2.getId().equals("AGC-right")) ||
-                    (crane3.getId().equals("AGC-right") && crane2.getId().equals("AGC-left"))) {
-                //crane3.getLocation().setX(destination2.getX() + 2 * safeDistance * sign(destination2.getX() - start2.getX()));
-                //if (isPrint) {
-                //    System.out.println(crane3.getLocation());
-                //}
-                if (isTrack) {
-                    track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
-                    track.getTaskNo().get(crane3.getId()).add(-1);
-                }
-            } else {
+            } else if (Math.abs(start1.getX() - destination1.getX()) >= 1e-3 && isBetweenWithSafe(start1.getX(), crane3.getLocation().getX(), destination1.getX(), crane1, crane3)) {
                 if (isPrint) {
                     System.out.print(crane3.getId() + ": " + crane3.getLocation() + "->");
                 }
-                crane3.getLocation().setX(destination2.getX() + 1 * safeDistance * sign(destination2.getX() - start2.getX()));
-                if (isPrint) {
-                    System.out.println(crane3.getLocation());
+                if ((crane3.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
+                        (crane3.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
+                    crane3.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
+                    if (isPrint) {
+                        System.out.println(crane3.getLocation());
+                    }
+                    if (isTrack) {
+                        track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
+                        track.getTaskNo().get(crane3.getId()).add(-1);
+                    }
+                } else {
+                    crane3.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
+                    if (isPrint) {
+                        System.out.println(crane3.getLocation());
+                    }
+                    if (isTrack) {
+                        track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
+                        track.getTaskNo().get(crane3.getId()).add(-1);
+                    }
                 }
+            } else if (crane2.isUsed() && Math.abs(start2.getX() - destination2.getX()) >= 1e-3 && isBetweenWithSafe(start2.getX(), crane3.getLocation().getX(), destination2.getX(), crane2, crane3)) { // 若已经与crane1之间有了冲突，不用考虑更低优先级的crane2
+                //if (isPrint) {
+                //    System.out.print(crane3.getId() + ": " + crane3.getLocation() + "->");
+                //}
+                if ((crane3.getId().equals("AGC-left") && crane2.getId().equals("AGC-right")) ||
+                        (crane3.getId().equals("AGC-right") && crane2.getId().equals("AGC-left"))) {
+                    //crane3.getLocation().setX(destination2.getX() + 2 * safeDistance * sign(destination2.getX() - start2.getX()));
+                    //if (isPrint) {
+                    //    System.out.println(crane3.getLocation());
+                    //}
+                    if (isTrack) {
+                        track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
+                        track.getTaskNo().get(crane3.getId()).add(-1);
+                    }
+                } else {
+                    if (isPrint) {
+                        System.out.print(crane3.getId() + ": " + crane3.getLocation() + "->");
+                    }
+                    crane3.getLocation().setX(destination2.getX() + 1 * safeDistance * sign(destination2.getX() - start2.getX()));
+                    if (isPrint) {
+                        System.out.println(crane3.getLocation());
+                    }
+                    if (isTrack) {
+                        track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
+                        track.getTaskNo().get(crane3.getId()).add(-1);
+                    }
+                }
+            } else {
                 if (isTrack) {
-                    track.getPath().get(crane3.getId()).add(crane3.getLocation().clone());
+                    track.getPath().get(crane3.getId()).add(start3.clone());
                     track.getTaskNo().get(crane3.getId()).add(-1);
                 }
-            }
-        } else if(crane3 != null){
-            if (isTrack) {
-                track.getPath().get(crane3.getId()).add(start3.clone());
-                track.getTaskNo().get(crane3.getId()).add(-1);
             }
         }
         if (isPrint) {
