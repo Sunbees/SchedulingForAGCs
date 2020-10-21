@@ -94,10 +94,13 @@ public class Collision {
 
     public static void main(String[] args) {
         List<Integer> pri = new ArrayList<>();
+        pri.add(5);
         pri.add(1);
         pri.add(2);
         pri.add(3);
         pri.add(0);
+        pri.add(4);
+        pri.add(6);
         init(pri);
 
         while (!priority.isEmpty() || numOfUsedCrane(craneList) > 0) {
@@ -370,8 +373,8 @@ public class Collision {
                 }
             }
         }
-        // 先处理crane3
-        if(crane3 != null) {
+        // 最后处理crane3
+        if (crane3 != null) {
             if (crane3.isUsed()) {
                 // 检测crane3和crane2是否会发生碰撞
                 if (crane2.isUsed() && sign(destination2.getX() - start2.getX()) == 0) {
@@ -393,6 +396,8 @@ public class Collision {
                         if (sign(destination2.getX() - start2.getX()) != 0)
                             destination3.setX(destination2.getX() + safeDistance * sign(destination2.getX() - start2.getX()));
                     }
+                } else if (Math.abs(destination2.getX() - destination3.getX()) < safeDistance || (destination2.getX() - destination3.getX()) * (start2.getX() - start3.getX()) < 0) {
+                    destination3.setX(destination2.getX() + safeDistance * sign(start3.getX() - destination3.getX()));
                 }
                 // 检测crane3和crane1是否会发生碰撞
                 if (sign(destination1.getX() - start1.getX()) == 0) {
@@ -413,6 +418,8 @@ public class Collision {
                         if (sign(destination1.getX() - start1.getX()) != 0)
                             destination3.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
                     }
+                } else if (Math.abs(destination1.getX() - destination3.getX()) < safeDistance|| (destination1.getX() - destination3.getX()) * (start1.getX() - start3.getX()) < 0) {
+                    destination3.setX(destination1.getX() + safeDistance * sign(start3.getX() - destination3.getX()));
                 }
                 if (isPrint) {
                     System.out.print(crane3.getId() + "(" + crane3.getTaskNo() + ")" + ":" + crane3.getLocation() + "->");

@@ -45,15 +45,15 @@ public class Data {
          * start_x,y,z：任务起始点
          * end_x,y,z：任务终点
          * */
-        int[] type = new int[]{1, 1, 2, 1};
-        double[] startTime = new double[]{10, 3, 5, 8};
-        double[] start_x = new double[]{80, 60, 55, 20};
-        double[] start_y = new double[]{20, 30, 50, 90};
-        double[] start_z = new double[]{5, 5, 5, 5};
-
-        double[] end_x = new double[]{10, 20, 40, 75};
-        double[] end_y = new double[]{70, 50, 20, 10};
-        double[] end_z = new double[]{5, 5, 5, 5};
+        //int[] type = new int[]{1, 1, 2, 1};
+        //double[] startTime = new double[]{10, 3, 5, 8};
+        //double[] start_x = new double[]{80, 60, 55, 20};
+        //double[] start_y = new double[]{20, 30, 50, 90};
+        //double[] start_z = new double[]{5, 5, 5, 5};
+        //
+        //double[] end_x = new double[]{10, 20, 40, 75};
+        //double[] end_y = new double[]{70, 50, 20, 10};
+        //double[] end_z = new double[]{5, 5, 5, 5};
 
         // 测试三个任务的情况
         //int[] type = new int[]{1, 1, 2};
@@ -76,6 +76,17 @@ public class Data {
         //double[] end_x = new double[]{10, 20};
         //double[] end_y = new double[]{70, 50};
         //double[] end_z = new double[]{5, 5};
+
+        // 7个任务的情况
+        int[] type = new int[]{1, 1, 2, 1, 2, 1, 0};
+        double[] startTime = new double[]{10, 3, 5, 8, 1, 4, 6};
+        double[] start_x = new double[]{80, 60, 55, 20, 1, 50, 90};
+        double[] start_y = new double[]{20, 30, 50, 90, 2, 10, 90};
+        double[] start_z = new double[]{5, 5, 5, 5, 5, 5, 5};
+
+        double[] end_x = new double[]{10, 20, 40, 75, 99, 100, 50};
+        double[] end_y = new double[]{70, 50, 20, 10, 98, 30, 10};
+        double[] end_z = new double[]{5, 5, 5, 5, 5, 5, 5};
 
         taskMap = new HashMap<>();
         // 把所有task插入taskMap
@@ -100,8 +111,8 @@ public class Data {
             String[] types = type.split(",");
             Location location = new Location(Double.parseDouble(locations[0]), Double.parseDouble(locations[1]), Double.parseDouble(locations[2]));
             String craneName = crane_num == 0 ? "AGC-left" : crane_num == 1 ? "AGC-middle" : "AGC-right";
-            Crane craneBuilder = new Crane(craneName,location,false,Double.parseDouble(velocities[0]),Double.parseDouble(velocities[1]),Double.parseDouble(velocities[2]));
-            for(int i=0;i<types.length;i++){
+            Crane craneBuilder = new Crane(craneName, location, false, Double.parseDouble(velocities[0]), Double.parseDouble(velocities[1]), Double.parseDouble(velocities[2]));
+            for (int i = 0; i < types.length; i++) {
                 int typeNum = Integer.parseInt(types[i]);
                 craneBuilder = craneBuilder.addType(typeNum);
             }
@@ -121,7 +132,7 @@ public class Data {
             taskMap.put(task_num++, taskBuilder);
         }
         //taskMap.values().forEach(System.out::println);
-        
+
     }
 
     public static void initData(Cranes cranesT, Tasks tasksT) {
