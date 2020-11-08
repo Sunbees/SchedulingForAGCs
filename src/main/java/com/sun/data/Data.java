@@ -197,6 +197,8 @@ public class Data {
     public static void initDataForDraw(Tasks4Create tasks, Cranes cranesT) throws IOException {
         cranes = cranesT;
         taskMap = new HashMap<>();
+        TASK_NUM = 0;
+        solution = new Solution();
         for (Task4Create task : tasks.getTasks()) {
             if (task.getNum() > 0) {
                 Util.createRandomTask(task.getType(), task.getNum(), task.getBegin(), task.getEnd());

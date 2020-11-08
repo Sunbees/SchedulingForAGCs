@@ -37,16 +37,17 @@ public class TestController {
     @GetMapping("/query")
     public String query(Model model) throws IOException {
         List<String> list = new ArrayList<>();
-        if (Data.stocks.size() == 0) {
-            String path = "./static/data/StoreLocation.csv";
-            ArrayList<String[]> stockList = new ArrayList<>();
-            Util.readCsv(path, stockList);
-            stockList.forEach(e -> {
+        boolean isInitial = Data.stocks.size() == 0;
+        String path = "./static/data/StoreLocation.csv";
+        ArrayList<String[]> stockList = new ArrayList<>();
+        Util.readCsv(path, stockList);
+        stockList.forEach(e -> {
+            list.add(e[0]);
+            if (isInitial) {
                 Stock stock = new Stock(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
                 Data.stocks.add(stock);
-                list.add(e[0]);
-            });
-        }
+            }
+        });
         //System.out.println(list);
         model.addAttribute("options", list);
         return "queryNew";
@@ -66,7 +67,7 @@ public class TestController {
         //    System.out.println(crane);
         //}
 
-        Data.initDataForDraw(tasks,cranes);
+        Data.initDataForDraw(tasks, cranes);
 
         Solution best = null;
         if (algorithmType == 0) {
@@ -88,7 +89,7 @@ public class TestController {
         System.out.println(best);
         model.addAttribute("property", best.getPriority());
         model.addAttribute("consumeTime", best.getConsumeTime());
-        model.addAttribute("craneNum",Data.craneList.size());
+        model.addAttribute("craneNum", Data.craneList.size());
         //new Collision().calRunningTime(best.getPriority(),true);
         Track track = new Collision().getTrack(best.getPriority());
         //track.getPath().keySet().forEach(System.out::println);
