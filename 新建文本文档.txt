@@ -1,0 +1,607 @@
+cWNRTVsoAfMaFgf1
+
+Track(timeList=[0.0, 17.5, 30.0, 40.0, 47.5, 55.0, 70.0, 77.5, 85.0, 97.5, 117.5, 125.0, 137.0, 144.5], path={
+AGC-right=[Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}, Location{x=100.0, y=100.0, z=20.0}], 
+AGC-middle=[Location{x=50.0, y=0.0, z=20.0}, Location{x=57.5, y=7.5, z=5.0}, Location{x=70.0, y=20.0, z=5.0}, Location{x=80.0, y=20.0, z=5.0}, Location{x=80.0, y=20.0, z=20.0}, Location{x=72.5, y=27.5, z=5.0}, Location{x=62.0, y=42.5, z=5.0}, Location{x=62.0, y=50.0, z=5.0}, Location{x=54.5, y=57.5, z=5.0}, Location{x=42.0, y=70.0, z=5.0}, Location{x=22.0, y=70.0, z=5.0}, Location{x=22.0, y=70.0, z=5.0}, Location{x=10.0, y=70.0, z=5.0}, Location{x=10.0, y=70.0, z=20.0}], 
+AGC-left=[Location{x=0.0, y=0.0, z=20.0}, Location{x=7.5, y=7.5, z=5.0}, Location{x=20.0, y=20.0, z=5.0}, Location{x=30.0, y=30.0, z=5.0}, Location{x=37.5, y=30.0, z=5.0}, Location{x=45.0, y=30.0, z=5.0}, Location{x=60.0, y=30.0, z=5.0}, Location{x=60.0, y=30.0, z=20.0}, Location{x=52.5, y=37.5, z=5.0}, Location{x=40.0, y=50.0, z=5.0}, Location{x=20.0, y=50.0, z=5.0}, Location{x=20.0, y=50.0, z=20.0}, Location{x=8.0, y=50.0, z=20.0}, Location{x=8.0, y=50.0, z=20.0}]})
+
+Track(
+timeList=[0.0, 10.0, 12.5, 17.5, 20.0, 30.0, 55.0, 62.5, 70.0, 77.5, 90.0, 92.5, 97.5, 100.0, 105.0, 107.5, 110.0, 115.0, 120.0, 127.5, 135.0, 147.5, 153.5, 161.0, 167.5, 175.0, 187.5, 232.0, 239.5], 
+path=
+{AGC-right=[(100.0, 100.0, 20.0), (100.0, 100.0, 20.0), (95.0, 97.5, 15.0), (85.0, 92.5, 5.0), (80.0, 90.0, 5.0), (80.0, 80.0, 5.0), (80.0, 55.0, 5.0), (80.0, 47.5, 5.0), (80.0, 40.0, 5.0), (80.0, 32.5, 5.0), (80.0, 20.0, 5.0), (80.0, 20.0, 10.0), (80.0, 20.0, 20.0), (75.0, 22.5, 15.0), (65.0, 27.5, 5.0), (60.0, 30.0, 5.0), (55.0, 32.5, 5.0), (57.0, 37.5, 5.0), (62.0, 42.5, 5.0), (62.0, 50.0, 5.0), (47.0, 57.5, 5.0), (22.0, 70.0, 5.0), (10.0, 70.0, 5.0), (10.0, 70.0, 20.0), (10.0, 70.0, 20.0), (10.0, 70.0, 20.0), (10.0, 70.0, 20.0), (10.0, 70.0, 20.0)],
+AGC-middle=[(50.0, 0.0, 20.0), (55.0, 5.0, 10.0), (55.0, 7.5, 5.0), (55.0, 12.5, 5.0), (55.0, 15.0, 5.0), (55.0, 25.0, 5.0), (55.0, 50.0, 5.0), (55.0, 50.0, 20.0), (47.5, 42.5, 5.0), (40.0, 35.0, 5.0), (40.0, 22.5, 5.0), (40.0, 20.0, 5.0), (40.0, 20.0, 15.0), (40.0, 20.0, 20.0), (45.0, 25.0, 10.0), (47.5, 27.5, 5.0), (50.0, 30.0, 5.0), (55.0, 30.0, 5.0), (60.0, 30.0, 5.0), (60.0, 30.0, 20.0), (52.5, 37.5, 5.0), (40.0, 50.0, 5.0), (34.0, 50.0, 5.0), (26.5, 50.0, 5.0), (20.0, 50.0, 5.0), (20.0, 50.0, 20.0), (32.5, 50.0, 20.0), (77.0, 50.0, 20.0), (77.0, 50.0, 20.0)]
+AGC-left=[(0.0, 0.0, 20.0), (0.0, 0.0, 20.0), (2.5, 2.5, 15.0), (7.5, 7.5, 5.0), (10.0, 10.0, 5.0), (20.0, 20.0, 5.0), (20.0, 45.0, 5.0), (20.0, 52.5, 5.0), (20.0, 60.0, 5.0), (20.0, 67.5, 5.0), (20.0, 80.0, 5.0), (20.0, 82.5, 5.0), (20.0, 87.5, 5.0), (20.0, 90.0, 5.0), (20.0, 90.0, 15.0), (20.0, 90.0, 20.0), (22.5, 87.5, 15.0), (27.5, 82.5, 5.0), (32.5, 77.5, 5.0), (40.0, 70.0, 5.0), (43.0, 62.5, 5.0), (18.0, 50.0, 5.0), (6.0, 44.0, 5.0), (6.0, 36.5, 5.0), (12.5, 30.0, 5.0), (18.0, 22.5, 5.0), (30.5, 10.0, 5.0), (75.0, 10.0, 5.0), (75.0, 10.0, 20.0)]}, 
+
+taskNo={AGC-right=[-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1], AGC-middle=[-1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1], AGC-left=[-1, -1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]})
+
+
+
+ "设备故障与班组的相关分析模型": "D:/生产保障分析模型/5-设备故障与班组的相关分析模型",
+  "设备故障与操作人员的相关分析模型": "D:/生产保障分析模型/7-设备故障与操作人员的相关分析模型",
+  "基于自动编码器的在线故障异常检测模型": "D:/生产保障分析模型/9-基于自动编码器的在线故障异常检测模型",
+  "不同设备部件故障的相关分析模型": "D:/生产保障分析模型/12-不同设备部件故障的相关分析模型",
+  "基于深度网络的设备软件故障定位分析模型": "D:/生产保障分析模型/14-基于深度网络的设备软件故障定位分析模型",
+
+/home/myzhao/ReID/DataSet/train/images
+
+transforms.Normalize(normMean = [0.37899614 0.3801569  0.39955614], normStd = [0.1199805  0.13681741 0.15428769])
+
+Location(x=180, y=200)->Location(x=140, y=180)->Location(x=140, y=140)->Location(x=100, y=120)->Location(x=100, y=160)->Location(x=80, y=180)->Location(x=60, y=200)->Location(x=20, y=160)->Location(x=40, y=120)->Location(x=60, y=80)->Location(x=20, y=40)->Location(x=20, y=20)->Location(x=60, y=20)->Location(x=100, y=40)->Location(x=120, y=80)->Location(x=160, y=20)->Location(x=200, y=40)->Location(x=180, y=60)->Location(x=180, y=100)->Location(x=200, y=160)->
+871.1173538448469
+
+20200108171027927879.wav
+20191231105845718621.wav
+
+收集下料工艺质量与相关板材参数的相关信息，包含板材参数和下料工艺质量x_0、x_1、x_2、y。4个观测变量。假设这4个变量满足结构方程模型，然后挖掘这4个变量对应的因果网络关系模型。
+
+
+
+首先，建立全连接无环图C，即x_0,..., x_3,y任意两个节点都赋予一条无向边；然后，对其中任意两个节点进行条件独立性测试，例如：要判断x_0与x_1是否条件独立，就需要测试是否存在集合Z，使得条件独立性x_0⊥x_1 |Z成立，其中，Z是剩余2个变量x_2, x_3,y的任意子集。
+任取两个变量x,y和相应的变量Z,它们在条件独立性背景下的联合概率分布为：
+E_1={g∈L_XZ^2,E(g│Z)=0}，E_2={h∈L_YZ^2,E(h│Z)=0}
+E_3={g^'∈L_X^2,E(g^')=0}，  E_4={h^'∈L_Y^2,E(h^')=0}
+其中L_X^2, L_Y^2, L_XZ^2和L_YZ^2分别是x,Z,(x,Z)和(y,Z)的平方可积函数空间。已知以下4个条件相互等价：
+1.) x⊥y|Z;
+2.)∀g∈E_1 与∀h∈E_1,E(gh)=0;
+3.)∀g∈E_1 与∀h^'∈E_4,E(gh^')=0;
+4.)∀h∈E_2 与∀g^'∈E_3,E(hg^')=0.
+给定x⊥y|Z, 对于∀g∈E_1和∀h^'∈E_4,由条件3可知E(gh^')=0。因为等式E(x-E(x│Z)│Z)=0和E(y-E(x│Z)│Z)=0成立, 所以，关系式x-E(x|Z) ∈ E_1和y-E(x|Z)∈E_4均成立, 则可以进一步推断得到：cov{(x-E(x|Z))(y-E(x|Z))}=E{(x-E(x│Z))(y-E(x│Z))}-E(x-E(x│Z))E(y-E(x│Z))=0。因此，就有x-E(x|Z)⊥y-E(x|Z)。
+另一方面, 给定Z，考虑X,Y的偏相关系数〖 ρ〗_(xy.Z)=σ_(xy.Z)/√(σ_(xx.Z) σ_(yy.Z) ),则有
+ σ_(xy.Z)= cov(x-E(x|Z),y-E(y|Z))
+      =E{(x-E(x|Z))(y-E(y|Z))}-E{(x-E(x|Z))}E{(y-E(y|Z))}
+      = E{(x-E(x|Z))(y-E(y|Z))}
+      = E{(x-E(x|Z))y}-E{(x-E(x|Z))E(y|Z)}
+      = 0-E{(x-E(x|Z))∑_(k=1)^m▒〖α_k z_k 〗}
+      = -∑_(k=1)^m▒α_k  E{(x-E(x|Z))z_k}
+      = 0 (因为z_k关于Z可测)
+从上面可以看到，利用条件x-E(x|Z)⊥y-E(y|Z)可以取代条件独立性x_0⊥x_1 |Z的测试方法。通过该方法对5个观测变量进行统计，如果x_0,x_1满足条件独立性，则从C中将边x_0-x_1删除，由此得到了5个变量的因果骨架图。
+2）通过一致性传播算法构建因果网络图：
+从因果骨架图中任取三个节点x_1, x_2, x_3，其中x_1, x_2和x_2, x_3在图C中为邻接对，而x_1, x_3在图C中不邻接；当且仅当x_2不是x_1, x_3的D-分离集时，x_1-x_2-x_3的因果方向为x_1->x_2<-x_3;如果x_1->x_2，x_2和x_3是邻接节点，x_1和x_3不是邻接节点，同时没有箭头指向x_2，则x_2-x_3的方向为x_2->x_3。如果存在一条路径从x_1到x_2，同时x_1和x_2有一条边，则x_1-x_2的方向为x_1->x_2。重复上述步骤，直至所有的边都被标明因果方向。
+
+z_1=x*w_1^T+b_1
+y ̂=a_2*w_3^T+b_3
+
+
+基于转移的表示推理会根据转移假设设计得分函数,衡量多元组有效的可能性,得分越高,多元组越可能有效.也即正例元组的得分高,负例元组的得分低。负例是通过替换头实体或尾实体得到的。第一个基于转移的表示模型TransE，TransE 的主要思想是:如果三元组(头实体,关系,尾实体)成立,头实体向量h 与关系向量r 的和与尾实体向量t 相近,否则远离.由上述基本转移假设得到得分函数-‖h+r-t‖_(L1/L2),即用L1 或L2 范数衡量距离.学习过程替换头实体或尾实体得到负例,类似支持向量机,最小化一个基于Margin 的损失,使正例的得分比负例的得分至少高一个Margin.在进行推理时,得分函数取值大的候选实体/关系即为推理结果。但TransE在处理多映射属性关系时，会造成向量空间的拥挤和误差，例如h_1和多个尾实体t_1 、t_2…t_n都存在关系r，则即使t_1 、t_2…t_n的语义差别很大，TransE仍会让它们挤在一起。
+对此本模型使用的是基于TransR的方法，其在单独的实体空间和关系空间建立实体和关系的表示,每个关系都对应一个空间,有一个映射矩阵,实体通过对应的映射矩阵映射到关系空间后,将关系向量看成实体向量间的转移。即TransR中的三元组(h, r, t),h和t在一个空间∈R^k,r在另一个空间∈R^d,对于每一个关系r都有一个映射矩阵M_r∈R^(k×d)把实体从实体空间映射到关系空间,即h_r=hM_r, t_r=tM_r，对应的得分函数也就变为-‖h_r+r-t_r ‖_(L1/L2)。然后对于此函数进行梯度下降不断修正映射矩阵M_r，使得正例得分高，负例得分低。以此根据新的相关参数对缺失的知识进行补全。
+
+基于转移的表示推理会根据转移假设设计得分函数,衡量多元组有效的可能性,得分越高,多元组越可能有效.也即正例元组的得分高,负例元组的得分低。负例是通过替换头实体或尾实体得到的。第一个基于转移的表示模型TransE，TransE 的主要思想是:如果三元组(头实体,关系,尾实体)成立,头实体向量h 与关系向量r 的和与尾实体向量t 相近,否则远离.由上述基本转移假设得到得分函数-‖h+r-t‖_(L1/L2),即用L1 或L2 范数衡量距离.学习过程替换头实体或尾实体得到负例,类似支持向量机,最小化一个基于Margin 的损失,使正例的得分比负例的得分至少高一个Margin.在进行推理时,得分函数取值大的候选实体/关系即为推理结果。但TransE在处理多映射属性关系时，会造成向量空间的拥挤和误差，例如h_1和多个尾实体t_1 、t_2…t_n都存在关系r，则即使t_1 、t_2…t_n的语义差别很大，TransE仍会让它们挤在一起。
+对此本模型使用的是基于TransR的方法，其在单独的实体空间和关系空间建立实体和关系的表示,每个关系都对应一个空间,有一个映射矩阵,实体通过对应的映射矩阵映射到关系空间后,将关系向量看成实体向量间的转移。即TransR中的三元组(h, r, t),h和t在一个空间∈R^k,r在另一个空间∈R^d,对于每一个关系r都有一个映射矩阵M_r∈R^(k×d)把实体从实体空间映射到关系空间,即h_r=hM_r, t_r=tM_r，对应的得分函数也就变为-‖h_r+r-t_r ‖_(L1/L2)。然后对于此函数进行梯度下降不断修正映射矩阵M_r，使得正例得分高，负例得分低。以此根据新的相关参数对缺失的知识进行补全。
+
+
+塔克分解是Ledyard R. Tucker于1964年提出并在1966年得到完善的一个分解方式。
+在三阶的情况下如令χ∈R^(I*J*K)是一个三阶张量，对其进行Tucker分解会产生一个核心张量Ζ∈R^(P*Q*R)和三个矩阵A∈R^(I*P)、B∈R^(J*Q)和C∈R^(K*R),其计算公式如下：
+χ≈Z×_1 A×_2 B×_3 C=∑_(p=1)^P▒∑_(q=1)^Q▒∑_(r=1)^R▒〖z_pqr⊗a_p⊗b_q⊗c_r 〗
+其中，×_n表示沿着第n维的张量乘法，⊗表示向量内积
+
+
+MSE(y,y ̂)=1/n Σ_(i=1)^n 〖(y_j-y ̂_j)〗^2
+  /**
+   * sunqj
+   */
+  "焊接工艺工时回归分析模型": "D:/生产过程分析模型/1-焊接工艺工时回归分析模型",
+  "焊接设备产能的回归分析模型": "D:/生产过程分析模型/14-焊接设备产能的回归分析模型",
+  "分段涂装工艺工时回归分析模型": "D:/生产过程分析模型/2-分段涂装工艺工时回归分析模型",
+  "下料工艺工时回归分析模型": "D:/生产过程分析模型/3-下料工艺工时回归分析模型",
+  "仓储成本预测的线性回归分析模型": "D:/生产过程分析模型/37-仓储成本预测的线性回归分析模型",
+  "人员成本预测的线性回归分析模型": "D:/生产过程分析模型/39-人员成本预测的线性回归分析模型",
+  "冷加工工艺工时回归分析模型": "D:/生产过程分析模型/4-冷加工工艺工时回归分析模型",
+  "运输成本预测的线性回归分析模型": "D:/生产过程分析模型/41-运输成本预测的线性回归分析模型",
+  "电力成本预测的线性回归分析模型": "D:/生产过程分析模型/43-电力成本预测的线性回归分析模型",
+  "物料采购成本预测的线性回归分析模型": "D:/生产过程分析模型/45-物料采购成本预测的线性回归分析模型",
+  "物流调度能力与配送设备的回归分析模型": "D:/生产过程分析模型/48-物流调度能力与配送设备的回归分析模型",
+  "火工工艺工时回归分析模型": "D:/生产过程分析模型/5-火工工艺工时回归分析模型",
+  "物流设备使用率与仓储的回归分析模型": "D:/生产过程分析模型/50-物流设备使用率与仓储的回归分析模型",
+  "物流效率与配送人员的回归分析模型": "D:/生产过程分析模型/53-物流效率与配送人员的回归分析模型",
+  "物流效率与物流设备的回归分析模型": "D:/生产过程分析模型/56-物流效率与物流设备的回归分析模型",
+  "物流效率与环境的回归分析模型": "D:/生产过程分析模型/59-物流效率与环境的回归分析模型",
+  "分段舾装工艺工时回归分析模型": "D:/生产过程分析模型/6-分段舾装工艺工时回归分析模型",
+  "预处理工艺工时回归分析模型": "D:/生产过程分析模型/7-预处理工艺工时回归分析模型",
+  "船台舾装工艺工时回归分析模型": "D:/生产过程分析模型/8-船台舾装工艺工时回归分析模型",
+  "船台涂装工艺工时回归分析模型": "D:/生产过程分析模型/9-船台涂装工艺工时回归分析模型",
+  "基于湿度的焊接工艺产能预测的非线性回归模型": "D:/生产过程分析模型/90-基于湿度的焊接工艺产能预测的非线性回归模型",
+  "基于温度的焊接工艺产能预测的非线性回归模型": "D:/生产过程分析模型/92-基于温度的焊接工艺产能预测的非线性回归模型",
+  "基于湿度的涂装工艺产能预测的非线性回归模型": "D:/生产过程分析模型/94-基于湿度的涂装工艺产能预测的非线性回归模型",
+  "基于温度的涂装工艺产能预测的非线性回归模型": "D:/生产过程分析模型/96-基于温度的涂装工艺产能预测的非线性回归模型",
+  "船厂耗电量与主要设备的线性回归模型":"D:/生产保障分析模型/49-船厂耗电量与主要设备的线性回归模型",
+  "船厂耗电量与主要设备的深度网络模型":"D:/生产保障分析模型/52-船厂耗电量与主要设备的深度网络模型",
+  "船厂可燃气消耗量与主要设备的线性回归模型":"D:/生产保障分析模型/53-船厂可燃气消耗量与主要设备的线性回归模型",
+  "船厂可燃气消耗量与主要设备的深度网络模型":"D:/生产保障分析模型/56-船厂可燃气消耗量与主要设备的深度网络模型",
+  "船厂风能消耗量与主要设备的线性回归模型":"D:/生产保障分析模型/57-船厂风能消耗量与主要设备的线性回归模型",
+  "船厂风能消耗量与主要设备的深度网络模型":"D:/生产保障分析模型/60-船厂风能消耗量与主要设备的深度网络模型",
+
+
+=======
+
+
+
+
+  "下料工艺质量与板材的回归分析模型":"D:/质量与工艺分析模型/34-下料工艺质量与板材的回归分析模型",
+  "下料工艺质量与板材的因果分析模型":"D:/质量与工艺分析模型/35-下料工艺质量与板材的因果分析模型",
+  "下料工艺质量与切割方法的回归分析模型":"D:/质量与工艺分析模型/37-下料工艺质量与切割方法的回归分析模型",
+  "下料工艺质量与切割方法的因果分析模型":"D:/质量与工艺分析模型/38-下料工艺质量与切割方法的因果分析模型",
+
+  "焊接工艺质量与板材的回归分析模型":"D:/质量与工艺分析模型/47-焊接工艺质量与板材的回归分析模型",
+  "焊接工艺质量与板材的因果分析模型":"D:/质量与工艺分析模型/48-焊接工艺质量与板材的因果分析模型",
+  "焊接工艺质量与焊料的回归分析模型":"D:/质量与工艺分析模型/50-焊接工艺质量与焊料的回归分析模型",
+  "焊接工艺质量与焊料的因果分析模型":"D:/质量与工艺分析模型/51-焊接工艺质量与焊料的因果分析模型",
+  "焊接工艺质量与焊接形式的回归分析模型":"D:/质量与工艺分析模型/53-焊接工艺质量与焊接形式的回归分析模型",
+  "焊接工艺质量与焊接形式的因果分析模型":"D:/质量与工艺分析模型/54-焊接工艺质量与焊接形式的因果分析模型",
+  "基于知识推理的知识补全模型":"D:/推荐模型/10-基于知识推理的知识补全模型",
+  "基于相似检索的知识补全模型":"D:/推荐模型/11-基于相似检索的知识补全模型",
+  "基于迁移学习的知识补全模型":"D:/推荐模型/12-基于迁移学习的知识补全模型",
+  "工业机理模型评估的深度网络模型":"D:/推荐模型/25-工业机理模型评估的深度网络模型",
+  // 8月
+  
+  "设备故障与班组的相关分析模型": "D:/生产保障分析模型/5-设备故障与班组的相关分析模型",
+  "设备故障与操作人员的相关分析模型": "D:/生产保障分析模型/7-设备故障与操作人员的相关分析模型",
+  "基于自动编码器的在线故障异常检测模型": "D:/生产保障分析模型/9-基于自动编码器的在线故障异常检测模型",
+  "不同设备部件故障的相关分析模型": "D:/生产保障分析模型/12-不同设备部件故障的相关分析模型",
+  "基于深度网络的设备软件故障定位分析模型": "D:/生产保障分析模型/14-基于深度网络的设备软件故障定位分析模型",
+
+
+
+
+
+
+        //List<Crane> unUsedList = new ArrayList<>(); // 无任务的AGC列表
+        //List<Crane> usedList = new ArrayList<>(); // 有任务的AGC列表
+        //// 填充unUsedList和usedList
+        //for (Crane crane : craneList) {
+        //    if (crane.isUsed()) {
+        //        usedList.add(crane);
+        //    } else {
+        //        unUsedList.add(crane);
+        //    }
+        //}
+        //int numOfUsedCrane = usedList.size(); // 有任务的AGC的数量
+        //
+        //// 只有一辆AGC正在被使用
+        //if (numOfUsedCrane == 1) {
+        //    Crane crane1 = usedList.get(0); // 正在使用的AGC记为crane1
+        //    int start = crane1.getX(); // crane1的位置
+        //    int terminal = crane1.getToDoList().peek(); // crane1任务列表中的下一个目的地
+        //    int destination = -1; // 记录crane1在本次run中能到的位置
+        //    int usedTime = Math.abs(start - terminal); // crane1到达下一个目的地需要的时间
+        //    if (usedTime > maxTime) { // 如果大于最大时间，crane1只能运行最大时间
+        //        destination = start + maxTime * sign(terminal - start);
+        //        nowTime += maxTime;
+        //    } else { // 否则crane1直接到达下一个目的地
+        //        destination = terminal;
+        //        crane1.getToDoList().poll();
+        //        nowTime += usedTime;
+        //    }
+        //    // 若在start和destination之间存在AGC，让它们避让
+        //    for (Crane crane : unUsedList) {
+        //        if (isBetween(start, crane.getX(), destination)) {
+        //            System.out.print(crane.getId() + ": " + crane.getX() + "->");
+        //            if ((crane.getId().equals("ACG-left") && crane1.getId().equals("ACG-right")) ||
+        //                    (crane.getId().equals("ACG-right") && crane1.getId().equals("ACG-left"))) {
+        //                crane.setX(destination + 2 * safeDistance * sign(destination - start)); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+        //                System.out.println(crane.getX());
+        //            } else {
+        //                crane.setX(destination + 1 * safeDistance * sign(destination - start));
+        //                System.out.println(crane.getX());
+        //            }
+        //        }
+        //    }
+        //    System.out.print(crane1.getId() + ":" + crane1.getX() + "->");
+        //    crane1.setX(destination);
+        //    System.out.println(crane1.getX());
+        //    // 如果crane1的todoList中已经没有地点了，就让crane1变成空闲状态
+        //    if (crane1.getToDoList().isEmpty()) {
+        //        crane1.setUsed(false);
+        //        taskMap.get(crane1.getTaskNo()).setEndTime(nowTime);
+        //    }
+        //}
+        //// 两辆AGC正在被使用
+        //if (numOfUsedCrane == 2) {
+        //    Crane crane1 = usedList.get(0);
+        //    Crane crane2 = usedList.get(1);
+        //    Crane crane3 = unUsedList.get(0);
+        //    if (crane1.getType() == crane2.getType()) { // 如果任务类型相同就比较用时，更少的优先
+        //        int cost1 = Math.abs(crane1.getX() - crane1.getToDoList().peek());
+        //        int cost2 = Math.abs(crane2.getX() - crane2.getToDoList().peek());
+        //        if (cost1 > cost2) {
+        //            Crane temp = crane1;
+        //            crane1 = crane2;
+        //            crane2 = temp;
+        //        }
+        //    } else if (crane1.getType() < crane2.getType()) { // 不同就直接类型优先级更高的优先
+        //        Crane temp = crane1;
+        //        crane1 = crane2;
+        //        crane2 = temp;
+        //    }
+        //    // 通过操作保证crane1优先级比crane2高
+        //    int start1 = crane1.getX();
+        //    int terminal1 = crane1.getToDoList().peek();
+        //    int destination1 = -1;
+        //    int start2 = crane2.getX();
+        //    int terminal2 = crane2.getToDoList().peek();
+        //    int destination2 = -1;
+        //    int usedTime = Math.min(Math.abs(start1 - terminal1), Math.abs(start2 - terminal2)); // crane1、2可以到达下一个目的地时间的较小时间
+        //    if (usedTime > maxTime) { // 如果大于最大时间，crane1、2只能运行最大时间
+        //        destination1 = start1 + maxTime * sign(terminal1 - start1);
+        //        destination2 = start2 + maxTime * sign(terminal2 - start2);
+        //        nowTime += maxTime;
+        //    } else { // 否则crane1、2直接运行usedtime
+        //        destination1 = start1 + usedTime * sign(terminal1 - start1);
+        //        destination2 = start2 + usedTime * sign(terminal2 - start2);
+        //        nowTime += usedTime;
+        //    }
+        //
+        //
+        //    // 先处理空闲的crane3
+        //    if (isBetween(start1, crane3.getX(), destination1)) {
+        //        System.out.print(crane3.getId() + ": " + crane3.getX() + "->");
+        //        if ((crane3.getId().equals("ACG-left") && crane1.getId().equals("ACG-right")) ||
+        //                (crane3.getId().equals("ACG-right") && crane1.getId().equals("ACG-left"))) {
+        //            crane3.setX(destination1 + 2 * safeDistance * sign(destination1 - start1));
+        //            System.out.println(crane3.getX());
+        //        } else {
+        //            crane3.setX(destination1 + 1 * safeDistance * sign(destination1 - start1));
+        //            System.out.println(crane3.getX());
+        //        }
+        //    } else if (isBetween(start2, crane3.getX(), destination2)) { // 若已经与crane1之间有了冲突，不用考虑更低优先级的crane2
+        //        System.out.print(crane3.getId() + ": " + crane3.getX() + "->");
+        //        if ((crane3.getId().equals("ACG-left") && crane2.getId().equals("ACG-right")) ||
+        //                (crane3.getId().equals("ACG-right") && crane2.getId().equals("ACG-left"))) {
+        //            crane3.setX(destination2 + 2 * safeDistance * sign(destination2 - start2));
+        //            System.out.println(crane3.getX());
+        //        } else {
+        //            crane3.setX(destination2 + 1 * safeDistance * sign(destination2 - start2));
+        //            System.out.println(crane3.getX());
+        //        }
+        //    }
+        //
+        //    // 检测crane1和crane2是否会发生碰撞，若会crane2避让
+        //    if (((start1 - destination1) * (start2 - destination2)) < 0 && (isBetween(start1, destination2, destination1) || isBetween(start1, start2, destination1))) {
+        //        if ((crane2.getId().equals("ACG-left") && crane1.getId().equals("ACG-right")) ||
+        //                (crane2.getId().equals("ACG-right") && crane1.getId().equals("ACG-left"))) {
+        //            destination2 = destination1 + 2 * safeDistance * sign(destination1 - start1);
+        //        } else {
+        //            destination2 = destination1 + safeDistance * sign(destination1 - start1);
+        //        }
+        //    }
+        //    System.out.print(crane2.getId() + ":" + crane2.getX() + "->");
+        //    crane2.setX(destination2);
+        //    System.out.println(crane2.getX());
+        //    if (crane2.getToDoList().peek() == destination2) { // 如果crane2当前地点是其toDoList中的下一个值，就标记完成
+        //        crane2.getToDoList().poll();
+        //        if (crane2.getToDoList().isEmpty()) { // 如果crane2的todoList中已经没有地点了，就让crane2变成空闲状态
+        //            crane2.setUsed(false);
+        //            taskMap.get(crane2.getTaskNo()).setEndTime(nowTime);
+        //        }
+        //    }
+        //
+        //
+        //    System.out.print(crane1.getId() + ":" + crane1.getX() + "->");
+        //    crane1.setX(destination1);
+        //    System.out.println(crane1.getX());
+        //
+        //    if (crane1.getToDoList().peek() == destination1) { // 如果crane1当前地点是其toDoList中的下一个值，就标记完成
+        //        crane1.getToDoList().poll();
+        //        if (crane1.getToDoList().isEmpty()) { // 如果crane1的todoList中已经没有地点了，就让crane1变成空闲状态
+        //            crane1.setUsed(false);
+        //            taskMap.get(crane1.getTaskNo()).setEndTime(nowTime);
+        //        }
+        //    }
+        //}
+        //// 三辆AGC正在被使用
+        //if (numOfUsedCrane == 3) {
+        //    // 优先队列
+        //    //PriorityQueue<Crane> priority = new PriorityQueue<>(Comparator.comparingInt(a -> (-500 * a.getType() + Math.abs(a.getX() - a.getToDoList().peek()))));
+        //    PriorityQueue<Crane> priority = new PriorityQueue<>((e1, e2) -> {
+        //        if (e1.getType() != e2.getType()) {
+        //            return e2.getType() - e1.getType();
+        //        } else {
+        //            return Math.abs(e1.getX() - e1.getToDoList().peek()) - Math.abs(e2.getX() - e2.getToDoList().peek());
+        //        }
+        //    });
+        //    for (Crane crane : usedList) {
+        //        priority.offer(crane);
+        //    }
+        //    // 优先级 crane1 >= crane2 >= crane3
+        //    Crane crane1 = priority.poll();
+        //    Crane crane2 = priority.poll();
+        //    Crane crane3 = priority.poll();
+        //    int usedTime = Math.abs(crane1.getX() - crane1.getToDoList().peek());
+        //    usedTime = Math.min(usedTime, Math.abs(crane2.getX() - crane2.getToDoList().peek()));
+        //    usedTime = Math.min(usedTime, Math.abs(crane3.getX() - crane3.getToDoList().peek()));
+        //    // 不用考虑 maxTime
+        //    nowTime += usedTime;
+        //    int start1 = crane1.getX();
+        //    int terminal1 = crane1.getToDoList().peek();
+        //    int destination1 = start1 + usedTime * sign(terminal1 - start1);
+        //
+        //    int start2 = crane2.getX();
+        //    int terminal2 = crane2.getToDoList().peek();
+        //    int destination2 = start2 + usedTime * sign(terminal2 - start2);
+        //
+        //    int start3 = crane3.getX();
+        //    int terminal3 = crane3.getToDoList().peek();
+        //    int destination3 = start3 + usedTime * sign(terminal3 - start3);
+        //
+        //    // 先处理crane3
+        //    // 检测crane3和crane1是否会发生碰撞
+        //    if (((start1 - destination1) * (start3 - destination3)) < 0 && (isBetween(start1, destination3, destination1) || isBetween(start1, start3, destination1))) {
+        //        if ((crane3.getId().equals("ACG-left") && crane1.getId().equals("ACG-right")) ||
+        //                (crane3.getId().equals("ACG-right") && crane1.getId().equals("ACG-left"))) {
+        //            destination3 = destination1 + 2 * safeDistance * sign(destination1 - start1);
+        //        } else {
+        //            destination3 = destination1 + safeDistance * sign(destination1 - start1);
+        //        }
+        //    }
+        //    // 检测crane3和crane2是否会发生碰撞
+        //    else if (((start2 - destination2) * (start3 - destination3)) < 0 && (isBetween(start2, destination3, destination2) || isBetween(start2, start3, destination2))) {
+        //        if ((crane3.getId().equals("ACG-left") && crane2.getId().equals("ACG-right")) ||
+        //                (crane3.getId().equals("ACG-right") && crane2.getId().equals("ACG-left"))) {
+        //            destination3 = destination2 + 2 * safeDistance * sign(destination2 - start2);
+        //        } else {
+        //            destination3 = destination2 + safeDistance * sign(destination2 - start2);
+        //        }
+        //    }
+        //    System.out.print(crane3.getId() + ":" + crane3.getX() + "->");
+        //    crane3.setX(destination3);
+        //    System.out.println(crane3.getX());
+        //    if (crane3.getToDoList().peek() == destination3) {
+        //        crane3.getToDoList().poll();
+        //        if (crane3.getToDoList().isEmpty()) {
+        //            crane3.setUsed(false);
+        //            taskMap.get(crane3.getTaskNo()).setEndTime(nowTime);
+        //        }
+        //    }
+        //
+        //    // 检测crane1和crane2是否会发生碰撞
+        //    if (((start1 - destination1) * (start2 - destination2)) < 0 && (isBetween(start1, destination2, destination1) || isBetween(start1, start2, destination1))) {
+        //        if ((crane2.getId().equals("ACG-left") && crane1.getId().equals("ACG-right")) ||
+        //                (crane2.getId().equals("ACG-right") && crane1.getId().equals("ACG-left"))) {
+        //            destination2 = destination1 + 2 * safeDistance * sign(destination1 - start1);
+        //        } else {
+        //            destination2 = destination1 + safeDistance * sign(destination1 - start1);
+        //        }
+        //    }
+        //    System.out.print(crane2.getId() + ":" + crane2.getX() + "->");
+        //    crane2.setX(destination2);
+        //    System.out.println(crane2.getX());
+        //    if (crane2.getToDoList().peek() == destination2) {
+        //        crane2.getToDoList().poll();
+        //        if (crane2.getToDoList().isEmpty()) {
+        //            crane2.setUsed(false);
+        //            taskMap.get(crane2.getTaskNo()).setEndTime(nowTime);
+        //        }
+        //    }
+        //    System.out.print(crane1.getId() + ":" + crane1.getX() + "->");
+        //    crane1.setX(destination1);
+        //    System.out.println(crane1.getX());
+        //
+        //    if (crane1.getToDoList().peek() == destination1) {
+        //        crane1.getToDoList().poll();
+        //        if (crane1.getToDoList().isEmpty()) {
+        //            crane1.setUsed(false);
+        //            taskMap.get(crane1.getTaskNo()).setEndTime(nowTime);
+        //        }
+        //    }
+        //}
+
+
+
+private static void run(List<Crane> craneList, double maxTime, boolean isPrint) {
+        PriorityQueue<Crane> priority = new PriorityQueue<>((e1, e2) -> {
+            if (!e1.isUsed() && !e2.isUsed()) {
+                return -1;
+            } else if (!e1.isUsed() || !e2.isUsed()) {
+                return e1.isUsed() ? -1 : 1;
+            } else if (e1.getType() != e2.getType()) {
+                return e2.getType() - e1.getType();
+            } else {
+                return (Math.abs(e1.getLocation().getX() - e1.getToDoList().peek().getX()) / e1.getV_x() - Math.abs(e2.getLocation().getX() - e2.getToDoList().peek().getX()) / e2.getV_x()) > 0 ? 1 : -1;
+            }
+        });
+        for (Crane crane : craneList) {
+            priority.offer(crane);
+        }
+        // 优先级 crane1 >= crane2 >= crane3
+        Crane crane1 = priority.poll();
+        Crane crane2 = priority.poll();
+        Crane crane3 = priority.poll();
+
+        double usedTime = crane1.minTime();
+        if (crane2.isUsed()) {
+            usedTime = Math.min(usedTime, crane2.minTime());
+        }
+        if (crane3.isUsed()) {
+            usedTime = Math.min(usedTime, crane3.minTime());
+        }
+        if (Math.abs(usedTime) < 1e-6) {
+            usedTime = 1;
+        }
+        if (usedTime > maxTime) {
+            nowTime += maxTime;
+            usedTime = maxTime;
+        } else {
+            nowTime += usedTime;
+        }
+        Location start1 = crane1.getLocation();
+        Location terminal1 = crane1.getToDoList().peek();
+        Location destination1 = calDestination(start1, terminal1, crane1, usedTime);
+
+        Location start2 = crane2.getLocation();
+        Location destination2 = null;
+        if (crane2.isUsed()) {
+            Location terminal2 = crane2.getToDoList().peek();
+            destination2 = calDestination(start2, terminal2, crane2, usedTime);
+        }
+
+        Location start3 = crane3.getLocation();
+        Location destination3 = null;
+        if (crane3.isUsed()) {
+            Location terminal3 = crane3.getToDoList().peek();
+            destination3 = calDestination(start3, terminal3, crane3, usedTime);
+        }
+
+        // 先处理crane3
+        if (crane3.isUsed()) {
+            // 检测crane3和crane2是否会发生碰撞
+            if (crane2.isUsed() && ((start2.getX() - destination2.getX()) * (start3.getX() - destination3.getX())) <= 0 && (isBetweenWithSafe(start2.getX(), destination3.getX(), destination2.getX(), crane2, crane3) || isBetweenWithSafe(start2.getX(), start3.getX(), destination2.getX(), crane2, crane3))) {
+                if ((crane3.getId().equals("AGC-left") && crane2.getId().equals("AGC-right")) ||
+                        (crane3.getId().equals("AGC-right") && crane2.getId().equals("AGC-left"))) {
+                    if (sign(destination2.getX() - start2.getX()) != 0)
+                        destination3.setX(destination2.getX() + 2 * safeDistance * sign(destination2.getX() - start2.getX()));
+                    else
+                        destination3.setX(destination2.getX() + 2 * safeDistance * sign(start3.getX() - destination2.getX()));
+                } else {
+                    if (sign(destination2.getX() - start2.getX()) != 0)
+                        destination3.setX(destination2.getX() + safeDistance * sign(destination2.getX() - start2.getX()));
+                    else
+                        destination3.setX(destination2.getX() + 1 * safeDistance * sign(start3.getX() - destination2.getX()));
+                }
+            }
+            // 检测crane3和crane1是否会发生碰撞
+            if ((start1.getX() - destination1.getX()) * (start3.getX() - destination3.getX()) <= 0 && (isBetweenWithSafe(start1.getX(), destination3.getX(), destination1.getX(), crane1, crane3) || isBetweenWithSafe(start1.getX(), start3.getX(), destination1.getX(), crane1, crane3))) {
+                if ((crane3.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
+                        (crane3.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
+                    if (sign(destination1.getX() - start1.getX()) != 0)
+                        destination3.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
+                    else
+                        destination2.setX(destination1.getX() + 2 * safeDistance * sign(start3.getX() - destination1.getX()));
+                } else {
+                    if (sign(destination1.getX() - start1.getX()) != 0)
+                        destination3.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
+                    else
+                        destination2.setX(destination1.getX() + 1 * safeDistance * sign(start3.getX() - destination1.getX()));
+                }
+            }
+            if (isPrint) {
+                System.out.print(crane3.getId() + "(" + crane3.getTaskNo() + ")" + ":" + crane3.getLocation() + "->");
+            }
+            crane3.setLocation(destination3);
+            if (isPrint) {
+                System.out.println(crane3.getLocation());
+            }
+            if (crane3.getToDoList().peek().equals(destination3)) {
+                if (destination3.getZ() == 20) {
+                    crane3.getToDoList().poll();
+                } else {
+                    crane3.getToDoList().peek().setZ(20);
+                }
+                if (crane3.getToDoList().isEmpty()) {
+                    crane3.setUsed(false);
+                    taskMap.get(crane3.getTaskNo()).setEndTime(nowTime);
+                }
+            }
+        } else if (Math.abs(start1.getX() - destination1.getX()) >= 1e-3 && isBetweenWithSafe(start1.getX(), crane3.getLocation().getX(), destination1.getX(), crane1, crane3)) {
+            if (isPrint) {
+                System.out.print(crane3.getId() + ": " + crane3.getLocation() + "->");
+            }
+            if ((crane3.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
+                    (crane3.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
+                crane3.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
+                if (isPrint) {
+                    System.out.println(crane3.getLocation());
+                }
+            } else {
+                crane3.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
+                if (isPrint) {
+                    System.out.println(crane3.getLocation());
+                }
+            }
+        } else if (crane2.isUsed() && Math.abs(start2.getX() - destination2.getX()) >= 1e-3 && isBetweenWithSafe(start2.getX(), crane3.getLocation().getX(), destination2.getX(), crane2, crane3)) { // 若已经与crane1之间有了冲突，不用考虑更低优先级的crane2
+            if (isPrint) {
+                System.out.print(crane3.getId() + ": " + crane3.getLocation() + "->");
+            }
+            if ((crane3.getId().equals("AGC-left") && crane2.getId().equals("AGC-right")) ||
+                    (crane3.getId().equals("AGC-right") && crane2.getId().equals("AGC-left"))) {
+                crane3.getLocation().setX(destination2.getX() + 2 * safeDistance * sign(destination2.getX() - start2.getX()));
+                if (isPrint) {
+                    System.out.println(crane3.getLocation());
+                }
+            } else {
+                crane3.getLocation().setX(destination2.getX() + 1 * safeDistance * sign(destination2.getX() - start2.getX()));
+                if (isPrint) {
+                    System.out.println(crane3.getLocation());
+                }
+            }
+        }
+        // 检测crane1和crane2是否会发生碰撞
+        if (crane2.isUsed()) {
+            if (((start1.getX() - destination1.getX()) * (start2.getX() - destination2.getX())) <= 0 && (isBetweenWithSafe(start1.getX(), destination2.getX(), destination1.getX(), crane1, crane2) || isBetweenWithSafe(start1.getX(), start2.getX(), destination1.getX(), crane1, crane2))) {
+                if ((crane2.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
+                        (crane2.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
+                    if (sign(destination1.getX() - start1.getX()) != 0)
+                        destination2.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
+                    else
+                        destination2.setX(destination1.getX() + 2 * safeDistance * sign(start2.getX() - destination1.getX()));
+                } else {
+                    if (sign(destination1.getX() - start1.getX()) != 0)
+                        destination2.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
+                    else
+                        destination2.setX(destination1.getX() + 1 * safeDistance * sign(start2.getX() - destination1.getX()));
+                }
+            }
+            if (isPrint) {
+                System.out.print(crane2.getId() + "(" + crane2.getTaskNo() + ")" + ":" + crane2.getLocation() + "->");
+            }
+            crane2.setLocation(destination2);
+            if (isPrint) {
+                System.out.println(crane2.getLocation());
+            }
+            if (crane2.getToDoList().peek().equals(destination2)) {
+                if (destination2.getZ() == 20) {
+                    crane2.getToDoList().poll();
+                } else {
+                    crane2.getToDoList().peek().setZ(20);
+                }
+                if (crane2.getToDoList().isEmpty()) {
+                    crane2.setUsed(false);
+                    taskMap.get(crane2.getTaskNo()).setEndTime(nowTime);
+                }
+            }
+        } else if (Math.abs(start1.getX() - destination1.getX()) >= 1e-3 && isBetweenWithSafe(start1.getX(), crane2.getLocation().getX(), destination1.getX(), crane1, crane2)) {
+            if (isPrint) {
+                System.out.print(crane2.getId() + ": " + crane2.getLocation() + "->");
+            }
+            if ((crane2.getId().equals("AGC-left") && crane1.getId().equals("AGC-right")) ||
+                    (crane2.getId().equals("AGC-right") && crane1.getId().equals("AGC-left"))) {
+                crane2.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+                if (isPrint) {
+                    System.out.println(crane2.getLocation());
+                }
+            } else {
+                crane2.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+                if (isPrint) {
+                    System.out.println(crane2.getLocation());
+                }
+            }
+        }
+
+        if (isPrint) {
+            System.out.print(crane1.getId() + "(" + crane1.getTaskNo() + ")" + ":" + crane1.getLocation() + "->");
+
+        }
+        crane1.setLocation(destination1);
+        if (isPrint) {
+            System.out.println(crane1.getLocation());
+        }
+
+        if (crane1.getToDoList().peek().equals(destination1)) {
+            if (destination1.getZ() == 20) {
+                crane1.getToDoList().poll();
+            } else {
+                crane1.getToDoList().peek().setZ(20);
+            }
+            if (crane1.getToDoList().isEmpty()) {
+                crane1.setUsed(false);
+                taskMap.get(crane1.getTaskNo()).setEndTime(nowTime);
+            }
+        }
+        if (isPrint) {
+            System.out.println("nowTime:" + nowTime);
+            System.out.println("============================");
+        }
+
+    }
+
+
+
+
