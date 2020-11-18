@@ -3,6 +3,7 @@ package com.sun.util;
 import com.sun.collision_dec.Location;
 import com.sun.collision_dec.Task;
 import com.sun.data.Data;
+import com.sun.pojo.Order;
 import com.sun.pojo.Stock;
 import org.springframework.core.io.ClassPathResource;
 
@@ -54,21 +55,23 @@ public class Util {
     }
 
     public static void writeCsvForPath(List<Double> timeList, Map<String, List<Location>> path, Map<String, List<Integer>> taskNo) throws IOException {
-        Map<String, String> craneNoMap = new HashMap<>();
-        craneNoMap.put("AGC-left", "1_1");
-        craneNoMap.put("AGC-middle", "1_2");
-        craneNoMap.put("AGC-right", "1_3");
-        for (String key : craneNoMap.keySet()) {
-            String writePath = "./static/data/20201102_" + craneNoMap.get(key) + ".csv";
+        List<String> craneNoMap = new ArrayList<>();
+        craneNoMap.add("1_1");
+        craneNoMap.add("1_2");
+        craneNoMap.add("1_3");
+
+        for (String key : craneNoMap) {
+            String key2 = "crane" + (key.equals("1_1") ? "1-1" : key.equals("1_2") ? "1-2" : "1-3");
+            String writePath = "./static/data/20201102_" + key + ".csv";
             ClassPathResource classPathResource = new ClassPathResource(writePath);
             File file = classPathResource.getFile();
-            if(file.exists()) {
+            if (file.exists()) {
                 file.delete();
             }
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.createNewFile();
             }
-            if(!taskNo.containsKey(key)) {
+            if (!taskNo.containsKey(key2)) {
                 continue;
             }
             FileWriter fileWriter = new FileWriter(file, true);
@@ -76,19 +79,46 @@ public class Util {
                 fileWriter.write("CraneNO,OrderNO,RecTime,CurX,CurY,CurZ,\n");
             }
             for (int i = 0; i < timeList.size(); i++) {
-                fileWriter.write(craneNoMap.get(key) + ",");
-                fileWriter.write(taskNo.get(key).get(i) + ",");
+                fileWriter.write(key2 + ",");
+                fileWriter.write(taskNo.get(key2).get(i) + ",");
                 fileWriter.write(timeList.get(i) + ",");
-                fileWriter.write(path.get(key).get(i).getX() + ",");
-                fileWriter.write(path.get(key).get(i).getY() + ",");
-                fileWriter.write(path.get(key).get(i).getZ() + ",\n");
+                fileWriter.write(path.get(key2).get(i).getX() + ",");
+                fileWriter.write(path.get(key2).get(i).getY() + ",");
+                fileWriter.write(path.get(key2).get(i).getZ() + ",\n");
             }
             fileWriter.flush();
             fileWriter.close();
         }
     }
 
-    public static List<Task> createRandomTask(int type, int num,String beginS, String endS) throws IOException {
+    public static void writeCsvForOrder() throws IOException {
+        String writePath = "./static/data/order.csv";
+        ClassPathResource classPathResource = new ClassPathResource(writePath);
+        File file = classPathResource.getFile();
+        if (file.exists()) {
+            file.delete();
+        }
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        FileWriter fileWriter = new FileWriter(file, true);
+        if (file.length() == 0) {
+            fileWriter.write("orderNo,type,crane,start,end,coilNo,startTime,\n");
+        }
+        for (Order order : Data.orderList) {
+            fileWriter.write(order.getOrderNo() + ",");
+            fileWriter.write(order.getType() + ",");
+            fileWriter.write(order.getCrane() + ",");
+            fileWriter.write(order.getStart() + ",");
+            fileWriter.write(order.getEnd() + ",");
+            fileWriter.write(order.getCoilNo() + ",");
+            fileWriter.write(order.getStartTime() + ",\n");
+        }
+        fileWriter.flush();
+        fileWriter.close();
+    }
+
+    public static List<Task> createRandomTask(int type, int num, String beginS, String endS) throws IOException {
         int stkNum = Data.stocks.size();
         if (stkNum == 0) {
             String path = "./static/data/StoreLocation.csv";

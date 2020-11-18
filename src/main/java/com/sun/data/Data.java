@@ -20,6 +20,7 @@ public class Data {
     static public Cranes cranes;
     static public Tasks tasks;
     static public List<Stock> stocks;
+    static public List<Order> orderList;
 
     static {
         solution = new Solution();
@@ -38,9 +39,9 @@ public class Data {
         Location location_l = new Location(0, 0, 20);
         Location location_m = new Location(50, 0, 20);
         Location location_r = new Location(100, 100, 20);
-        Crane craneL = new Crane("AGC-left", location_l, false, 1, 1, 2).addType(2).addType(1).addType(0);
-        Crane craneM = new Crane("AGC-middle", location_m, false, 1, 1, 2).addType(2).addType(1).addType(0);
-        Crane craneR = new Crane("AGC-right", location_r, false, 1, 1, 2).addType(2).addType(1).addType(0);
+        Crane craneL = new Crane("crane1-1", location_l, false, 1, 1, 2).addType(2).addType(1).addType(0);
+        Crane craneM = new Crane("crane1-2", location_m, false, 1, 1, 2).addType(2).addType(1).addType(0);
+        Crane craneR = new Crane("crane1-3", location_r, false, 1, 1, 2).addType(2).addType(1).addType(0);
         craneList = new ArrayList<>();
         craneList.add(craneL);
         craneList.add(craneM);
@@ -118,7 +119,7 @@ public class Data {
             String[] velocities = crane_Velocity.split(",");
             String[] types = type.split(",");
             Location location = new Location(Double.parseDouble(locations[0]), Double.parseDouble(locations[1]), Double.parseDouble(locations[2]));
-            String craneName = crane_num == 0 ? "AGC-left" : crane_num == 1 ? "AGC-middle" : "AGC-right";
+            String craneName = crane_num == 0 ? "crane1-1" : crane_num == 1 ? "crane1-2" : "crane1-3";
             Crane craneBuilder = new Crane(craneName, location, false, Double.parseDouble(velocities[0]), Double.parseDouble(velocities[1]), Double.parseDouble(velocities[2]));
             for (int i = 0; i < types.length; i++) {
                 int typeNum = Integer.parseInt(types[i]);
@@ -152,9 +153,9 @@ public class Data {
         Location location_l = new Location(0, 0, 6000);
         Location location_m = new Location(5000, 0, 6000);
         Location location_r = new Location(10000, 10000, 6000);
-        Crane craneL = new Crane("AGC-left", location_l, false, 100, 100, 200).addType(2).addType(1).addType(0);
-        Crane craneM = new Crane("AGC-middle", location_m, false, 100, 100, 200).addType(2).addType(1).addType(0);
-        Crane craneR = new Crane("AGC-right", location_r, false, 100, 100, 200).addType(2).addType(1).addType(0);
+        Crane craneL = new Crane("crane1-1", location_l, false, 100, 100, 200).addType(2).addType(1).addType(0);
+        Crane craneM = new Crane("crane1-2", location_m, false, 100, 100, 200).addType(2).addType(1).addType(0);
+        Crane craneR = new Crane("crane1-3", location_r, false, 100, 100, 200).addType(2).addType(1).addType(0);
         craneList = new ArrayList<>();
         craneList.add(craneL);
         craneList.add(craneM);
@@ -165,6 +166,8 @@ public class Data {
     public static void initForDraw() {
         int crane_num = 0;
         craneList = new ArrayList<>();
+        orderList = new ArrayList<>();
+
 
         for (Crane2 crane : cranes.getCranes()) {
             String type = crane.getType();
@@ -173,8 +176,8 @@ public class Data {
             double y = crane_num == 0 ? 3000 : crane_num == 1 ? 3000 : 3000;
             double z = 6000;
             Location location = new Location(x, y, z);
-            String craneName = crane_num == 0 ? "AGC-left" : crane_num == 1 ? "AGC-middle" : "AGC-right";
-            Crane craneBuilder = new Crane(craneName, location, false, 100, 100, 200);
+            String craneName = crane_num == 0 ? "crane1-1" : crane_num == 1 ? "crane1-2" : "crane1-3";
+            Crane craneBuilder = new Crane(craneName, location, false, 2000, 705, 200);
             for (int i = 0; i < types.length; i++) {
                 int typeNum = Integer.parseInt(types[i]);
                 craneBuilder = craneBuilder.addType(typeNum);

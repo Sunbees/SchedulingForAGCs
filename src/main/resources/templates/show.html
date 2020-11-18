@@ -27,12 +27,12 @@
             </thead>
             <tr th:each="t, stat:${time}">
                 <th scope="row">[[${t}]]</th>
-                <td th:text="${path.get('AGC-left')[stat.index]}"></td>
-                <td th:text="${taskNo.get('AGC-left')[stat.index]}"></td>
-                <td th:if="${path.size()>1}" th:text="${path.get('AGC-middle')[stat.index]}"></td>
-                <td th:if="${path.size()>1}" th:text="${taskNo.get('AGC-middle')[stat.index]}"></td>
-                <td th:if="${path.size()>2}" th:text="${path.get('AGC-right')[stat.index]}"></td>
-                <td th:if="${path.size()>2}" th:text="${taskNo.get('AGC-right')[stat.index]}"></td>
+                <td th:text="${path.get('crane1-1')[stat.index]}"></td>
+                <td th:text="${taskNo.get('crane1-1')[stat.index]}"></td>
+                <td th:if="${path.size()>1}" th:text="${path.get('crane1-2')[stat.index]}"></td>
+                <td th:if="${path.size()>1}" th:text="${taskNo.get('crane1-2')[stat.index]}"></td>
+                <td th:if="${path.size()>2}" th:text="${path.get('crane1-3')[stat.index]}"></td>
+                <td th:if="${path.size()>2}" th:text="${taskNo.get('crane1-3')[stat.index]}"></td>
             </tr>
         </table>
     </div>

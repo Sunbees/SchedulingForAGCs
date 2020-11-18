@@ -18,6 +18,11 @@ public class Location {
         this.z = z;
     }
 
+    public String getLocationName() {
+        return "[" + this.getX() + "-" + this.getY() + "-" + this.getZ() + "]";
+    }
+
+
     public double getX() {
         return x;
     }

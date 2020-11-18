@@ -95,7 +95,7 @@ public class TestController {
         //track.getPath().keySet().forEach(System.out::println);
         //track.getPath().values().forEach(System.out::println);
         Util.writeCsvForPath(track.getTimeList(), track.getPath(), track.getTaskNo());
-
+        Util.writeCsvForOrder();
         return "/2/path";
     }
 
