@@ -143,7 +143,7 @@ public class TestController {
     }
 
 
-    @GetMapping("/path")
+    @GetMapping("/order")
     public String path() throws IOException {
         //String file = "./static/data/StoreLocation.csv";
         //String[] names = new String[]{"AREA_Z12_E1",
@@ -221,7 +221,8 @@ public class TestController {
         //});
 
 
-        return "/2/path";
+        return "showOrder";
+        //return "/2/path";
     }
 
 }

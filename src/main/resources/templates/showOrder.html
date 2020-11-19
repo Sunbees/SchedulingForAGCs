@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>指令执行顺序</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <script type="text/javascript" th:src="@{/js/d3.js}"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-switch.min.css}" rel="stylesheet">
+
+    <script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap-switch.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">orderNo</th>
+                    <th scope="col">type</th>
+                    <th scope="col">crane</th>
+                    <th scope="col">start</th>
+                    <th scope="col">end</th>
+                    <th scope="col">coilNo</th>
+                    <th scope="col">startTime</th>
+                </tr>
+                </thead>
+                <tbody id="tb">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" th:src="@{/js/showOrder.js}">
+</script>
+</html>

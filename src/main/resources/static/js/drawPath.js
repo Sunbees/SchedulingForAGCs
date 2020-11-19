@@ -62,7 +62,7 @@ let path3;
 //20200928_1_3  20200925_1_2 20200927_1_2
 //d3.csv('../data/20200928_1_3.csv',,row).then(function(data) {
 d3.csv('../data/20201102_1_1.csv', row).then(function (data) {
-    console.log(data);
+    // console.log(data);
     // drawPath(data);
     path1 = data
 
