@@ -6,10 +6,7 @@ import com.sun.pojo.Order;
 import com.sun.pojo.Track;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Collision {
     public static double nowTime;
@@ -548,6 +545,9 @@ public class Collision {
 
 
     private static boolean allocated(List<Crane> craneList, int next, HashMap<Integer, Task> taskMap, boolean isPrint, Track track) {
+        if (next == -1) {
+            return false;
+        }
         Crane current_crane = selectCrane(craneList, next, taskMap, isPrint, track);
         if (current_crane != null) {
             current_crane.setUsed(true);
@@ -642,13 +642,31 @@ public class Collision {
         if (priority.isEmpty()) {
             return -1;
         }
+        Set<Integer> unUsedCraneType = new HashSet<>();
+        for (Crane crane : craneList) {
+            if (!crane.isUsed()) {
+                unUsedCraneType.addAll(crane.getTypeList());
+            }
+        }
         double tempTime = nowTime;
-        int res = priority.get(0);
+        int res = -1;
+        for (Integer p : priority) {
+            if (unUsedCraneType.contains(taskMap.get(p).getType())) {
+                res = p;
+            }
+        }
+        if (res == -1) {
+            return res;
+        }
+
         if (taskMap.get(res).getStartTime() > tempTime) {
             tempTime = taskMap.get(res).getStartTime();
         }
         for (int i = 1; i < priority.size(); i++) {
             int p = priority.get(i);
+            if (!unUsedCraneType.contains(taskMap.get(p).getType())) {
+                continue;
+            }
             if (taskMap.get(p).getStartTime() <= tempTime) {
                 if (taskMap.get(p).getType() > taskMap.get(res).getType()) {
                     res = p;
