@@ -3,6 +3,7 @@ package com.sun.data;
 import com.sun.collision_dec.Crane;
 import com.sun.collision_dec.Location;
 import com.sun.collision_dec.Task;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.sun.pojo.*;
 import com.sun.util.Util;
 
@@ -167,6 +168,7 @@ public class Data {
         int crane_num = 0;
         craneList = new ArrayList<>();
         orderList = new ArrayList<>();
+        Order.setNo(0);
 
 
         for (Crane2 crane : cranes.getCranes()) {

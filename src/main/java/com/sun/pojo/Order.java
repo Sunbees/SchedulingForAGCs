@@ -27,4 +27,7 @@ public class Order {
         this.startTime = startTime;
     }
 
+    public static void setNo(int no) {
+        Order.no = no;
+    }
 }
