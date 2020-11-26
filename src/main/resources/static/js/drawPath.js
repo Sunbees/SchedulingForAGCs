@@ -97,7 +97,7 @@ function drawPath() {
         .attr('height', height + margin.top + margin.bottom);
 
     var xScale = d3.scaleLinear()
-        .domain([0, 300])
+        .domain([0, 320])
         .range([margin.left, width - margin.right]);
 
     var yScale = d3.scaleLinear()

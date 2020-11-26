@@ -15,10 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.WritableResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.jws.WebParam;
 import java.io.*;
@@ -55,18 +52,6 @@ public class TestController {
 
     @PostMapping("/query")
     public String query(@RequestParam("algorithmType") Integer algorithmType, Tasks4Create tasks, Cranes cranes, Model model) throws IOException, CloneNotSupportedException {
-
-        //System.out.println(algorithmType);
-        //for (Task4Create task : tasks.getTasks()) {
-        //    System.out.println(task.getType());
-        //    System.out.println(task.getNum());
-        //    System.out.println(task.getBegin());
-        //    System.out.println(task.getEnd());
-        //}
-        //for (Crane2 crane : cranes.getCranes()) {
-        //    System.out.println(crane);
-        //}
-
         Data.initDataForDraw(tasks, cranes);
 
         Solution best = null;
@@ -142,87 +127,29 @@ public class TestController {
         return "show";
     }
 
+    @GetMapping("/set/{what}/{id}/{a}/{b}/{c}")
+    @ResponseBody
+    public String set(@PathVariable String what, @PathVariable int id, @PathVariable double a, @PathVariable double b, @PathVariable double c) {
+        if (what.startsWith("v")) {
+            double[] velocity = id == 1 ? Data.velocity_1 : id == 2 ? Data.velocity_2 : Data.velocity_3;
+            velocity[0] = a;
+            velocity[1] = b;
+            velocity[2] = c;
+        } else if (what.startsWith("l")) {
+            double[] location = id == 1 ? Data.location_1 : id == 2 ? Data.location_2 : Data.location_3;
+            location[0] = a;
+            location[1] = b;
+            location[2] = c;
+        }
+        else {
+            return "error";
+        }
+        return "ok";
+    }
 
     @GetMapping("/order")
     public String path() throws IOException {
-        //String file = "./static/data/StoreLocation.csv";
-        //String[] names = new String[]{"AREA_Z12_E1",
-        //        "AREA_Z12_E2",
-        //        "AREA_Z12_D1",
-        //        "AREA_Z12_D2",
-        //        "AREA_Z12_C1",
-        //        "AREA_Z12_C2",
-        //        "AREA_Z12_B1",
-        //        "AREA_Z12_B2",
-        //        "AREA_Z12_A1"};
-        //String[] types = new String[]{
-        //        "yard",
-        //        "yard",
-        //        "yard",
-        //        "yard",
-        //        "yard",
-        //        "yard",
-        //        "yard",
-        //        "yard",
-        //        "yard"
-        //};
-        //String[] x = new String[]{
-        //        "214.399",
-        //        "214.399",
-        //        "165.000",
-        //        "165.000",
-        //        "120.800",
-        //        "120.800",
-        //        "79.899",
-        //        "79.899",
-        //        "50.000"
-        //};
-        //String[] y = new String[]{
-        //        "18.622",
-        //        "35.800",
-        //        "18.622",
-        //        "32.900",
-        //        "18.622",
-        //        "32.900",
-        //        "18.622",
-        //        "32.900",
-        //        "20.800"
-        //};
-        //String[] widths = new String[]{
-        //        "48.601",
-        //        "48.601",
-        //        "37.501",
-        //        "37.501",
-        //        "46.199",
-        //        "46.199",
-        //        "30.601",
-        //        "30.601",
-        //        "27.199"
-        //};
-        //String[] heights = new String[]{
-        //        "16.622",
-        //        "17.178",
-        //        "14.222",
-        //        "14.278",
-        //        "14.222",
-        //        "14.278",
-        //        "16.622",
-        //        "14.278",
-        //        "4.3"
-        //};
-        //Util.writeCsvForLocation(file, names, types, x, y, widths, heights);
-        //ArrayList<String[]> list = new ArrayList<>();
-        //Util.readCsv(file, list);
-        //list.forEach(num -> {
-        //    for (String s : num) {
-        //        System.out.print(s + " ");
-        //    }
-        //    System.out.println();
-        //});
-
-
         return "showOrder";
-        //return "/2/path";
     }
 
 }

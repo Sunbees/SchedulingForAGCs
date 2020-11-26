@@ -56,7 +56,7 @@ public class GeneticAlgorithm {
             double p = Math.random();
             boolean flag = false;
             for (Solution solution : population.getPopulation()) {
-                if(p<solution.getRate()&&solution!=bestSolution){
+                if(p<solution.getRate()&&solution!=bestSolution) {
                     flag = true;
                     newPopulation.add(solution.clone());
                     break;

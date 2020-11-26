@@ -10,11 +10,13 @@ import java.util.*;
 
 public class Collision {
     public static double nowTime;
-    public static int safeDistance = 200;
+    public static int safeDistance = 26000;
+    public static double startZ = 0;
     // 存储所有的待分配任务
     public static HashMap<Integer, Task> taskMap;
     public static ArrayList<Integer> priority;
     public static List<Crane> craneList;
+    
 
     public static void init(List<Integer> pri) throws IOException, CloneNotSupportedException {
         nowTime = 0.0;
@@ -24,6 +26,7 @@ public class Collision {
         Data.initForDraw();
         // craneList存储所有的AGC信息
         craneList = Data.craneList;
+        startZ = craneList.get(0).getLocation().getZ();
         taskMap = new HashMap<>();
         try {
             for (Integer key : Data.taskMap.keySet()) {
@@ -299,10 +302,10 @@ public class Collision {
         }
 
         if (crane1.getToDoList().peek().equals(destination1)) {
-            if (Double.compare(destination1.getZ(), 6000.0) == 0) {
+            if (Double.compare(destination1.getZ(), startZ) == 0) {
                 crane1.getToDoList().poll();
             } else {
-                crane1.getToDoList().peek().setZ(6000.0);
+                crane1.getToDoList().peek().setZ(startZ);
             }
             if (crane1.getToDoList().isEmpty()) {
                 crane1.setUsed(false);
@@ -343,10 +346,10 @@ public class Collision {
                     track.getTaskNo().get(crane2.getId()).add(crane2.getTaskNo());
                 }
                 if (crane2.getToDoList().peek().equals(destination2)) {
-                    if (Double.compare(destination2.getZ(), 6000.0) == 0) {
+                    if (Double.compare(destination2.getZ(), startZ) == 0) {
                         crane2.getToDoList().poll();
                     } else {
-                        crane2.getToDoList().peek().setZ(6000.0);
+                        crane2.getToDoList().peek().setZ(startZ);
                     }
                     if (crane2.getToDoList().isEmpty()) {
                         crane2.setUsed(false);
@@ -444,10 +447,10 @@ public class Collision {
                     track.getTaskNo().get(crane3.getId()).add(crane3.getTaskNo());
                 }
                 if (crane3.getToDoList().peek().equals(destination3)) {
-                    if (Double.compare(destination3.getZ(), 6000.0) == 0) {
+                    if (Double.compare(destination3.getZ(), startZ) == 0) {
                         crane3.getToDoList().poll();
                     } else {
-                        crane3.getToDoList().peek().setZ(6000.0);
+                        crane3.getToDoList().peek().setZ(startZ);
                     }
                     if (crane3.getToDoList().isEmpty()) {
                         crane3.setUsed(false);
