@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>改变行车参数</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <!--    <script src="../static/js/jquery-3.2.1.slim.min.js"></script>-->
+</head>
+<body>
+<main role="main" class="col-md-8 ml-sm-auto col-lg-8 pt-3 px-4">
+
+    <div id="inputs">
+        <div id="crane">
+            <h2>
+                <button id="addC" type="button" class="btn btn-success">添加Crane</button>
+                <button id="removeC" type="button" class="btn btn-danger">删除Crane</button>
+            </h2>
+            <div class="row">
+                <p>Crane-1</p>
+                <div class="col-md-3">
+                    <label class="form-inline">位置
+                        <input type="text" class="form-control" form-control-sm name="c1_L"
+                               placeholder="初始位置（x,y,z）">
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-inline">速度
+                        <input type="text" class="form-control" form-control-sm name="c1_V"
+                               placeholder="行驶速度（Vx,Vy,Vz）">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 10px">
+        <div class="col-md-6 offset-md-2">
+            <button id="submit" class="btn btn-default">修改</button>
+        </div>
+    </div>
+</main>
+<script type="text/javascript">
+    function submit() {
+        let location = []
+        location.push($("[name='c1_L']").val())
+        location.push($("[name='c2_L']").val())
+        location.push($("[name='c3_L']").val())
+        let velocity = []
+        velocity.push($("[name='c1_V']").val())
+        velocity.push($("[name='c2_V']").val())
+        velocity.push($("[name='c3_V']").val())
+        $.ajax({
+            // headers必须添加，否则会报415错误
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: 'POST',
+            dataType: "json", //表示返回值类型，不必须
+            data: JSON.stringify({location:location,velocity:velocity}),
+            url: '/change',
+            success: function () {
+                alert('success');
+            },
+            error: function () {
+                alert('success');
+            }
+        });
+    }
+
+    $("#submit").click(submit)
+
+
+    let cI = 1;
+
+    function addCrane() {
+        if (cI > 2) {
+            alert("最多支持三台行车模拟！！！")
+            return
+        }
+        $("#crane").append(`
+        <div class="row">
+            <p>` + ((cI == 1) ? 'Crane-2' : 'Crane-3') + `</p>
+            <div class="col-md-3">
+                <label class="form-inline">位置
+                    <input type="text" class="form-control" form-control-sm name="c` + (cI + 1) + `_L" placeholder="初始位置（x,y,z）">
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label class="form-inline">速度
+                    <input type="text" class="form-control" form-control-sm name="c` + (cI + 1) + `_V" placeholder="行驶速度（Vx,Vy,Vz）">
+                </label>
+            </div>
+        </div>
+        `)
+        ++cI
+    }
+
+    $("#addC").click(addCrane)
+
+    $("#removeC").click(() => {
+        if (cI < 2) {
+            alert("不能再少了！")
+            return
+        }
+        $("#inputs #crane .row").last().remove()
+        --cI
+    })
+</script>
+</body>
+</html>

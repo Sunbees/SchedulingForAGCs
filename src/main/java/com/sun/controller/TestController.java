@@ -50,6 +50,40 @@ public class TestController {
         return "queryNew";
     }
 
+    @GetMapping("/change")
+    public String query() {
+        return "change";
+    }
+
+    @PostMapping("/change")
+    @ResponseBody
+    public String query(@RequestBody craneLV cranelv) {
+        for (int i = 0; i < 3; i++) {
+            String location = cranelv.location.get(i);
+            String velocity = cranelv.velocity.get(i);
+            double[] dLocation = i == 0 ? Data.location_1 : i == 1 ? Data.location_2 : Data.location_3;
+            double[] dVelocity = i == 0 ? Data.velocity_1 : i == 1 ? Data.velocity_2 : Data.velocity_3;
+
+            if (location != null && location.trim().length() > 0) {
+                double[] l = Arrays.asList(location.split(",")).stream().mapToDouble(Double::parseDouble).toArray();
+                if(l.length==3){
+                    dLocation[0] = l[0];
+                    dLocation[1] = l[1];
+                    dLocation[2] = l[2];
+                }
+            }
+            if (velocity != null && velocity.trim().length() > 0) {
+                double[] v = Arrays.asList(velocity.split(",")).stream().mapToDouble(Double::parseDouble).toArray();
+                if(v.length==3){
+                    dVelocity[0] = v[0];
+                    dVelocity[1] = v[1];
+                    dVelocity[2] = v[2];
+                }
+            }
+        }
+        return "hello";
+    }
+
     @PostMapping("/query")
     public String query(@RequestParam("algorithmType") Integer algorithmType, Tasks4Create tasks, Cranes cranes, Model model) throws IOException, CloneNotSupportedException {
         Data.initDataForDraw(tasks, cranes);
@@ -140,8 +174,7 @@ public class TestController {
             location[0] = a;
             location[1] = b;
             location[2] = c;
-        }
-        else {
+        } else {
             return "error";
         }
         return "ok";
