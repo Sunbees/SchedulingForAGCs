@@ -10,13 +10,13 @@ import java.util.*;
 
 public class Collision {
     public static double nowTime;
-    public static int safeDistance = 26000;
+    public static int safeDistance = Data.SafeDistance;
     public static double startZ = 0;
     // 存储所有的待分配任务
     public static HashMap<Integer, Task> taskMap;
     public static ArrayList<Integer> priority;
     public static List<Crane> craneList;
-    
+
 
     public static void init(List<Integer> pri) throws IOException, CloneNotSupportedException {
         nowTime = 0.0;

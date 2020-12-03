@@ -45,9 +45,33 @@ public class TestController {
                 Data.stocks.add(stock);
             }
         });
+        List<String> locations = new ArrayList<>();
+        locations.add(arrayToStr(Data.location_1));
+        locations.add(arrayToStr(Data.location_2));
+        locations.add(arrayToStr(Data.location_3));
+        List<double[]> velocities = new ArrayList<>();
+        velocities.add(Data.velocity_1);
+        velocities.add(Data.velocity_2);
+        velocities.add(Data.velocity_3);
         //System.out.println(list);
         model.addAttribute("options", list);
+        model.addAttribute("safeDis", Data.SafeDistance);
+        model.addAttribute("locations", locations);
+        model.addAttribute("velocities", velocities);
         return "queryProduct";
+    }
+
+    private String arrayToStr(double[] arr) {
+        StringBuilder builder = new StringBuilder("(");
+        for (int i = 0; i < arr.length; i++) {
+            builder.append(arr[i]);
+            if (i < arr.length - 1) {
+                builder.append(", ");
+            } else {
+                builder.append(")");
+            }
+        }
+        return builder.toString();
     }
 
     @GetMapping("/change")

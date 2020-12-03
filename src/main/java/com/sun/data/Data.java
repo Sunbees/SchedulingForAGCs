@@ -22,6 +22,7 @@ public class Data {
     static public Tasks tasks;
     static public List<Stock> stocks;
     static public List<Order> orderList;
+    static public int SafeDistance = 26000;
     static public double[] velocity_1 = {1500, 200, 100};
     static public double[] velocity_2 = {1500, 200, 100};
     static public double[] velocity_3 = {1500, 200, 100};

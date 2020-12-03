@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Title</title>
+    <title>首页</title>
     <!-- Bootstrap core CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/BsMultiSelect.css}" rel="stylesheet">
@@ -60,14 +60,15 @@
     </div>
     <div id="second" class="col-md-8 offset-2 row">
         <div class="col-md-7">任务配置</div>
-        <div class="col">行车配置<img id="embed" th:src="@{/src/setting.svg}" style="height:25px"></div>
+        <div class="col">行车配置<a th:href="@{/change}" th:target="_blank"><img id="embed" th:src="@{/src/setting.svg}"
+                                                                             style="height:20px"></a></div>
     </div>
     <div id="third" class="col-md-8 offset-2 row">
         <div style="border: 1px solid #0069d9; margin-left: -1em; padding: 1em" class="col-md-7">
-            <div>
-                <label class="form-inline"/>倒剁任务(0)
+            <div class="input-group-prepend">
+                <span class="input-group-text">倒剁任务(0)</span>
                 <input type="text" class="form-control" form-control-sm name="tasks[0].num"
-                       placeholder="数量" value="0">
+                       placeholder="数量" value="0" style="width: 100px; margin-left: 0.5em">
                 <input type="hidden" name="tasks[0].type" value="0">
             </div>
             <div class="row">
@@ -85,10 +86,10 @@
                 </div>
             </div>
             <hr/>
-            <div>
-                <label class="form-inline"/>出入库任务(1)
+            <div class="input-group-prepend">
+                <span class="input-group-text">出入库任务(1)</span>
                 <input type="text" class="form-control" form-control-sm name="tasks[1].num"
-                       placeholder="数量" value="0">
+                       placeholder="数量" value="0" style="width: 100px; margin-left: 0.5em">
                 <input type="hidden" name="tasks[1].type" value="1">
             </div>
             <div class="row">
@@ -106,10 +107,10 @@
                 </div>
             </div>
             <hr/>
-            <div>
-                <label class="form-inline"/>机组任务(2)
+            <div class="input-group-prepend">
+                <span class="input-group-text">机组任务(2)</span>
                 <input type="text" class="form-control" form-control-sm name="tasks[2].num"
-                       placeholder="数量" value="0">
+                       placeholder="数量" value="0" style="width: 100px; margin-left: 0.5em">
                 <input type="hidden" name="tasks[2].type" value="2">
             </div>
             <div class="row">
@@ -127,8 +128,23 @@
                 </div>
             </div>
         </div>
-        <div style="border: 1px solid #0069d9; margin-left: 1rem; margin-right: -2px" class="col-md-5">
-            To be continue...
+        <div id="info" style="border: 1px solid #0069d9; margin-left: 1rem; margin-right: -1em; padding: 1rem"
+             class="col-md-5">
+            <div class="row" style="margin-left: 1rem">
+                <div class="h5">避让距离(mm):[[${safeDis}]]</div>
+            </div>
+            <div style="margin-left: 1rem" name="subInfo">
+                <div class="row">
+                    <span>crane1-1 位置：[[${locations.get(0)}]]</span>
+                </div>
+                <div class="row">
+                    <span>大车速度：[[${velocities.get(0)[0]}]]&nbsp;</span>
+                    <span>小车速度：[[${velocities.get(0)[1]}]]</span>
+                </div>
+                <div class="row">
+                    <span>夹具起降速度：[[${velocities.get(0)[2]}]]</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -148,7 +164,13 @@
         }
 
     }
-    selectBlock.bsMultiSelect();
+    selectBlock.bsMultiSelect()
+
+    let locations = [[${locations}]]
+    let velocities = [[${velocities}]]
+    //
+    // console.log(locations)
+    // console.log(velocities)
 
     let crane_num = 1
 
@@ -164,6 +186,22 @@
                 </label>
             </h6>
         `)
+
+        $("#info").append(`
+         <div style="margin-left: 1rem" name="subInfo">
+            <hr/>
+            <div class="row">
+                <span>` + ((crane_num === 1) ? 'crane1-2' : 'crane1-3') + `位置：` + locations[crane_num] + `</span>
+            </div>
+            <div class="row">
+                <span>大车速度：` + velocities[crane_num][0] + `&nbsp;</span>
+                <span>小车速度：` + velocities[crane_num][1] + `</span>
+            </div>
+            <div class="row">
+                <span>夹具起降速度：` + velocities[crane_num][2] + `</span>
+            </div>
+         </div>
+        `)
         ++crane_num
     }
 
@@ -174,6 +212,7 @@
             return
         }
         $("#crane h6").last().remove()
+        $("#info div[name=subInfo]").last().remove()
         --crane_num
     })
 </script>
