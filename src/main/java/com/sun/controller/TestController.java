@@ -27,7 +27,7 @@ import java.util.List;
 @Controller
 public class TestController {
     @RequestMapping("/hello")
-    public String hello() {
+    public String hello(Model model) throws IOException {
         return "hello";
     }
 
@@ -47,7 +47,7 @@ public class TestController {
         });
         //System.out.println(list);
         model.addAttribute("options", list);
-        return "queryNew";
+        return "queryProduct";
     }
 
     @GetMapping("/change")
@@ -66,7 +66,7 @@ public class TestController {
 
             if (location != null && location.trim().length() > 0) {
                 double[] l = Arrays.asList(location.split(",")).stream().mapToDouble(Double::parseDouble).toArray();
-                if(l.length==3){
+                if (l.length == 3) {
                     dLocation[0] = l[0];
                     dLocation[1] = l[1];
                     dLocation[2] = l[2];
@@ -74,7 +74,7 @@ public class TestController {
             }
             if (velocity != null && velocity.trim().length() > 0) {
                 double[] v = Arrays.asList(velocity.split(",")).stream().mapToDouble(Double::parseDouble).toArray();
-                if(v.length==3){
+                if (v.length == 3) {
                     dVelocity[0] = v[0];
                     dVelocity[1] = v[1];
                     dVelocity[2] = v[2];
