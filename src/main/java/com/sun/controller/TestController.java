@@ -132,7 +132,17 @@ public class TestController {
         System.out.println(best);
         model.addAttribute("property", best.getPriority());
         model.addAttribute("consumeTime", best.getConsumeTime());
-        model.addAttribute("craneNum", Data.craneList.size());
+        StringBuilder sb = new StringBuilder();
+        for (Crane crane : Data.craneList) {
+            if (crane.getId().endsWith("1")) {
+                sb.append("1");
+            } else if (crane.getId().endsWith("2")) {
+                sb.append("2");
+            } else {
+                sb.append("3");
+            }
+        }
+        model.addAttribute("craneNum", sb.toString());
         //new Collision().calRunningTime(best.getPriority(),true);
         Track track = new Collision().getTrack(best.getPriority());
         //track.getPath().keySet().forEach(System.out::println);

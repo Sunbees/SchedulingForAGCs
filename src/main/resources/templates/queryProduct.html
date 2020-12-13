@@ -32,25 +32,36 @@
     <div style="border: 1px solid #0069d9" class="col-md-8 offset-2" id="first">
         <div class="row">
             <div class="col" id="crane">
-                <h6>
-                    <label class="form-inline">Crane_1-1&nbsp;&nbsp;类别&nbsp;&nbsp;
-                        <input style="margin-top: 6px" type="text" class="form-control" form-control-sm
-                               name="cranes[0].type"
-                               placeholder="可以执行任务的类别">
-                    </label>
-                </h6>
+<!--                <h6 id="crane_1">-->
+<!--                    <label class="form-inline">Crane_1-1&nbsp;&nbsp;类别&nbsp;&nbsp;-->
+<!--                        <input style="margin-top: 6px" type="text" class="form-control" form-control-sm-->
+<!--                               name="cranes[0].type"-->
+<!--                               placeholder="可以执行任务的类别">-->
+<!--                    </label>-->
+<!--                </h6>-->
             </div>
             <div class="col">
-                <h2>
-                    <button id="addC" type="button" class="btn btn-success">添加Crane</button>
-                    <button id="removeC" type="button" class="btn btn-danger">删除Crane</button>
-                </h2>
                 <div class="input-group" style="margin-bottom: 6px">
-                    <select class="custom-select" name="algorithmType">
-                        <option selected th:value="0" th:text="模拟退火"></option>
-                        <option th:value="1" th:text="遗传算法"></option>
-                        <option th:value="2" th:text="蚁群算法"></option>
-                    </select>
+                    <div class="col-md-5" style="margin-top: 0.3rem">
+                        <select class="custom-select" name="crane_name">
+                            <option selected th:value="0" th:text="Crane_1-1"></option>
+                            <option th:value="1" th:text="Crane_1-2"></option>
+                            <option th:value="2" th:text="Crane_1-3"></option>
+                        </select>
+                    </div>
+                    <h2>
+                        <button id="addC" type="button" class="btn btn-success">添加Crane</button>
+                        <button id="removeC" type="button" class="btn btn-danger">删除Crane</button>
+                    </h2>
+                </div>
+                <div class="input-group" style="margin-bottom: 6px">
+                    <div class="col-md-5">
+                        <select class="custom-select" name="algorithmType">
+                            <option selected th:value="0" th:text="模拟退火"></option>
+                            <option th:value="1" th:text="遗传算法"></option>
+                            <option th:value="2" th:text="蚁群算法"></option>
+                        </select>
+                    </div>
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-secondary">计算</button>
                     </div>
@@ -133,18 +144,18 @@
             <div class="row" style="margin-left: 1rem">
                 <div class="h5">避让距离(mm):[[${safeDis}]]</div>
             </div>
-            <div style="margin-left: 1rem" name="subInfo">
-                <div class="row">
-                    <span>crane1-1 位置：[[${locations.get(0)}]]</span>
-                </div>
-                <div class="row">
-                    <span>大车速度：[[${velocities.get(0)[0]}]]&nbsp;</span>
-                    <span>小车速度：[[${velocities.get(0)[1]}]]</span>
-                </div>
-                <div class="row">
-                    <span>夹具起降速度：[[${velocities.get(0)[2]}]]</span>
-                </div>
-            </div>
+<!--            <div style="margin-left: 1rem" name="subInfo">-->
+<!--                <div class="row">-->
+<!--                    <span>crane1-1 位置：[[${locations.get(0)}]]</span>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <span>大车速度：[[${velocities.get(0)[0]}]]&nbsp;</span>-->
+<!--                    <span>小车速度：[[${velocities.get(0)[1]}]]</span>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <span>夹具起降速度：[[${velocities.get(0)[2]}]]</span>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 
@@ -171,18 +182,19 @@
     //
     // console.log(locations)
     // console.log(velocities)
-
-    let crane_num = 1
+    
 
     function addCrane() {
-        if (crane_num > 2) {
-            alert("最多支持三台车模拟！！！")
+        let craneNo = parseInt($("[name='crane_name']").val())
+        // console.log("crane_" + (craneNo + 1))
+        if (document.getElementById("crane_" + (craneNo + 1))) {
+            alert("行车已存在")
             return
         }
         $("#crane").append(`
-            <h6>
-                <label class="form-inline">` + ((crane_num == 1) ? 'Crane_1-2' : 'Crane_1-3') + `&nbsp;&nbsp;类别&nbsp;&nbsp;
-                    <input type="text" class="form-control" form-control-sm name="cranes[` + crane_num + `].type" placeholder="可以执行任务的类别">
+            <h6 id="crane_` + (craneNo + 1) + `">
+                <label class="form-inline">Crane_1-` + (craneNo + 1) + `&nbsp;&nbsp;类别&nbsp;&nbsp;
+                    <input type="text" class="form-control" form-control-sm name="cranes[` + craneNo + `].type" placeholder="可以执行任务的类别">
                 </label>
             </h6>
         `)
@@ -191,29 +203,27 @@
          <div style="margin-left: 1rem" name="subInfo">
             <hr/>
             <div class="row">
-                <span>` + ((crane_num === 1) ? 'crane1-2' : 'crane1-3') + `位置：` + locations[crane_num] + `</span>
+                <span>>Crane_1-` + (craneNo + 1) + `位置：` + locations[craneNo] + `</span>
             </div>
             <div class="row">
-                <span>大车速度：` + velocities[crane_num][0] + `&nbsp;</span>
-                <span>小车速度：` + velocities[crane_num][1] + `</span>
+                <span>大车速度：` + velocities[craneNo][0] + `&nbsp;</span>
+                <span>小车速度：` + velocities[craneNo][1] + `</span>
             </div>
             <div class="row">
-                <span>夹具起降速度：` + velocities[crane_num][2] + `</span>
+                <span>夹具起降速度：` + velocities[craneNo][2] + `</span>
             </div>
          </div>
         `)
-        ++crane_num
     }
 
     $("#addC").click(addCrane)
     $("#removeC").click(() => {
-        if (crane_num < 2) {
+        if ($("h6[id^=crane]").length==0) {
             alert("不能再少了！")
             return
         }
         $("#crane h6").last().remove()
         $("#info div[name=subInfo]").last().remove()
-        --crane_num
     })
 </script>
 </body>

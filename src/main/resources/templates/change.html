@@ -14,37 +14,46 @@
     <!--    <script src="../static/js/jquery-3.2.1.slim.min.js"></script>-->
 </head>
 <body>
-<main role="main" class="col-md-8 ml-sm-auto col-lg-8 pt-3 px-4">
-
-    <div id="inputs">
-        <div id="crane">
-            <h2>
-                <button id="addC" type="button" class="btn btn-success">添加Crane</button>
-                <button id="removeC" type="button" class="btn btn-danger">删除Crane</button>
-            </h2>
-            <div class="row">
-                <p>Crane-1</p>
-                <div class="col-md-3">
-                    <label class="form-inline">位置
-                        <input type="text" class="form-control" form-control-sm name="c1_L"
-                               placeholder="初始位置（x,y,z）">
-                    </label>
+<blockquote class="blockquote text-center">
+    <p class="mb-0 h1">宝信软件UACS模拟系统</p>
+</blockquote>
+<div style="border: 1px solid #0069d9" class="col-md-8 offset-2" id="first">
+    <div class="row">
+        <div id="crane" class="col">
+<!--            <h6 id="crane_1">-->
+<!--                <label class="form-inline">Crane_1-1&nbsp;&nbsp;位置&nbsp;&nbsp;-->
+<!--                    <input type="text" class="form-control col-md-3" form-control-sm name="c1_L"-->
+<!--                           placeholder="初始位置（x,y,z）">-->
+<!--                    &nbsp;&nbsp;速度&nbsp;&nbsp;-->
+<!--                    <input type="text" class="form-control col-md-3" form-control-sm name="c1_V"-->
+<!--                           placeholder="行驶速度（Vx,Vy,Vz）">-->
+<!--                </label>-->
+<!--            </h6>-->
+        </div>
+        <div class="col">
+            <div class="input-group" style="margin-bottom: 6px">
+                <div class="col-md-5" style="margin-top: 0.3rem">
+                    <select class="custom-select" name="crane_name">
+                        <option selected th:value="0" th:text="Crane_1-1"></option>
+                        <option th:value="1" th:text="Crane_1-2"></option>
+                        <option th:value="2" th:text="Crane_1-3"></option>
+                    </select>
                 </div>
-                <div class="col-md-3">
-                    <label class="form-inline">速度
-                        <input type="text" class="form-control" form-control-sm name="c1_V"
-                               placeholder="行驶速度（Vx,Vy,Vz）">
-                    </label>
+                <h2>
+                    <button id="addC" type="button" class="btn btn-success">添加Crane</button>
+                    <button id="removeC" type="button" class="btn btn-danger">删除Crane</button>
+                </h2>
+                <div class="form-group" style="margin-bottom: 6px">
+                    <div class="col-md-6 offset-md-2">
+                        <button id="submit" class="btn btn-default">修改</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group" style="margin-top: 10px">
-        <div class="col-md-6 offset-md-2">
-            <button id="submit" class="btn btn-default">修改</button>
-        </div>
-    </div>
-</main>
+
+</div>
+
 <script type="text/javascript">
     function submit() {
         let location = []
@@ -63,7 +72,7 @@
             },
             type: 'POST',
             dataType: "json", //表示返回值类型，不必须
-            data: JSON.stringify({location:location,velocity:velocity}),
+            data: JSON.stringify({location: location, velocity: velocity}),
             url: '/change',
             success: function () {
                 alert('success');
@@ -76,41 +85,34 @@
 
     $("#submit").click(submit)
 
-
-    let cI = 1;
-
     function addCrane() {
-        if (cI > 2) {
-            alert("最多支持三台行车模拟！！！")
+        let craneNo = parseInt($("[name='crane_name']").val())
+        if (document.getElementById("crane_" + (craneNo + 1))) {
+            alert("行车已存在")
             return
         }
-        $("#crane").append(`
-        <div class="row">
-            <p>` + ((cI == 1) ? 'Crane-2' : 'Crane-3') + `</p>
-            <div class="col-md-3">
-                <label class="form-inline">位置
-                    <input type="text" class="form-control" form-control-sm name="c` + (cI + 1) + `_L" placeholder="初始位置（x,y,z）">
+        $("#crane ").append(`
+         <h6 id="crane_` + (craneNo + 1) + `">
+                <label class="form-inline"> Crane_1-` + (craneNo+1) + `&nbsp;&nbsp;位置&nbsp;&nbsp;
+                    <input type="text" class="form-control col-md-3" form-control-sm name="c` + (craneNo + 1) + `_L"
+                           placeholder="初始位置（x,y,z）">
+                    &nbsp;&nbsp;速度&nbsp;&nbsp;
+                    <input type="text" class="form-control col-md-3" form-control-sm name="c` + (craneNo + 1) + `_V"
+                           placeholder="行驶速度（Vx,Vy,Vz）">
                 </label>
-            </div>
-            <div class="col-md-3">
-                <label class="form-inline">速度
-                    <input type="text" class="form-control" form-control-sm name="c` + (cI + 1) + `_V" placeholder="行驶速度（Vx,Vy,Vz）">
-                </label>
-            </div>
-        </div>
+
+            </h6>
         `)
-        ++cI
     }
 
     $("#addC").click(addCrane)
 
     $("#removeC").click(() => {
-        if (cI < 2) {
+        if ($("h6[id^=crane]").length==0) {
             alert("不能再少了！")
             return
         }
-        $("#inputs #crane .row").last().remove()
-        --cI
+        $("#crane h6").last().remove()
     })
 </script>
 </body>

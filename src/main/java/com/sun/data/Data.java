@@ -181,20 +181,22 @@ public class Data {
 
         for (Crane2 crane : cranes.getCranes()) {
             String type = crane.getType();
-            String[] types = type.split(",");
-            double x = crane_num == 0 ? location_1[0] : crane_num == 1 ? location_2[0] : location_3[0];
-            double y = crane_num == 0 ? location_1[1] : crane_num == 1 ? location_2[1] : location_3[1];
-            double z = crane_num == 0 ? location_1[2] : crane_num == 1 ? location_2[2] : location_3[2];
+            if(type!=null) {
+                String[] types = type.split(",");
+                double x = crane_num == 0 ? location_1[0] : crane_num == 1 ? location_2[0] : location_3[0];
+                double y = crane_num == 0 ? location_1[1] : crane_num == 1 ? location_2[1] : location_3[1];
+                double z = crane_num == 0 ? location_1[2] : crane_num == 1 ? location_2[2] : location_3[2];
 
-            Location location = new Location(x, y, z);
-            String craneName = crane_num == 0 ? "crane1-1" : crane_num == 1 ? "crane1-2" : "crane1-3";
-            double[] velocity = crane_num == 0 ? velocity_1 : crane_num == 1 ? velocity_2 : velocity_3;
-            Crane craneBuilder = new Crane(craneName, location, false, velocity[0], velocity[1], velocity[2]);
-            for (int i = 0; i < types.length; i++) {
-                int typeNum = Integer.parseInt(types[i]);
-                craneBuilder = craneBuilder.addType(typeNum);
+                Location location = new Location(x, y, z);
+                String craneName = crane_num == 0 ? "crane1-1" : crane_num == 1 ? "crane1-2" : "crane1-3";
+                double[] velocity = crane_num == 0 ? velocity_1 : crane_num == 1 ? velocity_2 : velocity_3;
+                Crane craneBuilder = new Crane(craneName, location, false, velocity[0], velocity[1], velocity[2]);
+                for (int i = 0; i < types.length; i++) {
+                    int typeNum = Integer.parseInt(types[i]);
+                    craneBuilder = craneBuilder.addType(typeNum);
+                }
+                craneList.add(craneBuilder);
             }
-            craneList.add(craneBuilder);
             ++crane_num;
         }
     }
