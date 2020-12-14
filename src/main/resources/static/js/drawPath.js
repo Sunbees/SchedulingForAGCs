@@ -77,8 +77,7 @@ d3.csv('../data/20201102_1_3.csv', row).then(function (data) {
 })
 d3.timeout(function () {
     drawPath()
-},1)
-
+}, 1)
 
 
 //绘制路径
@@ -151,6 +150,7 @@ function drawPath() {
             .style("stroke", "orange")
             .style("fill", "none")
             .attr("d", line(path3));
+        psHandler()
     }, dur * 1.4);
 
     function drawCircle(context, radius) {
@@ -171,7 +171,7 @@ function drawPath() {
 
 
         function ready(data) {
-            console.log(data);
+            // console.log(data);
             svg.selectAll('rect').data(data).enter()
                 .append('g')
                 .append('rect')
@@ -213,9 +213,7 @@ function drawPath() {
 
 
         } // ready()
-
     }, dur * 0.5);
-
 }
 
 //字符串转时间
@@ -236,4 +234,10 @@ function getDataTime(dataTimeStr) {
     }
 }
 
+
+function psHandler(data) {
+    $('#pageloading').hide();
+    $("[name=path]").css("display", "inherit")
+    // show the detail data
+}
 

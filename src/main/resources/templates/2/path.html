@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SVG Practice</title>
     <style>
-
         svg {
             border-style: solid;
             border-width: 1px;
@@ -23,6 +22,22 @@
         }
 
     </style>
+    <style type="text/css">
+        #pageloading {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 70px;
+            color: #22DDB8;
+            font-size: x-large;
+
+        }
+        #pageloading img {
+            width: 50%;
+            max-width: 400px;
+        }
+    </style>
     <script type="text/javascript" th:src="@{/js/d3.js}"></script>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/bootstrap-switch.min.css}" rel="stylesheet">
@@ -32,7 +47,11 @@
     <script type="text/javascript" th:src="@{/js/bootstrap-switch.min.js}"></script>
 </head>
 <body>
-<div id="switch" class="col-md-12 ml-sm-auto col-lg-8 pt-3 px-4">
+<div id="pageloading">
+    <img th:src="@{/src/loading.gif}"/>
+    正在载入。。。
+</div>
+<div id="switch" class="col-md-12 ml-sm-auto col-lg-8 pt-3 px-4" name="path" style="display: none">
     <div class="col-md-4 offset-8" id="switch1" style="display: none">
         <a class="btn btn-info btn-sm" href="/order" role="button" th:target="_blank">查看指令执行顺序</a>
         <label class="form-inline">
@@ -65,17 +84,16 @@
         </label>
     </div>
 </div>
-<div id="vis"></div>
-<div class="col-md-8 align-self-center">
+<div id="vis" name="path" style="display: none"></div>
+<div class="col-md-8 align-self-center" name="path" style="display: none">
     <h4>算法：[[${algorithm}]]</h4>
     <h4>完成所有任务最短消耗时间：[[${consumeTime}]]</h4>
 </div>
-
 </body>
 <script type="text/javascript">
     let num = "[[${craneNum}]]"
     for (let numElement of num) {
-        $("#switch"+numElement).css("display", "inherit")
+        $("#switch" + numElement).css("display", "inherit")
     }
 </script>
 <script type="text/javascript" th:src="@{/js/drawPath.js}"></script>
