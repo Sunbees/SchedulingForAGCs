@@ -33,9 +33,23 @@
             font-size: x-large;
 
         }
+
         #pageloading img {
             width: 50%;
             max-width: 400px;
+        }
+
+        @keyframes dash {
+            /*0%{*/
+            /*    stroke-dashoffset: 397;*/
+            /*}*/
+
+            /*100%{*/
+            /*    stroke-dashoffset: -397;*/
+            /*}*/
+            to {
+                stroke-dashoffset: 0;
+            }
         }
     </style>
     <script type="text/javascript" th:src="@{/js/d3.js}"></script>
@@ -50,6 +64,10 @@
 <div id="pageloading">
     <img th:src="@{/src/loading.gif}"/>
     正在载入。。。
+</div>
+<div class="col-md-8 align-self-center" name="path" style="display: none">
+    <h4>算法：[[${algorithm}]]</h4>
+    <h4>完成所有任务最短消耗时间：[[${consumeTime}]]</h4>
 </div>
 <div id="switch" class="col-md-12 ml-sm-auto col-lg-8 pt-3 px-4" name="path" style="display: none">
     <div class="col-md-4 offset-8" id="switch1" style="display: none">
@@ -85,10 +103,7 @@
     </div>
 </div>
 <div id="vis" name="path" style="display: none"></div>
-<div class="col-md-8 align-self-center" name="path" style="display: none">
-    <h4>算法：[[${algorithm}]]</h4>
-    <h4>完成所有任务最短消耗时间：[[${consumeTime}]]</h4>
-</div>
+
 </body>
 <script type="text/javascript">
     let num = "[[${craneNum}]]"

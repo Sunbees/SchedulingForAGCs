@@ -20,17 +20,26 @@
 <div style="border: 1px solid #0069d9" class="col-md-8 offset-2" id="first">
     <div class="row">
         <div id="crane" class="col">
-<!--            <h6 id="crane_1">-->
-<!--                <label class="form-inline">Crane_1-1&nbsp;&nbsp;位置&nbsp;&nbsp;-->
-<!--                    <input type="text" class="form-control col-md-3" form-control-sm name="c1_L"-->
-<!--                           placeholder="初始位置（x,y,z）">-->
-<!--                    &nbsp;&nbsp;速度&nbsp;&nbsp;-->
-<!--                    <input type="text" class="form-control col-md-3" form-control-sm name="c1_V"-->
-<!--                           placeholder="行驶速度（Vx,Vy,Vz）">-->
-<!--                </label>-->
-<!--            </h6>-->
+            <h6 id="crane_1">
+                <label class="form-inline">Crane_1-1&nbsp;&nbsp;位置&nbsp;&nbsp;
+                    <input type="text" class="form-control col-md-6" form-control-sm name="c1_L"
+                           placeholder="初始位置（x,y,z）">
+                </label>
+                <label class="form-inline" style="padding-left: 4.3em">&nbsp;&nbsp;速度&nbsp;&nbsp;
+                    <input type="text" class="form-control col-md-7" form-control-sm name="c1_V"
+                           placeholder="行驶速度（Vx,Vy,Vz）">
+                </label>
+            </h6>
         </div>
         <div class="col">
+            <div>
+                <h6>
+                    <label class="form-inline">&nbsp;&nbsp;避让距离(mm)
+                        <input type="text" class="form-control col-md-6" form-control-sm name="dis"
+                               placeholder="避让距离">
+                    </label>
+                </h6>
+            </div>
             <div class="input-group" style="margin-bottom: 6px">
                 <div class="col-md-5" style="margin-top: 0.3rem">
                     <select class="custom-select" name="crane_name">
@@ -63,6 +72,7 @@
         velocity.push($("[name='c1_V']").val())
         velocity.push($("[name='c2_V']").val())
         velocity.push($("[name='c3_V']").val())
+        let dis = $("[name='dis']").val()
         $.ajax({
             // headers必须添加，否则会报415错误
             headers: {
@@ -71,7 +81,7 @@
             },
             type: 'POST',
             dataType: "json", //表示返回值类型，不必须
-            data: JSON.stringify({location: location, velocity: velocity}),
+            data: JSON.stringify({location: location, velocity: velocity, distance: dis}),
             url: '/change',
             success: function () {
                 alert('success');
@@ -92,14 +102,14 @@
         }
         $("#crane ").append(`
          <h6 id="crane_` + (craneNo + 1) + `">
-                <label class="form-inline"> Crane_1-` + (craneNo+1) + `&nbsp;&nbsp;位置&nbsp;&nbsp;
-                    <input type="text" class="form-control col-md-3" form-control-sm name="c` + (craneNo + 1) + `_L"
+                <label class="form-inline"> Crane_1-` + (craneNo + 1) + `&nbsp;&nbsp;位置&nbsp;&nbsp;
+                    <input type="text" class="form-control col-md-6" form-control-sm name="c` + (craneNo + 1) + `_L"
                            placeholder="初始位置（x,y,z）">
-                    &nbsp;&nbsp;速度&nbsp;&nbsp;
-                    <input type="text" class="form-control col-md-3" form-control-sm name="c` + (craneNo + 1) + `_V"
+                </label>
+                <label class="form-inline" style="padding-left: 4.3em">&nbsp;&nbsp;速度&nbsp;&nbsp;
+                    <input type="text" class="form-control col-md-7" form-control-sm name="c` + (craneNo + 1) + `_V"
                            placeholder="行驶速度（Vx,Vy,Vz）">
                 </label>
-
             </h6>
         `)
     }
@@ -107,7 +117,7 @@
     $("#addC").click(addCrane)
 
     $("#removeC").click(() => {
-        if ($("h6[id^=crane]").length==0) {
+        if ($("h6[id^=crane]").length == 0) {
             alert("不能再少了！")
             return
         }

@@ -82,6 +82,10 @@ public class TestController {
     @PostMapping("/change")
     @ResponseBody
     public String query(@RequestBody craneLV cranelv) {
+        //System.out.println(cranelv.distance);
+        if (cranelv.distance > 1e-6) {
+            Data.SafeDistance = cranelv.distance;
+        }
         for (int i = 0; i < 3; i++) {
             String location = cranelv.location.get(i);
             String velocity = cranelv.velocity.get(i);

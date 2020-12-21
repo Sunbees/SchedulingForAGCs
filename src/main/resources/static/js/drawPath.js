@@ -131,6 +131,7 @@ function drawPath() {
     d3.timeout(function () {
         svg.append("path")
             .attr("id", "crane1")
+            .attr("class","line")
             .attr('stroke-width', 5)
             .style("stroke", "blue")
             .style("fill", "none")
@@ -139,6 +140,7 @@ function drawPath() {
         // console.log(sss);
         svg.append("path")
             .attr("id", "crane2")
+            .attr("class","line")
             .attr('stroke-width', 5)
             .style("stroke", "red")
             .style("fill", "none")
@@ -146,10 +148,28 @@ function drawPath() {
 
         svg.append("path")
             .attr("id", "crane3")
+            .attr("class","line")
             .attr('stroke-width', 5)
             .style("stroke", "orange")
             .style("fill", "none")
             .attr("d", line(path3));
+
+        var path = document.getElementsByClassName('line');  //获取class标签为line的元素
+        let length = path[0].getTotalLength();
+        for (let pathElement of path) {
+            if(pathElement.getTotalLength() > length) {
+                length = pathElement.getTotalLength()
+            }
+        }
+        const animation_dur = length / 150
+        for (let pathElement of path) {
+            pathElement.style.animation = "dash "+animation_dur+"s linear forwards";
+        }
+        //获取第一个折线的总共的长度
+        d3.selectAll('.line')
+            .style('stroke-dasharray', length)          //根据上面获取的值来设置stroke-dasharray值
+            .style('stroke-dashoffset', length);
+
         psHandler()
     }, dur * 1.4);
 
