@@ -127,48 +127,72 @@ function drawPath() {
         // .interpolate("line");
         .curve(d3.curveCatmullRom)
     ;
+
+    function length(path) {
+        return d3.create("svg:path").attr("d", path).node().getTotalLength();
+    }
+
     // append the path
     d3.timeout(function () {
+        const l1 = length(line(path1));
+        const l2 = length(line(path2));
+        const l3 = length(line(path3));
+
         svg.append("path")
             .attr("id", "crane1")
-            .attr("class","line")
+            .attr("class", "line")
             .attr('stroke-width', 5)
             .style("stroke", "blue")
             .style("fill", "none")
-            .attr("d", line(path1));
+            .attr("stroke-dasharray", `0,${l1}`)
+            .attr("d", line(path1))
+            .transition()
+            .duration(100000)
+            .ease(d3.easeLinear)
+            .attr("stroke-dasharray", `${l1},${l1}`);
 
         // console.log(sss);
         svg.append("path")
             .attr("id", "crane2")
-            .attr("class","line")
+            .attr("class", "line")
             .attr('stroke-width', 5)
             .style("stroke", "red")
             .style("fill", "none")
-            .attr("d", line(path2));
+            .attr("stroke-dasharray", `0,${l2}`)
+            .attr("d", line(path2))
+            .transition()
+            .duration(100000)
+            .ease(d3.easeLinear)
+            .attr("stroke-dasharray", `${l2},${l2}`);
 
         svg.append("path")
             .attr("id", "crane3")
-            .attr("class","line")
+            .attr("class", "line")
             .attr('stroke-width', 5)
             .style("stroke", "orange")
             .style("fill", "none")
-            .attr("d", line(path3));
+            .attr("stroke-dasharray", `0,${l3}`)
+            .attr("d", line(path3))
+            .transition()
+            .duration(100000)
+            .ease(d3.easeLinear)
+            .attr("stroke-dasharray", `${l3},${l3}`);
 
-        var path = document.getElementsByClassName('line');  //获取class标签为line的元素
-        let length = path[0].getTotalLength();
-        for (let pathElement of path) {
-            if(pathElement.getTotalLength() > length) {
-                length = pathElement.getTotalLength()
-            }
-        }
-        const animation_dur = length / 150
-        for (let pathElement of path) {
-            pathElement.style.animation = "dash "+animation_dur+"s linear forwards";
-        }
-        //获取第一个折线的总共的长度
-        d3.selectAll('.line')
-            .style('stroke-dasharray', length)          //根据上面获取的值来设置stroke-dasharray值
-            .style('stroke-dashoffset', length);
+        // var path = document.getElementsByClassName('line');  //获取class标签为line的元素
+        // let length = path[0].getTotalLength();
+        // for (let pathElement of path) {
+        //     if(pathElement.getTotalLength() > length) {
+        //         length = pathElement.getTotalLength()
+        //     }
+        // }
+        // const animation_dur = length / 150
+        // for (let pathElement of path) {
+        //     pathElement.style.animation = "dash "+animation_dur+"s linear forwards";
+        // }
+        // //获取第一个折线的总共的长度
+        // d3.selectAll('.line')
+        //     .style('stroke-dasharray', length)          //根据上面获取的值来设置stroke-dasharray值
+        //     .style('stroke-dashoffset', length);
 
         psHandler()
     }, dur * 1.4);
