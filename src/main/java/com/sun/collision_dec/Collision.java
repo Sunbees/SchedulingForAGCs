@@ -319,9 +319,11 @@ public class Collision {
                     if (isBetweenWithSafe(start2.getX(), start1.getX(), destination2.getX(), crane1, crane2)) {
                         if ((crane2.getId().equals("crane1-1") && crane1.getId().equals("crane1-3")) ||
                                 (crane2.getId().equals("crane1-3") && crane1.getId().equals("crane1-1"))) {
-                            destination2.setX(destination1.getX() + 2 * safeDistance * sign(start2.getX() - destination2.getX()));
+                            destination2.setX(destination1.getX() + 2 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX()));
+                            //destination2.setX(destination1.getX() + 2 * safeDistance * sign(start2.getX() - destination2.getX()));
                         } else {
-                            destination2.setX(destination1.getX() + 1 * safeDistance * sign(start2.getX() - destination2.getX()));
+                            destination2.setX(destination1.getX() + 1 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX()));
+                            //destination2.setX(destination1.getX() + 1 * safeDistance * sign(start2.getX() - destination2.getX()));
                         }
                     }
                     //isBetweenWithSafe(start1.getX(), destination2.getX(), destination1.getX(), crane1, crane2) ||
@@ -329,17 +331,20 @@ public class Collision {
                     if ((crane2.getId().equals("crane1-1") && crane1.getId().equals("crane1-3")) ||
                             (crane2.getId().equals("crane1-3") && crane1.getId().equals("crane1-1"))) {
                         if (sign(destination1.getX() - start1.getX()) != 0)
-                            destination2.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
+                            destination2.setX(destination1.getX() + 2 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX()));
+                        //destination2.setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX()));
                     } else {
                         if (sign(destination1.getX() - start1.getX()) != 0)
-                            destination2.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
+                            destination2.setX(destination1.getX() + 1 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX()));
+                        //destination2.setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX()));
                     }
                 } else if (isBetweenWithSafe(start2.getX(), destination1.getX(), destination2.getX(), crane1, crane2) && isBetweenWithSafe(start2.getX(), start1.getX(), destination2.getX(), crane1, crane2)) {
                     if ((crane2.getId().equals("crane1-1") && crane1.getId().equals("crane1-3")) ||
                             (crane2.getId().equals("crane1-3") && crane1.getId().equals("crane1-1"))) {
-                        destination2.setX(destination1.getX() + 2 * safeDistance * sign(start1.getX() - destination1.getX()));
+                        destination2.setX(destination1.getX() + 2 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX()));
+                        //destination2.setX(destination1.getX() + 2 * safeDistance * sign(start1.getX() - destination1.getX()));
                     } else {
-                        destination2.setX(destination1.getX() + 1 * safeDistance * sign(start1.getX() - destination1.getX()));
+                        destination2.setX(destination1.getX() + 1 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX()));
                     }
                 }
                 if (isPrint) {
@@ -370,7 +375,8 @@ public class Collision {
                 }
                 if ((crane2.getId().equals("crane1-1") && crane1.getId().equals("crane1-3")) ||
                         (crane2.getId().equals("crane1-3") && crane1.getId().equals("crane1-1"))) {
-                    crane2.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+                    crane2.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+                    //crane2.getLocation().setX(destination1.getX() + 2 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
                     if (isPrint) {
                         System.out.println(crane2.getLocation());
                     }
@@ -379,7 +385,7 @@ public class Collision {
                         track.getTaskNo().get(crane2.getId()).add(-1);
                     }
                 } else {
-                    crane2.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(destination1.getX() - start1.getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
+                    crane2.getLocation().setX(destination1.getX() + 1 * safeDistance * sign(crane2.getLocation().getX() - crane1.getLocation().getX())); // 在两端的AGC发生碰撞时，考虑到中间的AGC，所以要避让两倍的安全距离
                     if (isPrint) {
                         System.out.println(crane2.getLocation());
                     }
