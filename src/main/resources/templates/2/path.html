@@ -31,7 +31,6 @@
             margin-top: 70px;
             color: #22DDB8;
             font-size: x-large;
-
         }
 
         #pageloading img {
@@ -65,11 +64,11 @@
     <img th:src="@{/src/loading.gif}"/>
     正在载入。。。
 </div>
-<div class="col-md-8 align-self-center" name="path" style="display: none">
+<div class="col-md-8" name="path" style="display: none; margin-left: 5em">
     <h4>算法：[[${algorithm}]]</h4>
     <h4>完成所有任务最短消耗时间：[[${consumeTime}]]</h4>
 </div>
-<div id="switch" class="col-md-12 ml-sm-auto col-lg-8 pt-3 px-4" name="path" style="display: none">
+<div id="switch" class="col-md-12 ml-sm-auto col-lg-8 pt-3 px-4" name="path" style="display: none; margin-top: -5em">
     <div class="col-md-4 offset-8" id="switch1" style="display: none">
         <a class="btn btn-info btn-sm" href="/order" role="button" th:target="_blank">查看指令执行顺序</a>
         <label class="form-inline">
@@ -102,7 +101,7 @@
         </label>
     </div>
 </div>
-<div id="vis" name="path" style="display: none">
+<div id="vis" name="path" style="display: none; margin-top: -5em">
     <svg width="1200" height="600" id="mainsvg" class="svgs" style="display: block;margin: auto"></svg>
 </div>
 

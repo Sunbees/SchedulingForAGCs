@@ -1,4 +1,4 @@
-let margin = ({top: 20, right: 30, bottom: 30, left: 40}),
+let margin = ({top: 10, right: 30, bottom: 30, left: 40}),
     width = window.innerWidth - margin.left - margin.right,
     height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 

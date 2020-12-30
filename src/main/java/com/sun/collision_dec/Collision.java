@@ -761,6 +761,7 @@ public class Collision {
         for (Integer p : priority) {
             if (unUsedCraneType.contains(taskMap.get(p).getType())) {
                 res = p;
+                break;
             }
         }
         if (res == -1) {
@@ -770,7 +771,7 @@ public class Collision {
         if (taskMap.get(res).getStartTime() > tempTime) {
             tempTime = taskMap.get(res).getStartTime();
         }
-        for (int i = 1; i < priority.size(); i++) {
+        for (int i = 0; i < priority.size(); i++) {
             int p = priority.get(i);
             if (!unUsedCraneType.contains(taskMap.get(p).getType())) {
                 continue;
