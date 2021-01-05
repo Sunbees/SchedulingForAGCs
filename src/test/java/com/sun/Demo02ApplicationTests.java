@@ -18,18 +18,8 @@ class Demo02ApplicationTests {
 
     @Test
     void contextLoads() throws IOException {
-        //Util.writeCsvForPath("1_1","2020110200001","9570","27011","5710");
-        //Util.writeCsvForPath("1_1","2020110200002","9571","27012","5711");
-        //Util.writeCsvForPath("1_1","2020110200003","9571","27012","5711");
-        //Util.writeCsvForPath("1_1","2020110200004","9571","27012","5711");
 
-        //Util.createRandomTask(1, 25);
-        //Util.createRandomTask(2, 13);
-        Data.taskMap = new HashMap<>();
-        Util.createRandomTask(0, 10, "0,1", "2,3");
-        Data.taskMap.values().forEach(System.out::println);
-        //Data.stocks.forEach(System.out::println);
     }
-
-
 }
+
+
