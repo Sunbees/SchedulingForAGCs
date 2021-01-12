@@ -43,7 +43,6 @@ const render_block = (filePath) => {
             .attr("height", function (d) {
                 return height - margin.bottom - yScale(d.height)
             })
-            //.attr('transform', 'translate('+0+','+margin.bottom+')')
             .style("fill", "#888");
         //文字
         g.selectAll('g')
@@ -89,8 +88,8 @@ const processData = (path) => {
     return path;
 };
 const color = d3.scaleOrdinal()
-    .domain(["path1", "path2", "path3"])
-    .range(["blue", "red", "orange"]);
+    .domain(["path1", "path2", "path3", "start", "end"])
+    .range(["blue", "red", "orange", "lightgreen", "yellow"]);
 const render_update = (routes, flag, id) => {
     let circleUpdate = g.select(`#${flag}`).selectAll(`#${flag}id${id}`).data([routes]);
     let circleEnter = circleUpdate.enter()
@@ -99,11 +98,17 @@ const render_update = (routes, flag, id) => {
         .attr("class", flag)
         .attr("d", line)
         .attr("stroke", color(flag))
+        .attr("stroke-width", 2)
         .attr("fill", "none");
 
     circleUpdate.merge(circleEnter)
-        .transition().ease(d3.easeLinear).duration(10)
+        .transition().ease(d3.easeLinear).duration(1000)
         .attr("d", line)
+
+    if (id >= 50) {
+        let disappear = g.select(`#${flag}`).selectAll(`#${flag}id${id - 50}`);
+        disappear.transition().ease(d3.easeLinear).duration(10).attr("stroke-opacity", .2);
+    }
 }
 const loadAndRender = (filePath, flag) => {
     d3.csv(filePath).then(data => {
@@ -113,12 +118,13 @@ const loadAndRender = (filePath, flag) => {
         let intervalID = setInterval(() => {
             if (c >= data.length) {
                 clearInterval(intervalID);
+                g.selectAll("path").attr("stroke-opacity", 1)
             } else {
-                if (c !== 0 && c % 50 === 0) {
+                if (c !== 0 && c % 10 === 0) {
                     routes = [data[c - 1]];
                 }
                 routes.push(data[c]);
-                render_update(routes, flag, Math.floor(c / 50));
+                render_update(routes, flag, Math.floor(c / 10));
                 ++c;
             }
         }, 10)
@@ -130,6 +136,76 @@ loadAndRender("../data/20201102_1_1.csv", "path1");
 loadAndRender("../data/20201102_1_2.csv", "path2");
 loadAndRender("../data/20201102_1_3.csv", "path3");
 psHandler();
+
+const tip = d3.tip()
+    .attr("class", "d3-tip")
+    .html("xxx")
+svg.call(tip);
+
+let data1;
+d3.csv("../data/order.csv").then(data => {
+    data1 = processOrderData(data);
+    data = data1;
+    let startEnter = g.selectAll("circle").data(data).enter();
+    startEnter.append("g")
+        .attr("name", "start")
+        .append("circle")
+        .attr("cx", data => xScale(+(data.start[0]) / 1000))
+        .attr("cy", data => yScale(+(data.start[1]) / 1000))
+        .attr("r", 4)
+        .style("fill", color("start"))
+        .attr('stroke-width', 1)
+        .on("mouseover", function () {
+            d3.select(this)
+                .attr('opacity', 0.5)
+                .attr("stroke", color("start"))
+                .attr('stroke-width', 4)
+        })
+        .on("mouseout", function () {
+            d3.select(this)
+                .attr('opacity', 1)
+                .attr('stroke', color("start"))
+                .attr('stroke-width', 1)
+        })
+        .on("click", function (d) {
+            tip.show(d)
+        });
+    startEnter.append("g")
+        .attr("name", "end")
+        .append("circle")
+        .attr("cx", data => xScale(+(data.end[0]) / 1000))
+        .attr("cy", data => yScale(+(data.end[1]) / 1000))
+        .attr("r", 4)
+        .style("fill", color("end"))
+        .attr('stroke-width', 1)
+        .on("mouseover", function () {
+            d3.select(this)
+                .attr('opacity', 0.5)
+                .attr("stroke", color("end"))
+                .attr('stroke-width', 4)
+        })
+        .on("mouseout", function () {
+            d3.select(this)
+                .attr('opacity', 1)
+                .attr('stroke', color("end"))
+                .attr('stroke-width', 1)
+        })
+        .on("click", function () {
+            tip.show()
+        });
+
+})
+
+
+function processOrderData(data) {
+    data.forEach(d => {
+        const start = d.start;
+        const end = d.end;
+        d.start = start.substring(1, start.length - 1).split("-");
+        d.end = end.substring(1, end.length - 1).split("-");
+    })
+    return data;
+}
 
 
 $(function () {
@@ -147,7 +223,6 @@ $(function () {
             } else {
                 $("#path1").attr("display", 'none');
             }
-
         }
     })
     $('[name="switch2"]').bootstrapSwitch({
@@ -164,7 +239,6 @@ $(function () {
             } else {
                 $("#path2").attr("display", 'none');
             }
-
         }
     })
     $('[name="switch3"]').bootstrapSwitch({
@@ -181,7 +255,6 @@ $(function () {
             } else {
                 $("#path3").attr("display", 'none');
             }
-
         }
     })
 })
