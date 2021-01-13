@@ -159,8 +159,13 @@ let data1;
 d3.csv("../data/order.csv").then(data => {
     data1 = processOrderData(data);
     data = data1;
-    let start = 1;
-    let end = 1;
+    let start1 = 1;
+    let start2 = 1;
+    let start3 = 1;
+    let end1 = 1;
+    let end2 = 1;
+    let end3 = 1;
+
     let startEnter = g.selectAll("circle").data(data).enter();
     startEnter.append("g")
         .attr("name", "start")
@@ -173,6 +178,15 @@ d3.csv("../data/order.csv").then(data => {
         .style("font-color", "#000")
         .attr('stroke-width', 1)
         .attr("opacity", 0.9)
+        .attr("class", data => {
+            if (data.crane.endsWith("1")) {
+                return "pc1"
+            } else if (data.crane.endsWith("2")) {
+                return "pc2"
+            } else {
+                return "pc3"
+            }
+        })
         .on("mouseover", function () {
             d3.select(this)
                 .attr('opacity', 0.5)
@@ -197,6 +211,15 @@ d3.csv("../data/order.csv").then(data => {
         .style("fill", color("end"))
         .attr('stroke-width', 1)
         .attr("opacity", 0.9)
+        .attr("class", data => {
+            if (data.crane.endsWith("1")) {
+                return "pc1"
+            } else if (data.crane.endsWith("2")) {
+                return "pc2"
+            } else {
+                return "pc3"
+            }
+        })
         .on("mouseover", function () {
             d3.select(this)
                 .attr('opacity', 0.5)
@@ -215,29 +238,55 @@ d3.csv("../data/order.csv").then(data => {
 
     let textEnter = g.selectAll(".tt").data(data).enter();
     textEnter.append("text")
-        .attr("class", "tt")
+        .attr("class", data => {
+            if (data.crane.endsWith("1")) {
+                return "tt pc1";
+            } else if (data.crane.endsWith("2")) {
+                return "tt pc2";
+            } else {
+                return "tt pc3";
+            }
+        })
         .attr("x", data => xScale(+(data.start[0]) / 1000))
         .attr("y", data => yScale(+(data.start[1]) / 1000))
         .attr("text-anchor", "middle")
         .attr("dy", 4)
         .style("font-size", "12px")
         .style("font-weight", "bold")
-        .text(data => {
-            return start++;
+        .text((data) => {
+            if (data.crane.endsWith("1")) {
+                return start1++;
+            } else if (data.crane.endsWith("2")) {
+                return start2++;
+            } else {
+                return start3++;
+            }
         })
     textEnter.append("text")
-        .attr("class", "tt")
+        .attr("class", data => {
+            if (data.crane.endsWith("1")) {
+                return "tt pc1";
+            } else if (data.crane.endsWith("2")) {
+                return "tt pc2";
+            } else {
+                return "tt pc3";
+            }
+        })
         .attr("x", data => xScale(+(data.end[0]) / 1000))
         .attr("y", data => yScale(+(data.end[1]) / 1000))
         .attr("text-anchor", "middle")
         .attr("dy", 4)
         .style("font-size", "12px")
         .style("font-weight", "bold")
-        .text(data => {
-            return end++;
+        .text((data) => {
+            if (data.crane.endsWith("1")) {
+                return end1++;
+            } else if (data.crane.endsWith("2")) {
+                return end2++;
+            } else {
+                return end3++;
+            }
         })
-
-
 })
 
 
@@ -264,8 +313,10 @@ $(function () {
         onSwitchChange: function (event, state) {
             if (!state === true) {
                 $("#path1").attr("display", 'true');
+                $(".pc1").attr("display", 'true');
             } else {
                 $("#path1").attr("display", 'none');
+                $(".pc1").attr("display", 'none');
             }
         }
     })
@@ -280,8 +331,10 @@ $(function () {
         onSwitchChange: function (event, state) {
             if (!state === true) {
                 $("#path2").attr("display", 'true');
+                $(".pc2").attr("display", 'true');
             } else {
                 $("#path2").attr("display", 'none');
+                $(".pc2").attr("display", 'none');
             }
         }
     })
@@ -296,8 +349,10 @@ $(function () {
         onSwitchChange: function (event, state) {
             if (!state === true) {
                 $("#path3").attr("display", 'true');
+                $(".pc3").attr("display", 'true');
             } else {
                 $("#path3").attr("display", 'none');
+                $(".pc3").attr("display", 'none');
             }
         }
     })
