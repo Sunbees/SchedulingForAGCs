@@ -8,7 +8,6 @@ let svg = d3.select('#mainsvg')
 let xScale = d3.scaleLinear()
     .domain([0, 320])
     .range([margin.left, width - margin.right]);
-
 let yScale = d3.scaleLinear()
     .domain([0, 42])
     .range([height - margin.bottom, margin.top]);
@@ -103,7 +102,7 @@ const render_update = (routes, flag, id) => {
 
     circleUpdate.merge(circleEnter)
         .transition().ease(d3.easeLinear).duration(1000)
-        .attr("d", line)
+        .attr("d", line);
 
     if (id >= 50) {
         let disappear = g.select(`#${flag}`).selectAll(`#${flag}id${id - 50}`);
@@ -139,22 +138,41 @@ psHandler();
 
 const tip = d3.tip()
     .attr("class", "d3-tip")
-    .html("xxx")
+    .html(data => {
+        return `
+        <h6>执行行车：${data.crane}</h6>
+        <h6>钢卷号：${data.coilNo}</h6>
+        <h6>订单号：${data.orderNo}</h6>
+        <h6>类型：${data.type === "0" ? "倒剁" : data.type === "1" ? "出入库" : "倒机组"}</h6>
+        `
+    })
 svg.call(tip);
 
+$("#mainsvg").click(function (e) {
+    if (e.target === this) {
+        tip.hide();
+    }
+})
+
 let data1;
+
 d3.csv("../data/order.csv").then(data => {
     data1 = processOrderData(data);
     data = data1;
+    let start = 1;
+    let end = 1;
     let startEnter = g.selectAll("circle").data(data).enter();
     startEnter.append("g")
         .attr("name", "start")
         .append("circle")
         .attr("cx", data => xScale(+(data.start[0]) / 1000))
         .attr("cy", data => yScale(+(data.start[1]) / 1000))
-        .attr("r", 4)
+        .attr("r", 6)
         .style("fill", color("start"))
+        .text("1")
+        .style("font-color", "#000")
         .attr('stroke-width', 1)
+        .attr("opacity", 0.9)
         .on("mouseover", function () {
             d3.select(this)
                 .attr('opacity', 0.5)
@@ -163,7 +181,7 @@ d3.csv("../data/order.csv").then(data => {
         })
         .on("mouseout", function () {
             d3.select(this)
-                .attr('opacity', 1)
+                .attr('opacity', 0.9)
                 .attr('stroke', color("start"))
                 .attr('stroke-width', 1)
         })
@@ -175,9 +193,10 @@ d3.csv("../data/order.csv").then(data => {
         .append("circle")
         .attr("cx", data => xScale(+(data.end[0]) / 1000))
         .attr("cy", data => yScale(+(data.end[1]) / 1000))
-        .attr("r", 4)
+        .attr("r", 6)
         .style("fill", color("end"))
         .attr('stroke-width', 1)
+        .attr("opacity", 0.9)
         .on("mouseover", function () {
             d3.select(this)
                 .attr('opacity', 0.5)
@@ -186,13 +205,38 @@ d3.csv("../data/order.csv").then(data => {
         })
         .on("mouseout", function () {
             d3.select(this)
-                .attr('opacity', 1)
+                .attr('opacity', 0.9)
                 .attr('stroke', color("end"))
                 .attr('stroke-width', 1)
         })
-        .on("click", function () {
-            tip.show()
+        .on("click", function (data) {
+            tip.show(data)
         });
+
+    let textEnter = g.selectAll(".tt").data(data).enter();
+    textEnter.append("text")
+        .attr("class", "tt")
+        .attr("x", data => xScale(+(data.start[0]) / 1000))
+        .attr("y", data => yScale(+(data.start[1]) / 1000))
+        .attr("text-anchor", "middle")
+        .attr("dy", 4)
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text(data => {
+            return start++;
+        })
+    textEnter.append("text")
+        .attr("class", "tt")
+        .attr("x", data => xScale(+(data.end[0]) / 1000))
+        .attr("y", data => yScale(+(data.end[1]) / 1000))
+        .attr("text-anchor", "middle")
+        .attr("dy", 4)
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text(data => {
+            return end++;
+        })
+
 
 })
 

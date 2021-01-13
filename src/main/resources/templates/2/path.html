@@ -23,10 +23,23 @@
             max-width: 400px;
         }
 
+        .tt {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /*
+            上面不可点击
+            下面不会遮挡下一层的事件
+            */
+            pointer-events: none;
+        }
+
     </style>
     <script type="text/javascript" th:src="@{/js/d3.min.js}"></script>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/bootstrap-switch.min.css}" rel="stylesheet">
+    <link th:href="@{/css/d3tip.css}" rel="stylesheet">
 
     <script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
