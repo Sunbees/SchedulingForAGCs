@@ -154,11 +154,41 @@ $("#mainsvg").click(function (e) {
     }
 })
 
-let data1;
+const addPoint = (flag, enter) => {
+    enter.append("g")
+        .attr("name", flag)
+        .append("circle")
+        .attr("cx", data => xScale(+(flag === "start" ? data.start[0] : data.end[0]) / 1000))
+        .attr("cy", data => yScale(+(flag === "start" ? data.start[1] : data.end[1]) / 1000))
+        .attr("r", 6)
+        .style("fill", color(flag))
+        .text("1")
+        .style("font-color", "#000")
+        .attr('stroke-width', 1)
+        .attr("opacity", 0.8)
+        .attr("class", data => "pc" + data.flag)
+        .on("mouseover", function () {
+            d3.select(this)
+                .attr('opacity', 0.5)
+                .attr("stroke", color(flag))
+                .attr('stroke-width', 4)
+        })
+        .on("mouseout", function () {
+            d3.select(this)
+                .attr('opacity', 0.8)
+                .attr('stroke', color(flag))
+                .attr('stroke-width', 1)
+        })
+        .on("click", function (d) {
+            tip.show(d)
+        });
 
+}
+
+let dataT;
 d3.csv("../data/order.csv").then(data => {
-    data1 = processOrderData(data);
-    data = data1;
+    data = processOrderData(data);
+    dataT = data;
     let start1 = 1;
     let start2 = 1;
     let start3 = 1;
@@ -166,75 +196,79 @@ d3.csv("../data/order.csv").then(data => {
     let end2 = 1;
     let end3 = 1;
 
-    let startEnter = g.selectAll("circle").data(data).enter();
-    startEnter.append("g")
-        .attr("name", "start")
-        .append("circle")
-        .attr("cx", data => xScale(+(data.start[0]) / 1000))
-        .attr("cy", data => yScale(+(data.start[1]) / 1000))
-        .attr("r", 6)
-        .style("fill", color("start"))
-        .text("1")
-        .style("font-color", "#000")
-        .attr('stroke-width', 1)
-        .attr("opacity", 0.9)
-        .attr("class", data => {
-            if (data.crane.endsWith("1")) {
-                return "pc1"
-            } else if (data.crane.endsWith("2")) {
-                return "pc2"
-            } else {
-                return "pc3"
-            }
-        })
-        .on("mouseover", function () {
-            d3.select(this)
-                .attr('opacity', 0.5)
-                .attr("stroke", color("start"))
-                .attr('stroke-width', 4)
-        })
-        .on("mouseout", function () {
-            d3.select(this)
-                .attr('opacity', 0.9)
-                .attr('stroke', color("start"))
-                .attr('stroke-width', 1)
-        })
-        .on("click", function (d) {
-            tip.show(d)
-        });
-    startEnter.append("g")
-        .attr("name", "end")
-        .append("circle")
-        .attr("cx", data => xScale(+(data.end[0]) / 1000))
-        .attr("cy", data => yScale(+(data.end[1]) / 1000))
-        .attr("r", 6)
-        .style("fill", color("end"))
-        .attr('stroke-width', 1)
-        .attr("opacity", 0.9)
-        .attr("class", data => {
-            if (data.crane.endsWith("1")) {
-                return "pc1"
-            } else if (data.crane.endsWith("2")) {
-                return "pc2"
-            } else {
-                return "pc3"
-            }
-        })
-        .on("mouseover", function () {
-            d3.select(this)
-                .attr('opacity', 0.5)
-                .attr("stroke", color("end"))
-                .attr('stroke-width', 4)
-        })
-        .on("mouseout", function () {
-            d3.select(this)
-                .attr('opacity', 0.9)
-                .attr('stroke', color("end"))
-                .attr('stroke-width', 1)
-        })
-        .on("click", function (data) {
-            tip.show(data)
-        });
+    let pointEnter = g.selectAll("circle").data(data).enter();
+
+    addPoint("start",pointEnter)
+    addPoint("end",pointEnter)
+
+    // startEnter.append("g")
+    //     .attr("name", "start")
+    //     .append("circle")
+    //     .attr("cx", data => xScale(+(data.start[0]) / 1000))
+    //     .attr("cy", data => yScale(+(data.start[1]) / 1000))
+    //     .attr("r", 6)
+    //     .style("fill", color("start"))
+    //     .text("1")
+    //     .style("font-color", "#000")
+    //     .attr('stroke-width', 1)
+    //     .attr("opacity", 0.9)
+    //     .attr("class", data => {
+    //         if (data.crane.endsWith("1")) {
+    //             return "pc1"
+    //         } else if (data.crane.endsWith("2")) {
+    //             return "pc2"
+    //         } else {
+    //             return "pc3"
+    //         }
+    //     })
+    //     .on("mouseover", function () {
+    //         d3.select(this)
+    //             .attr('opacity', 0.5)
+    //             .attr("stroke", color("start"))
+    //             .attr('stroke-width', 4)
+    //     })
+    //     .on("mouseout", function () {
+    //         d3.select(this)
+    //             .attr('opacity', 0.9)
+    //             .attr('stroke', color("start"))
+    //             .attr('stroke-width', 1)
+    //     })
+    //     .on("click", function (d) {
+    //         tip.show(d)
+    //     });
+    // startEnter.append("g")
+    //     .attr("name", "end")
+    //     .append("circle")
+    //     .attr("cx", data => xScale(+(data.end[0]) / 1000))
+    //     .attr("cy", data => yScale(+(data.end[1]) / 1000))
+    //     .attr("r", 6)
+    //     .style("fill", color("end"))
+    //     .attr('stroke-width', 1)
+    //     .attr("opacity", 0.9)
+    //     .attr("class", data => {
+    //         if (data.crane.endsWith("1")) {
+    //             return "pc1"
+    //         } else if (data.crane.endsWith("2")) {
+    //             return "pc2"
+    //         } else {
+    //             return "pc3"
+    //         }
+    //     })
+    //     .on("mouseover", function () {
+    //         d3.select(this)
+    //             .attr('opacity', 0.5)
+    //             .attr("stroke", color("end"))
+    //             .attr('stroke-width', 4)
+    //     })
+    //     .on("mouseout", function () {
+    //         d3.select(this)
+    //             .attr('opacity', 0.9)
+    //             .attr('stroke', color("end"))
+    //             .attr('stroke-width', 1)
+    //     })
+    //     .on("click", function (data) {
+    //         tip.show(data)
+    //     });
 
     let textEnter = g.selectAll(".tt").data(data).enter();
     textEnter.append("text")
@@ -289,6 +323,27 @@ d3.csv("../data/order.csv").then(data => {
         })
 })
 
+
+$("#reshow1").click(() => {
+    $("#path1").html("");
+    loadAndRender("../data/20201102_1_1.csv", "path1");
+})
+$("#reshow2").click(() => {
+    $("#path2").html("");
+    loadAndRender("../data/20201102_1_2.csv", "path2");
+})
+$("#reshow3").click(() => {
+    $("#path3").html("");
+    loadAndRender("../data/20201102_1_3.csv", "path3");
+})
+$("#reshowAll").click(() => {
+    $("#path1").html("");
+    loadAndRender("../data/20201102_1_1.csv", "path1");
+    $("#path2").html("");
+    loadAndRender("../data/20201102_1_2.csv", "path2");
+    $("#path3").html("");
+    loadAndRender("../data/20201102_1_3.csv", "path3");
+})
 
 function processOrderData(data) {
     data.forEach(d => {

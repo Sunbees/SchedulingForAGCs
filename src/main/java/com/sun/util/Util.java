@@ -103,12 +103,13 @@ public class Util {
         }
         FileWriter fileWriter = new FileWriter(file, true);
         if (file.length() == 0) {
-            fileWriter.write("orderNo,type,crane,start,end,coilNo,startTime,\n");
+            fileWriter.write("orderNo,type,crane,flag,start,end,coilNo,startTime,\n");
         }
         for (Order order : Data.orderList) {
             fileWriter.write(order.getOrderNo() + ",");
             fileWriter.write(order.getType() + ",");
             fileWriter.write(order.getCrane() + ",");
+            fileWriter.write(order.getCrane().charAt(order.getCrane().length() - 1) + ",");
             fileWriter.write(order.getStart() + ",");
             fileWriter.write(order.getEnd() + ",");
             fileWriter.write(order.getCoilNo() + ",");
