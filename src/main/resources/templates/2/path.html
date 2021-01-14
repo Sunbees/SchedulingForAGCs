@@ -110,12 +110,12 @@
         $("#switch" + numElement).css("display", "inherit")
     }
     let i = 1;
-    $(".reload").click(function () {
+    $(".reload").mouseover(function () {
         $(this).css("transform", `rotate(360deg)`)
         $(this).css("transition", `all 1s`)
     }).mouseout(function () {
         $(this).css("transform", `rotate(0deg)`)
-        $(this).css("transform", `all 1s`)
+        $(this).css("transition", `all 1s`)
     })
 
 </script>

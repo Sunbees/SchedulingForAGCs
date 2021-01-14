@@ -163,7 +163,7 @@ const addPoint = (flag, enter) => {
         .attr("r", 6)
         .style("fill", color(flag))
         .text("1")
-        .style("font-color", "#000")
+        .style("font-color", "#000000")
         .attr('stroke-width', 1)
         .attr("opacity", 0.8)
         .attr("class", data => "pc" + data.flag)
@@ -182,145 +182,34 @@ const addPoint = (flag, enter) => {
         .on("click", function (d) {
             tip.show(d)
         });
+}
 
+const addText = (flag, enter, pointNo) => {
+    enter.append("text")
+        .attr("class", data => "tt pc" + data.flag)
+        .attr("x", data => xScale(+(flag === "start" ? data.start[0] : data.end[0]) / 1000))
+        .attr("y", data => yScale(+(flag === "start" ? data.start[1] : data.end[1]) / 1000))
+        .attr("text-anchor", "middle")
+        .attr("dy", 4)
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text(data => pointNo[+(data.flag) - 1]++)
 }
 
 let dataT;
 d3.csv("../data/order.csv").then(data => {
     data = processOrderData(data);
     dataT = data;
-    let start1 = 1;
-    let start2 = 1;
-    let start3 = 1;
-    let end1 = 1;
-    let end2 = 1;
-    let end3 = 1;
 
     let pointEnter = g.selectAll("circle").data(data).enter();
 
-    addPoint("start",pointEnter)
-    addPoint("end",pointEnter)
-
-    // startEnter.append("g")
-    //     .attr("name", "start")
-    //     .append("circle")
-    //     .attr("cx", data => xScale(+(data.start[0]) / 1000))
-    //     .attr("cy", data => yScale(+(data.start[1]) / 1000))
-    //     .attr("r", 6)
-    //     .style("fill", color("start"))
-    //     .text("1")
-    //     .style("font-color", "#000")
-    //     .attr('stroke-width', 1)
-    //     .attr("opacity", 0.9)
-    //     .attr("class", data => {
-    //         if (data.crane.endsWith("1")) {
-    //             return "pc1"
-    //         } else if (data.crane.endsWith("2")) {
-    //             return "pc2"
-    //         } else {
-    //             return "pc3"
-    //         }
-    //     })
-    //     .on("mouseover", function () {
-    //         d3.select(this)
-    //             .attr('opacity', 0.5)
-    //             .attr("stroke", color("start"))
-    //             .attr('stroke-width', 4)
-    //     })
-    //     .on("mouseout", function () {
-    //         d3.select(this)
-    //             .attr('opacity', 0.9)
-    //             .attr('stroke', color("start"))
-    //             .attr('stroke-width', 1)
-    //     })
-    //     .on("click", function (d) {
-    //         tip.show(d)
-    //     });
-    // startEnter.append("g")
-    //     .attr("name", "end")
-    //     .append("circle")
-    //     .attr("cx", data => xScale(+(data.end[0]) / 1000))
-    //     .attr("cy", data => yScale(+(data.end[1]) / 1000))
-    //     .attr("r", 6)
-    //     .style("fill", color("end"))
-    //     .attr('stroke-width', 1)
-    //     .attr("opacity", 0.9)
-    //     .attr("class", data => {
-    //         if (data.crane.endsWith("1")) {
-    //             return "pc1"
-    //         } else if (data.crane.endsWith("2")) {
-    //             return "pc2"
-    //         } else {
-    //             return "pc3"
-    //         }
-    //     })
-    //     .on("mouseover", function () {
-    //         d3.select(this)
-    //             .attr('opacity', 0.5)
-    //             .attr("stroke", color("end"))
-    //             .attr('stroke-width', 4)
-    //     })
-    //     .on("mouseout", function () {
-    //         d3.select(this)
-    //             .attr('opacity', 0.9)
-    //             .attr('stroke', color("end"))
-    //             .attr('stroke-width', 1)
-    //     })
-    //     .on("click", function (data) {
-    //         tip.show(data)
-    //     });
+    addPoint("start", pointEnter)
+    addPoint("end", pointEnter)
 
     let textEnter = g.selectAll(".tt").data(data).enter();
-    textEnter.append("text")
-        .attr("class", data => {
-            if (data.crane.endsWith("1")) {
-                return "tt pc1";
-            } else if (data.crane.endsWith("2")) {
-                return "tt pc2";
-            } else {
-                return "tt pc3";
-            }
-        })
-        .attr("x", data => xScale(+(data.start[0]) / 1000))
-        .attr("y", data => yScale(+(data.start[1]) / 1000))
-        .attr("text-anchor", "middle")
-        .attr("dy", 4)
-        .style("font-size", "12px")
-        .style("font-weight", "bold")
-        .text((data) => {
-            if (data.crane.endsWith("1")) {
-                return start1++;
-            } else if (data.crane.endsWith("2")) {
-                return start2++;
-            } else {
-                return start3++;
-            }
-        })
-    textEnter.append("text")
-        .attr("class", data => {
-            if (data.crane.endsWith("1")) {
-                return "tt pc1";
-            } else if (data.crane.endsWith("2")) {
-                return "tt pc2";
-            } else {
-                return "tt pc3";
-            }
-        })
-        .attr("x", data => xScale(+(data.end[0]) / 1000))
-        .attr("y", data => yScale(+(data.end[1]) / 1000))
-        .attr("text-anchor", "middle")
-        .attr("dy", 4)
-        .style("font-size", "12px")
-        .style("font-weight", "bold")
-        .text((data) => {
-            if (data.crane.endsWith("1")) {
-                return end1++;
-            } else if (data.crane.endsWith("2")) {
-                return end2++;
-            } else {
-                return end3++;
-            }
-        })
+    let startNo = [1, 1, 1], endNo = [1, 1, 1];
+    addText("start", textEnter, startNo)
+    addText("end", textEnter, endNo)
 })
 
 
