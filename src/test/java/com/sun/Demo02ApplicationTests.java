@@ -18,62 +18,98 @@ class Demo02ApplicationTests {
 
     @Test
     public void test() {
-        int[][] edges = {{2, 1}, {3, 1}, {4, 2}, {1, 4}};
-        findRedundantDirectedConnection(edges);
+        int[][] grid = {{1, 0, 1}, {1, 1, 1}};
+        int[][] hits = {{0, 0}, {0, 2}, {1, 1}};
+        int[] ans = hitBricks(grid, hits);
+        for (int an : ans) {
+            System.out.print(an+" ");
+        }
     }
 
-    public int[] findRedundantDirectedConnection(int[][] edges) {
-        int len = edges.length;
+    private int rows;
+    private int cols;
 
-        UnionFind uf = new UnionFind(len);
-        int[] parent = new int[len];
-        for (int i = 0; i < len; i++) {
-            parent[i] = i;
+    public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+
+    public int[] hitBricks(int[][] grid, int[][] hits) {
+        this.rows = grid.length;
+        this.cols = grid[0].length;
+
+        int[][] copy = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                copy[i][j] = grid[i][j];
+            }
         }
 
-        int conflict = -1;
-        int cycle = -1;
+        for (int[] hit : hits) {
+            copy[hit[0]][hit[1]] = 0;
+        }
+        int size = rows * cols;
+        UnionFind uf = new UnionFind(size + 1);
+        for (int j = 0; j < cols; j++) {
+            if (copy[0][j] == 1) {
+                uf.union(j, size);
+            }
+        }
 
-        for (int i = 0; i < len; i++) {
-            int[] edge = edges[i];
-            int u = edge[0] - 1;
-            int v = edge[1] - 1;
-            if (parent[v] != v) {
-                conflict = i;
-            } else {
-                parent[v] = u;
-                if (uf.find(u) == uf.find(v)) {
-                    cycle = i;
-                } else {
-                    uf.union(u, v);
+        for (int i = 1; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (copy[i][j] == 1) {
+                    if (copy[i - 1][j] == 1) {
+                        uf.union(getIndex(i - 1, j), getIndex(i, j));
+                    }
+                    if (j > 0 && copy[i][j - 1] == 1) {
+                        uf.union(getIndex(i, j - 1), getIndex(i, j));
+                    }
                 }
             }
-
         }
-        if (conflict < 0) {
-            return edges[cycle];
-        } else {
-            int[] conflictEdge = edges[conflict];
-            if (cycle >= 0) {
-                int[] res = new int[]{parent[conflictEdge[1]], conflictEdge[1]};
-                return res;
-            } else {
-                return conflictEdge;
+        int hitsLen = hits.length;
+        int[] res = new int[hitsLen];
+        for (int i = hitsLen - 1; i >= 0; i--) {
+            int x = hits[i][0];
+            int y = hits[i][1];
+
+            if (grid[x][y] == 0) {
+                continue;
             }
+            copy[x][y] = 1;
+            int originSize = uf.getSize(size);
+            if (x == 0) {
+                uf.union(y, size);
+            }
+            for (int[] dir : DIRECTIONS) {
+                int newX = x + dir[0];
+                int newY = y + dir[1];
+                if (inArea(newX, newY) && copy[newX][newY] == 1) {
+                    uf.union(getIndex(x, y), getIndex(newX, newY));
+                }
+            }
+            int currentSize = uf.getSize(size);
+            res[i] = Math.max(0, currentSize - originSize - 1);
         }
+        return res;
+    }
 
+    private boolean inArea(int x, int y) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
+    }
+
+    private int getIndex(int x, int y) {
+        return x * cols + y;
     }
 
     private class UnionFind {
-        private int[] rank;
         private int[] parent;
+        private int[] size;
 
         public UnionFind(int n) {
-            rank = new int[n];
             parent = new int[n];
+            size = new int[n];
             for (int i = 0; i < n; i++) {
                 parent[i] = i;
-                rank[i] = 1;
+                size[i] = 1;
             }
         }
 
@@ -85,16 +121,18 @@ class Demo02ApplicationTests {
         }
 
         public void union(int x, int y) {
-            x = find(x);
-            y = find(y);
-            if (rank[x] == rank[y]) {
-                parent[x] = y;
-                ++rank[y];
-            } else if (rank[x] < rank[y]) {
-                parent[x] = y;
-            } else {
-                parent[y] = x;
+            int rootX = find(x);
+            int rootY = find(y);
+
+            if (rootX == rootY) {
+                return;
             }
+            parent[rootX] = rootY;
+            size[rootY] += size[rootX];
+        }
+
+        public int getSize(int x) {
+            return size[find(x)];
         }
     }
 }
