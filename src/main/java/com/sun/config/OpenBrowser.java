@@ -1,4 +1,4 @@
-package com.sun;
+package com.sun.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
