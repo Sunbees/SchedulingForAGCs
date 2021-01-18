@@ -4,3 +4,4 @@ server:
       force: true
       charset: utf-8
       enabled: true
+  port: 8080
