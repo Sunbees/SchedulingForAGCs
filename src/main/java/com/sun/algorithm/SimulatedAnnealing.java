@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class SimulatedAnnealing {
-    private static Collision collision = new Collision();;
+    private static Collision collision = new Collision();
     // 初始温度
     private double currentTemperature = 5000;
     // 最低温度

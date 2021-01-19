@@ -24,6 +24,18 @@ const line = d3.line()
     .y(d => yScale(yValue(d)))
     .curve(d3.curveCatmullRom);
 
+const tip = d3.tip()
+    .attr("class", "d3-tip")
+    .html(data => {
+        return `
+        <h6>执行行车：${data.crane}</h6>
+        <h6>钢卷号：${data.coilNo}</h6>
+        <h6>订单号：${data.orderNo}</h6>
+        <h6>类型：${data.type === "0" ? "倒剁" : data.type === "1" ? "出入库" : "倒机组"}</h6>
+        `
+    });
+svg.call(tip);
+
 const render_block = (filePath) => {
     d3.csv(filePath).then(data => {
         g.selectAll('rect').data(data).enter()
@@ -64,6 +76,76 @@ const render_block = (filePath) => {
     });
 };
 
+const addPoint = (flag, enter) => {
+    enter.append("g")
+        .attr("name", flag)
+        .append("circle")
+        .attr("cx", data => xScale(+(flag === "start" ? data.start[0] : data.end[0]) / 1000))
+        .attr("cy", data => yScale(+(flag === "start" ? data.start[1] : data.end[1]) / 1000))
+        .attr("r", 6)
+        .style("fill", color(flag))
+        .text("1")
+        .style("font-color", "#000000")
+        .attr('stroke-width', 1)
+        .attr("opacity", 0.8)
+        .attr("class", data => "pc" + data.flag)
+        .on("mouseover", function () {
+            d3.select(this)
+                .attr('opacity', 0.5)
+                .attr("stroke", color(flag))
+                .attr('stroke-width', 4)
+        })
+        .on("mouseout", function () {
+            d3.select(this)
+                .attr('opacity', 0.8)
+                .attr('stroke', color(flag))
+                .attr('stroke-width', 1)
+        })
+        .on("click", function (d) {
+            tip.show(d)
+        });
+}
+
+const addText = (flag, enter, pointNo) => {
+    enter.append("text")
+        .attr("class", data => "tt pc" + data.flag)
+        .attr("x", data => xScale(+(flag === "start" ? data.start[0] : data.end[0]) / 1000))
+        .attr("y", data => yScale(+(flag === "start" ? data.start[1] : data.end[1]) / 1000))
+        .attr("text-anchor", "middle")
+        .attr("dy", 4)
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text(data => pointNo[+(data.flag) - 1]++)
+}
+
+function processOrderData(data) {
+    data.forEach(d => {
+        const start = d.start;
+        const end = d.end;
+        d.start = start.substring(1, start.length - 1).split("-");
+        d.end = end.substring(1, end.length - 1).split("-");
+    })
+    return data;
+}
+
+let dataT;
+let render_order = (orderPath) => {
+    d3.csv(orderPath).then(data => {
+        data = processOrderData(data);
+        dataT = data;
+
+        let pointEnter = g.selectAll("circle").data(data).enter();
+
+        addPoint("start", pointEnter)
+        addPoint("end", pointEnter)
+
+        let textEnter = g.selectAll(".tt").data(data).enter();
+        let startNo = [1, 1, 1], endNo = [1, 1, 1];
+        addText("start", textEnter, startNo)
+        addText("end", textEnter, endNo)
+    })
+}
+
 const render_init = () => {
     let xAxis = g => g
         .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -76,6 +158,7 @@ const render_init = () => {
     g.append("g").call(xAxis);
     g.append("g").call(yAxis);
     render_block("../data/StoreLocation.csv");
+    render_order("../data/order.csv");
 };
 
 const processData = (path) => {
@@ -136,17 +219,7 @@ loadAndRender("../data/20201102_1_2.csv", "path2");
 loadAndRender("../data/20201102_1_3.csv", "path3");
 psHandler();
 
-const tip = d3.tip()
-    .attr("class", "d3-tip")
-    .html(data => {
-        return `
-        <h6>执行行车：${data.crane}</h6>
-        <h6>钢卷号：${data.coilNo}</h6>
-        <h6>订单号：${data.orderNo}</h6>
-        <h6>类型：${data.type === "0" ? "倒剁" : data.type === "1" ? "出入库" : "倒机组"}</h6>
-        `
-    })
-svg.call(tip);
+
 
 $("#mainsvg").click(function (e) {
     if (e.target === this) {
@@ -154,63 +227,21 @@ $("#mainsvg").click(function (e) {
     }
 })
 
-const addPoint = (flag, enter) => {
-    enter.append("g")
-        .attr("name", flag)
-        .append("circle")
-        .attr("cx", data => xScale(+(flag === "start" ? data.start[0] : data.end[0]) / 1000))
-        .attr("cy", data => yScale(+(flag === "start" ? data.start[1] : data.end[1]) / 1000))
-        .attr("r", 6)
-        .style("fill", color(flag))
-        .text("1")
-        .style("font-color", "#000000")
-        .attr('stroke-width', 1)
-        .attr("opacity", 0.8)
-        .attr("class", data => "pc" + data.flag)
-        .on("mouseover", function () {
-            d3.select(this)
-                .attr('opacity', 0.5)
-                .attr("stroke", color(flag))
-                .attr('stroke-width', 4)
-        })
-        .on("mouseout", function () {
-            d3.select(this)
-                .attr('opacity', 0.8)
-                .attr('stroke', color(flag))
-                .attr('stroke-width', 1)
-        })
-        .on("click", function (d) {
-            tip.show(d)
-        });
-}
 
-const addText = (flag, enter, pointNo) => {
-    enter.append("text")
-        .attr("class", data => "tt pc" + data.flag)
-        .attr("x", data => xScale(+(flag === "start" ? data.start[0] : data.end[0]) / 1000))
-        .attr("y", data => yScale(+(flag === "start" ? data.start[1] : data.end[1]) / 1000))
-        .attr("text-anchor", "middle")
-        .attr("dy", 4)
-        .style("font-size", "12px")
-        .style("font-weight", "bold")
-        .text(data => pointNo[+(data.flag) - 1]++)
-}
-
-let dataT;
-d3.csv("../data/order.csv").then(data => {
-    data = processOrderData(data);
-    dataT = data;
-
-    let pointEnter = g.selectAll("circle").data(data).enter();
-
-    addPoint("start", pointEnter)
-    addPoint("end", pointEnter)
-
-    let textEnter = g.selectAll(".tt").data(data).enter();
-    let startNo = [1, 1, 1], endNo = [1, 1, 1];
-    addText("start", textEnter, startNo)
-    addText("end", textEnter, endNo)
-})
+// d3.csv("../data/order.csv").then(data => {
+//     data = processOrderData(data);
+//     dataT = data;
+//
+//     let pointEnter = g.selectAll("circle").data(data).enter();
+//
+//     addPoint("start", pointEnter)
+//     addPoint("end", pointEnter)
+//
+//     let textEnter = g.selectAll(".tt").data(data).enter();
+//     let startNo = [1, 1, 1], endNo = [1, 1, 1];
+//     addText("start", textEnter, startNo)
+//     addText("end", textEnter, endNo)
+// })
 
 
 $("#reshow1").click(() => {
@@ -233,16 +264,6 @@ $("#reshowAll").click(() => {
     $("#path3").html("");
     loadAndRender("../data/20201102_1_3.csv", "path3");
 })
-
-function processOrderData(data) {
-    data.forEach(d => {
-        const start = d.start;
-        const end = d.end;
-        d.start = start.substring(1, start.length - 1).split("-");
-        d.end = end.substring(1, end.length - 1).split("-");
-    })
-    return data;
-}
 
 
 $(function () {
