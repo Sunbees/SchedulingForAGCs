@@ -157,8 +157,13 @@ const render_init = () => {
 
     g.append("g").call(xAxis);
     g.append("g").call(yAxis);
-    render_block("../data/StoreLocation.csv");
-    render_order("../data/order.csv");
+    new Promise((resolve) => {
+        render_block("../data/StoreLocation.csv");
+        return resolve();
+    }).then(() => {
+        render_order("../data/order.csv");
+    });
+
 };
 
 const processData = (path) => {
@@ -220,28 +225,11 @@ loadAndRender("../data/20201102_1_3.csv", "path3");
 psHandler();
 
 
-
 $("#mainsvg").click(function (e) {
     if (e.target === this) {
         tip.hide();
     }
 })
-
-
-// d3.csv("../data/order.csv").then(data => {
-//     data = processOrderData(data);
-//     dataT = data;
-//
-//     let pointEnter = g.selectAll("circle").data(data).enter();
-//
-//     addPoint("start", pointEnter)
-//     addPoint("end", pointEnter)
-//
-//     let textEnter = g.selectAll(".tt").data(data).enter();
-//     let startNo = [1, 1, 1], endNo = [1, 1, 1];
-//     addText("start", textEnter, startNo)
-//     addText("end", textEnter, endNo)
-// })
 
 
 $("#reshow1").click(() => {
