@@ -14,8 +14,8 @@ public class OpenBrowser implements CommandLineRunner {
         //System.out.println("应用已经准备就绪 ... 启动浏览器并自动加载指定的页面 ... ");
         try {
             //System.out.println(port);
-            //Runtime.getRuntime().exec("cmd /c start msedge.exe --inprivate http://localhost:" + port + "/query");//指定自己项目的路径
-            Runtime.getRuntime().exec("cmd /c start http://localhost:" + port + "/query");//指定自己项目的路径
+            Runtime.getRuntime().exec("cmd /c start msedge.exe --inprivate http://localhost:" + port + "/query");//指定自己项目的路径
+            //Runtime.getRuntime().exec("cmd /c start http://localhost:" + port + "/query");//指定自己项目的路径
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -136,13 +136,13 @@ let render_order = (orderPath) => {
 
         let pointEnter = g.selectAll("circle").data(data).enter();
 
-        addPoint("start", pointEnter)
-        addPoint("end", pointEnter)
+        addPoint("start", pointEnter);
+        addPoint("end", pointEnter);
 
         let textEnter = g.selectAll(".tt").data(data).enter();
         let startNo = [1, 1, 1], endNo = [1, 1, 1];
-        addText("start", textEnter, startNo)
-        addText("end", textEnter, endNo)
+        addText("start", textEnter, startNo);
+        addText("end", textEnter, endNo);
     })
 }
 
@@ -157,12 +157,36 @@ const render_init = () => {
 
     g.append("g").call(xAxis);
     g.append("g").call(yAxis);
-    new Promise((resolve) => {
+    let renderB = () => new Promise((resolve) => {
         render_block("../data/StoreLocation.csv");
-        return resolve();
-    }).then(() => {
+        resolve()
+    })
+    let renderO = () => new Promise((resolve) => {
         render_order("../data/order.csv");
-    });
+        resolve()
+    })
+
+    let taskArr = [renderB, renderO];
+    let runArr = (arr, start = 0) => {
+        if (start > arr.length || start < 0) return; // 参数start不能超过    arr.length，不能为负数
+        let next = function (i) {
+            if (i < arr.length) {
+                let fn = arr[i];
+                fn().then(() => {
+                    i++;
+                    next(i)
+                })
+            }
+        }
+        next(start);
+    }
+    runArr(taskArr, 0);
+    // new Promise((resolve) => {
+    //     render_block("../data/StoreLocation.csv");
+    //     return resolve();
+    // }).then(() => {
+    //     render_order("../data/order.csv");
+    // });
 
 };
 
