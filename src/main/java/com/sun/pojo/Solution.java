@@ -1,29 +1,46 @@
 package com.sun.pojo;
 
+import com.sun.allocate.SolutionForAllocate;
 import com.sun.collision_dec.Collision;
+import lombok.SneakyThrows;
 
 import javax.sound.midi.Soundbank;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
     private List<Integer> priority;
 
     private double consumeTime;
 
+    private boolean isAllocate;
+
+    private List<Integer> allocationNo;
+
+
     public Solution() {
         priority = new ArrayList<>();
+        allocationNo = new ArrayList<>();
         consumeTime = 0.0;
+        isAllocate = false;
     }
 
     public Solution(List<Integer> priority) {
         this.priority = priority;
     }
 
+    public Solution(List<Integer> priority, List<Integer> allocationNo) {
+        this.priority = priority;
+        this.allocationNo = allocationNo;
+        this.isAllocate = true;
+    }
+
     public List<Integer> getPriority() {
         return priority;
+    }
+
+    public List<Integer> getAllocationNo() {
+        return this.allocationNo;
     }
 
     @Override
@@ -31,12 +48,19 @@ public class Solution {
         return "Solution{" +
                 "priority=" + priority +
                 ", consumeTime=" + consumeTime +
+                ", allocationNo=" + allocationNo +
                 '}';
     }
 
+    @SneakyThrows
     public Solution clone() {
         Solution solution_copy = new Solution();
         solution_copy.priority.addAll(this.priority);
+        if (isAllocate) {
+            solution_copy.isAllocate = true;
+            solution_copy.allocationNo.addAll(this.allocationNo);
+        }
+        solution_copy.consumeTime = this.getConsumeTime();
         return solution_copy;
     }
 
@@ -45,8 +69,19 @@ public class Solution {
         this.consumeTime = 0;
     }
 
+    public void setAllocationNo(List<Integer> allocationNo) {
+        this.allocationNo = allocationNo;
+        this.isAllocate = true;
+    }
+
+    public void setAllocationNo(int allocationIndex, int i) {
+        this.allocationNo.set(allocationIndex, i);
+        this.consumeTime = 0;
+    }
+
     public void setPriority(List<Integer> priority) {
         this.priority = priority;
+        this.consumeTime = 0;
     }
 
     public void setConsumeTime(double consumeTime) {
@@ -63,12 +98,17 @@ public class Solution {
 
     public Solution addPriority(Integer pri) {
         this.priority.add(pri);
+        this.consumeTime = 0;
         return this;
     }
 
-    public double getConsumeTime() throws IOException, CloneNotSupportedException {
+    public double getConsumeTime() throws IOException {
         if (Math.abs(consumeTime) <= 1e-6) {
-            consumeTime = new Collision().calRunningTime(this.priority, false);
+            if (!isAllocate) {
+                consumeTime = new Collision().calRunningTime(this.priority, false);
+            } else {
+                consumeTime = new Collision().calRunningTime(this.priority, false, allocationNo, allocationNo.size());
+            }
         }
         return consumeTime;
     }
@@ -102,7 +142,7 @@ public class Solution {
 
     /**
      * For 遗传算法
-     * */
+     */
     private double rate;
 
     public double getRate() {

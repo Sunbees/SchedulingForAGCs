@@ -4,12 +4,11 @@ import com.sun.collision_dec.Location;
 import com.sun.collision_dec.Task;
 import com.sun.data.Data;
 import com.sun.pojo.Order;
-import com.sun.pojo.Stock;
+import com.sun.pojo.StockArea;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,27 +119,27 @@ public class Util {
     }
 
     public static List<Task> createRandomTask(int type, int num, String beginS, String endS) throws IOException {
-        int stkNum = Data.stocks.size();
+        int stkNum = Data.stockAreas.size();
         if (stkNum == 0) {
             String path = "./static/data/StoreLocation.csv";
             ArrayList<String[]> stockList = new ArrayList<>();
             readCsv(path, stockList);
             stockList.forEach(e -> {
-                Stock stock = new Stock(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
-                Data.stocks.add(stock);
+                StockArea stockArea = new StockArea(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
+                Data.stockAreas.add(stockArea);
             });
-            stkNum = Data.stocks.size();
+            stkNum = Data.stockAreas.size();
         }
         if (stkNum == 0) {
             return null;
         }
-        List<Stock> beginList = new ArrayList<>();
-        List<Stock> endList = new ArrayList<>();
+        List<StockArea> beginList = new ArrayList<>();
+        List<StockArea> endList = new ArrayList<>();
         for (String s : beginS.split(",")) {
-            beginList.add(Data.stocks.get(Integer.parseInt(s)));
+            beginList.add(Data.stockAreas.get(Integer.parseInt(s)));
         }
         for (String s : endS.split(",")) {
-            endList.add(Data.stocks.get(Integer.parseInt(s)));
+            endList.add(Data.stockAreas.get(Integer.parseInt(s)));
         }
         int beginNum = beginList.size();
         int endNum = endList.size();

@@ -1,6 +1,7 @@
 package com.sun.collision_dec;
 
 
+import com.sun.allocate.TestData;
 import com.sun.data.Data;
 import com.sun.pojo.Order;
 import com.sun.pojo.Track;
@@ -11,19 +12,17 @@ import java.util.*;
 public class Collision {
     public static double nowTime;
     public static int safeDistance = Data.SafeDistance;
-    public static double startZ = 0;
+    public static double startZ;
     // 存储所有的待分配任务
     public static HashMap<Integer, Task> taskMap;
     public static ArrayList<Integer> priority;
     public static List<Crane> craneList;
 
 
-    public static void init(List<Integer> pri) throws IOException, CloneNotSupportedException {
+    public static void init(List<Integer> pri) {
         nowTime = 0.0;
-        //Data.initTest();
-        //Data.init();
-        //Data.initTestForDraw();
-        Data.initForDraw();
+
+        Data.initForDraw(); //改这个还原
         safeDistance = Data.SafeDistance;
         // craneList存储所有的AGC信息
         craneList = Data.craneList;
@@ -43,7 +42,30 @@ public class Collision {
         //priority.add(2);
     }
 
-    public static Track getTrack(List<Integer> pri) throws IOException, CloneNotSupportedException {
+    public static void initForAllocate(List<Integer> allocationNo, int taskNum, List<Integer> pri) throws IOException {
+        nowTime = 0.0;
+        //List<Integer> allocationNo = Arrays.asList(0, 2, 5, 6, 7, 10, 11, 12, 14);
+        //test.genTasks(allocationNo);
+        //TestData.taskMap.values().forEach(System.out::println);
+
+        TestData.initForAllocate(allocationNo, taskNum);
+        safeDistance = Data.SafeDistance;
+        // craneList存储所有的AGC信息
+        craneList = Data.craneList;
+        startZ = craneList.get(0).getLocation().getZ();
+        taskMap = new HashMap<>();
+        try {
+            for (Integer key : Data.taskMap.keySet()) {
+                taskMap.put(key, Data.taskMap.get(key).clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        // priority列表存储每个任务的处理优先级，越靠前优先级越高，已分配AGC的任务会从中删除
+        priority = new ArrayList<>(pri);
+    }
+
+    public static Track getTrack(List<Integer> pri) {
         init(pri);
         Track track = new Track();
         // 初始化track
@@ -104,7 +126,7 @@ public class Collision {
         return track;
     }
 
-    public static void main(String[] args) throws IOException, CloneNotSupportedException {
+    public static void main(String[] args) {
         List<Integer> pri = new ArrayList<>();
         //pri.add(5);
         //pri.add(1);
@@ -165,9 +187,62 @@ public class Collision {
         }
     }
 
-    public double calRunningTime(List<Integer> pri, boolean isPrint) throws IOException, CloneNotSupportedException {
-        init(pri);
+    public double calRunningTime(List<Integer> pri, boolean isPrint, List<Integer> allocationNo, int taskNum) throws IOException {
+        //init(pri);
+        initForAllocate(allocationNo, taskNum, pri);
+        while (!priority.isEmpty() || numOfUsedCrane(craneList) > 0) {
+            if (numOfUsedCrane(craneList) == 0) {
+                // 选择分配AGC的任务
+                int current = selectTask(priority);
 
+                // 如果时间还没到，就把时间调整至这个任务的开始时间
+                if (nowTime < taskMap.get(current).getStartTime()) {
+                    nowTime = taskMap.get(current).getStartTime();
+                }
+                Crane current_crane = selectCrane(craneList, current, taskMap, isPrint, null);
+                if (current_crane != null) {
+                    priority.remove(Integer.valueOf(current));
+                    current_crane.setUsed(true);
+                    current_crane.addTask(taskMap.get(current).getStart()).addTask(taskMap.get(current).getEnd());
+                    current_crane.setTaskNo(current);
+                    current_crane.setType(taskMap.get(current).getType());
+                }
+            }
+
+            // 有一个AGC被使用
+            if (!priority.isEmpty() && numOfUsedCrane(craneList) == 1) {
+                // 选择分配AGC的任务
+                int next = selectTask(priority);
+                // 是否能分配
+                if (allocated(craneList, next, taskMap, isPrint, null)) {
+                    priority.remove(Integer.valueOf(next));
+                }
+            }
+
+            //有两个AGC被使用
+            if (!priority.isEmpty() && numOfUsedCrane(craneList) == 2) {
+                // 选择分配AGC的任务
+                int next = selectTask(priority);
+                // 是否能分配
+                if (allocated(craneList, next, taskMap, isPrint, null)) {
+                    priority.remove(Integer.valueOf(next));
+                }
+            }
+
+            // 运行
+            run(craneList, 999999, isPrint, null);
+        }
+        double endTime = 0.0;
+        for (Task task : taskMap.values()) {
+            if (task.getEndTime() > endTime) {
+                endTime = task.getEndTime();
+            }
+        }
+        return endTime;
+    }
+
+    public double calRunningTime(List<Integer> pri, boolean isPrint) throws IOException {
+        init(pri);
         while (!priority.isEmpty() || numOfUsedCrane(craneList) > 0) {
             if (numOfUsedCrane(craneList) == 0) {
                 // 选择分配AGC的任务

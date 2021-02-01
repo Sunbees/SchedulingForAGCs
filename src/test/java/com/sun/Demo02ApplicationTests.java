@@ -18,121 +18,63 @@ class Demo02ApplicationTests {
 
     @Test
     public void test() {
-        int[][] grid = {{1, 0, 1}, {1, 1, 1}};
-        int[][] hits = {{0, 0}, {0, 2}, {1, 1}};
-        int[] ans = hitBricks(grid, hits);
-        for (int an : ans) {
-            System.out.print(an+" ");
-        }
+        int[][] grid = new int[][]{{0,1,2,3,4}, {24,23,22,21,5}, {12,13,14,15,16}, {11,17,18,19,20}, {10,9,8,7,6}};
+        Solution s1 = new Solution();
+        s1.swimInWater(grid);
+
     }
 
-    private int rows;
-    private int cols;
 
-    public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+    public class Solution {
 
-    public int[] hitBricks(int[][] grid, int[][] hits) {
-        this.rows = grid.length;
-        this.cols = grid[0].length;
+        // Dijkstra 算法（应用前提：没有负权边，找单源最短路径）
 
-        int[][] copy = new int[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                copy[i][j] = grid[i][j];
+        public int swimInWater(int[][] grid) {
+            int n = grid.length;
+
+            Queue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(o -> grid[o[0]][o[1]]));
+            minHeap.offer(new int[]{0, 0});
+
+            boolean[][] visited = new boolean[n][n];
+            // distTo[i][j] 表示：到顶点 [i, j] 须要等待的最少的时间
+            int[][] distTo = new int[n][n];
+            for (int[] row : distTo) {
+                Arrays.fill(row, n * n);
             }
-        }
+            distTo[0][0] = grid[0][0];
 
-        for (int[] hit : hits) {
-            copy[hit[0]][hit[1]] = 0;
-        }
-        int size = rows * cols;
-        UnionFind uf = new UnionFind(size + 1);
-        for (int j = 0; j < cols; j++) {
-            if (copy[0][j] == 1) {
-                uf.union(j, size);
-            }
-        }
+            int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+            while (!minHeap.isEmpty()) {
+                // 找最短的边
+                int[] front = minHeap.poll();
+                int currentX = front[0];
+                int currentY = front[1];
+                if (visited[currentX][currentY]) {
+                    continue;
+                }
 
-        for (int i = 1; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (copy[i][j] == 1) {
-                    if (copy[i - 1][j] == 1) {
-                        uf.union(getIndex(i - 1, j), getIndex(i, j));
-                    }
-                    if (j > 0 && copy[i][j - 1] == 1) {
-                        uf.union(getIndex(i, j - 1), getIndex(i, j));
+                // 确定最短路径顶点
+                visited[currentX][currentY] = true;
+                if (currentX == n - 1 && currentY == n - 1) {
+                    return distTo[n - 1][n - 1];
+                }
+
+                // 更新
+                for (int[] direction : directions) {
+                    int newX = currentX + direction[0];
+                    int newY = currentY + direction[1];
+                    if (inArea(newX, newY, n) && !visited[newX][newY] &&
+                            Math.max(distTo[currentX][currentY], grid[newX][newY]) < distTo[newX][newY]) {
+                        distTo[newX][newY] = Math.max(distTo[currentX][currentY], grid[newX][newY]);
+                        minHeap.offer(new int[]{newX, newY});
                     }
                 }
             }
-        }
-        int hitsLen = hits.length;
-        int[] res = new int[hitsLen];
-        for (int i = hitsLen - 1; i >= 0; i--) {
-            int x = hits[i][0];
-            int y = hits[i][1];
-
-            if (grid[x][y] == 0) {
-                continue;
-            }
-            copy[x][y] = 1;
-            int originSize = uf.getSize(size);
-            if (x == 0) {
-                uf.union(y, size);
-            }
-            for (int[] dir : DIRECTIONS) {
-                int newX = x + dir[0];
-                int newY = y + dir[1];
-                if (inArea(newX, newY) && copy[newX][newY] == 1) {
-                    uf.union(getIndex(x, y), getIndex(newX, newY));
-                }
-            }
-            int currentSize = uf.getSize(size);
-            res[i] = Math.max(0, currentSize - originSize - 1);
-        }
-        return res;
-    }
-
-    private boolean inArea(int x, int y) {
-        return x >= 0 && x < rows && y >= 0 && y < cols;
-    }
-
-    private int getIndex(int x, int y) {
-        return x * cols + y;
-    }
-
-    private class UnionFind {
-        private int[] parent;
-        private int[] size;
-
-        public UnionFind(int n) {
-            parent = new int[n];
-            size = new int[n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-                size[i] = 1;
-            }
+            return -1;
         }
 
-        public int find(int x) {
-            if (x != parent[x]) {
-                parent[x] = find(parent[x]);
-            }
-            return parent[x];
-        }
-
-        public void union(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-
-            if (rootX == rootY) {
-                return;
-            }
-            parent[rootX] = rootY;
-            size[rootY] += size[rootX];
-        }
-
-        public int getSize(int x) {
-            return size[find(x)];
+        private boolean inArea(int x, int y, int n) {
+            return x >= 0 && x < n && y >= 0 && y < n;
         }
     }
 }
