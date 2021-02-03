@@ -16,39 +16,38 @@ public class SimulatedAnnealingForAllocate {
     // 最低温度
     private final double minTemperature = 1;
     // 某一温度下迭代次数
-    private final int internalLoop = 20;
+    private final int internalLoop = 10;
     // 冷却比率
-    private final double coolingRate = 0.4;
+    private final double coolingRate = 0.3;
     // 初始解
     private Solution currentSolution;
 
-    private List<Integer> currentAllocateNo;
+    private List<Set<Integer>> currentAllocateNo;
 
 
-    public Solution anneal(List<Integer> countForEveryType) throws IOException, CloneNotSupportedException {
+    public Solution anneal(List<Integer> countForEveryType) throws IOException {
         currentTemperature = 1000;
         Solution newSolution = null;
 
         currentAllocateNo = genIndividual(countForEveryType, TestData.typeStockMap);
-        List<Integer> newAllocateNo;
-        List<Integer> bestAllocateNo;
+        List<Set<Integer>> newAllocateNo;
+        List<Set<Integer>> bestAllocateNo;
         Solution bestSolution = null;
 
         SimulatedAnnealing sa = new SimulatedAnnealing();
-        TestData testData = new TestData();
-        testData.initSolution(currentAllocateNo.size());
+        TestData.initSolution(countForEveryType.stream().reduce(0, Integer::sum));
         sa.initSolution();
-        currentSolution = sa.anneal(currentAllocateNo);
+        currentSolution = sa.anneal(currentAllocateNo, 1000, 1, 0.3, 10);
         double currentEnergy = currentSolution.getConsumeTime();
-        testData.clearTaskMap();
+        TestData.clearTaskMap();
 
 
         while (currentTemperature > minTemperature) {
             for (int i = 0; i < internalLoop; i++) {
-                testData.initSolution(currentAllocateNo.size());
+                TestData.initSolution(countForEveryType.stream().reduce(0, Integer::sum));
                 sa.initSolution();
                 newAllocateNo = generateNext(currentAllocateNo, countForEveryType, TestData.typeStockMap);
-                newSolution = sa.anneal(newAllocateNo);
+                newSolution = sa.anneal(newAllocateNo, 1000, 1, 0.2, 5);
                 double newEnergy = newSolution.getConsumeTime();
 
 
@@ -61,9 +60,7 @@ public class SimulatedAnnealingForAllocate {
                         bestAllocateNo = bestSolution.getAllocationNo();
                     }
                 }
-                testData.clearTaskMap();
-
-
+                TestData.clearTaskMap();
             }
             currentTemperature *= (1 - coolingRate);
         }
@@ -79,33 +76,29 @@ public class SimulatedAnnealingForAllocate {
 
     }
 
-    public List<Integer> genIndividual(List<Integer> countForEveryType, Map<Integer, List<Integer>> availableStock) {
-        List<Integer> res = new ArrayList<>();
+    public List<Set<Integer>> genIndividual(List<Integer> countForEveryType, Map<Integer, List<Integer>> availableStock) {
+        List<Set<Integer>> res = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             int count = countForEveryType.get(i);
             List<Integer> availableList = availableStock.get(i);
-            Set<Integer> selectedList = new TreeSet<>(Comparator.comparingInt(e -> e));
+            Set<Integer> selectedSet = new TreeSet<>(Comparator.comparingInt(e -> e));
             Random random = new Random();
-            int index = 0;
-            while (true) {
+            int index;
+            while (selectedSet.size() < count) {
                 index = random.nextInt(availableList.size());
-                selectedList.add(availableList.get(index));
-                if (selectedList.size() >= count) {
-                    break;
-                }
+                selectedSet.add(availableList.get(index));
             }
-            res.addAll(selectedList);
+            res.add(selectedSet);
         }
         return res;
     }
 
-    public List<Integer> generateNext(List<Integer> preCode, List<Integer> countForEveryType, Map<Integer, List<Integer>> availableStock) {
-        List<Integer> res = new ArrayList<>(preCode);
-        int begin = 0;
+    public List<Set<Integer>> generateNext(List<Set<Integer>> preCode, List<Integer> countForEveryType, Map<Integer, List<Integer>> availableStock) {
+        List<Set<Integer>> res = new ArrayList<>(preCode);
         for (int i = 0; i < 3; i++) {
             int count = countForEveryType.get(i);
             List<Integer> availableList = availableStock.get(i);
-            List<Integer> selectedList = preCode.subList(begin, begin + count);
+            List<Integer> selectedList = new ArrayList<>(preCode.get(i));
             if (count == availableList.size()) {
                 continue;
             }
@@ -118,8 +111,10 @@ public class SimulatedAnnealingForAllocate {
             Random random = new Random();
             int index1 = random.nextInt(unSelectedList.size());
             int index2 = random.nextInt(selectedList.size());
-            res.set(begin + index2, unSelectedList.get(index1));
-            begin += count;
+            int a = unSelectedList.get(index1);
+            int b = selectedList.get(index2);
+            res.get(i).remove(b);
+            res.get(i).add(a);
         }
 
         return res;
@@ -132,49 +127,39 @@ public class SimulatedAnnealingForAllocate {
         countForEveryType.add(3);
         countForEveryType.add(4);
         SimulatedAnnealingForAllocate solution = new SimulatedAnnealingForAllocate();
+        //List<Set<Integer>> sets = solution.genIndividual(countForEveryType, TestData.typeStockMap);
+        //sets.forEach(set->{
+        //    for(int s: set) {
+        //        System.out.print(s+" ");
+        //    }
+        //    System.out.println();
+        //});
+        //
+        //sets = solution.generateNext(sets, countForEveryType, TestData.typeStockMap);
+        //sets.forEach(set->{
+        //    for(int s: set) {
+        //        System.out.print(s+" ");
+        //    }
+        //    System.out.println();
+        //});
+
+        long startTime = System.currentTimeMillis();    //获取开始时间
+
+
         Solution anneal = solution.anneal(countForEveryType);
+
+        long endTime = System.currentTimeMillis();    //获取结束时间
+
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
         //TestData.stockLocationMap.values().forEach(System.out::println);
         System.out.println(anneal);
 
         SimulatedAnnealingForAllocate solution2 = new SimulatedAnnealingForAllocate();
+        startTime = System.currentTimeMillis();    //获取开始时间
         Solution anneal2 = solution2.anneal(countForEveryType);
+        endTime = System.currentTimeMillis();    //获取结束时间
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
         System.out.println(anneal2);
-        //List<Integer> prelist = solution.genIndividual(countForEveryType, TestData.typeStockMap);
-        //prelist.forEach(e -> System.out.print(e + "\t"));
-        //System.out.println();
-        //
-        //SimulatedAnnealing sa = new SimulatedAnnealing();
-        //TestData testData = new TestData();
-        //testData.initSolution(9);
-        //sa.initSolution();
-        //Solution best = sa.anneal(prelist);
-        //System.out.println(best);
-        //System.out.println("最短时间：" + best.getConsumeTime());
-        //
-        //
-        //List<Integer> newList = solution.generateNext(prelist, countForEveryType, TestData.typeStockMap);
-        //newList.forEach(e -> System.out.print(e + "\t"));
-        //System.out.println();
-        //
-        //testData.initSolution(9);
-        //sa.initSolution();
-        //testData.clearTaskMap();
-        //best = sa.anneal(newList);
-        //System.out.println(best);
-        //System.out.println("最短时间：" + best.getConsumeTime());
-        //
-        //prelist = newList;
-        //
-        //newList = solution.generateNext(prelist, countForEveryType, TestData.typeStockMap);
-        //newList.forEach(e -> System.out.print(e + "\t"));
-        //System.out.println();
-        //
-        //testData.initSolution(9);
-        //sa.initSolution();
-        //testData.clearTaskMap();
-        //best = sa.anneal(newList);
-        //System.out.println(best);
-        //System.out.println("最短时间：" + best.getConsumeTime());
 
     }
 }

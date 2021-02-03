@@ -15,7 +15,7 @@ public class Solution {
 
     private boolean isAllocate;
 
-    private List<Integer> allocationNo;
+    private List<Set<Integer>> allocationNo;
 
 
     public Solution() {
@@ -29,7 +29,7 @@ public class Solution {
         this.priority = priority;
     }
 
-    public Solution(List<Integer> priority, List<Integer> allocationNo) {
+    public Solution(List<Integer> priority, List<Set<Integer>> allocationNo) {
         this.priority = priority;
         this.allocationNo = allocationNo;
         this.isAllocate = true;
@@ -39,7 +39,7 @@ public class Solution {
         return priority;
     }
 
-    public List<Integer> getAllocationNo() {
+    public List<Set<Integer>> getAllocationNo() {
         return this.allocationNo;
     }
 
@@ -69,14 +69,9 @@ public class Solution {
         this.consumeTime = 0;
     }
 
-    public void setAllocationNo(List<Integer> allocationNo) {
+    public void setAllocationNo(List<Set<Integer>> allocationNo) {
         this.allocationNo = allocationNo;
         this.isAllocate = true;
-    }
-
-    public void setAllocationNo(int allocationIndex, int i) {
-        this.allocationNo.set(allocationIndex, i);
-        this.consumeTime = 0;
     }
 
     public void setPriority(List<Integer> priority) {
@@ -157,6 +152,14 @@ public class Solution {
         List<Integer> list = new ArrayList<>(priority);
         Collections.shuffle(list);
         this.priority = list;
+        this.consumeTime = 0.0;
+    }
+    public void createRandomlyForAllocate(List<Integer> priority,List<Set<Integer>> allocationNo) {
+        List<Integer> list = new ArrayList<>(priority);
+        Collections.shuffle(list);
+        this.priority = list;
+        this.allocationNo = allocationNo;
+        this.isAllocate = true;
         this.consumeTime = 0.0;
     }
 }

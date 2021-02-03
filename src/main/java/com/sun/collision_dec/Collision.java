@@ -42,7 +42,7 @@ public class Collision {
         //priority.add(2);
     }
 
-    public static void initForAllocate(List<Integer> allocationNo, int taskNum, List<Integer> pri) throws IOException {
+    public static void initForAllocate(List<Set<Integer>> allocationNo, int taskNum, List<Integer> pri) throws IOException {
         nowTime = 0.0;
         //List<Integer> allocationNo = Arrays.asList(0, 2, 5, 6, 7, 10, 11, 12, 14);
         //test.genTasks(allocationNo);
@@ -187,7 +187,7 @@ public class Collision {
         }
     }
 
-    public double calRunningTime(List<Integer> pri, boolean isPrint, List<Integer> allocationNo, int taskNum) throws IOException {
+    public double calRunningTime(List<Integer> pri, boolean isPrint, List<Set<Integer>> allocationNo, int taskNum) throws IOException {
         //init(pri);
         initForAllocate(allocationNo, taskNum, pri);
         while (!priority.isEmpty() || numOfUsedCrane(craneList) > 0) {

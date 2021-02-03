@@ -8,9 +8,7 @@ import com.sun.pojo.StockArea;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Util {
     public static void readCsv(String readPath, ArrayList<String[]> Valueslist) throws IOException {
@@ -165,5 +163,24 @@ public class Util {
         }
 
         return taskList;
+    }
+
+    public static List<Set<Integer>> convertToSet(List<Integer> countForEveryType, List<Integer> allocateNo) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        Set<Integer> set3 = new HashSet<>();
+        int pre = 0;
+        for (int i = 0; i < 3; i++) {
+            int count = countForEveryType.get(i);
+            if (i == 0)
+                set1.addAll(allocateNo.subList(pre, pre + count));
+            else if (i == 1)
+                set2.addAll(allocateNo.subList(pre, pre + count));
+            else
+                set3.addAll(allocateNo.subList(pre, pre + count));
+            pre += count;
+        }
+
+        return Arrays.asList(set1, set2, set3);
     }
 }

@@ -18,64 +18,44 @@ class Demo02ApplicationTests {
 
     @Test
     public void test() {
-        int[][] grid = new int[][]{{0,1,2,3,4}, {24,23,22,21,5}, {12,13,14,15,16}, {11,17,18,19,20}, {10,9,8,7,6}};
-        Solution s1 = new Solution();
-        s1.swimInWater(grid);
+        strToInt("2147483648");
 
     }
 
 
-    public class Solution {
-
-        // Dijkstra 算法（应用前提：没有负权边，找单源最短路径）
-
-        public int swimInWater(int[][] grid) {
-            int n = grid.length;
-
-            Queue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(o -> grid[o[0]][o[1]]));
-            minHeap.offer(new int[]{0, 0});
-
-            boolean[][] visited = new boolean[n][n];
-            // distTo[i][j] 表示：到顶点 [i, j] 须要等待的最少的时间
-            int[][] distTo = new int[n][n];
-            for (int[] row : distTo) {
-                Arrays.fill(row, n * n);
-            }
-            distTo[0][0] = grid[0][0];
-
-            int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-            while (!minHeap.isEmpty()) {
-                // 找最短的边
-                int[] front = minHeap.poll();
-                int currentX = front[0];
-                int currentY = front[1];
-                if (visited[currentX][currentY]) {
-                    continue;
-                }
-
-                // 确定最短路径顶点
-                visited[currentX][currentY] = true;
-                if (currentX == n - 1 && currentY == n - 1) {
-                    return distTo[n - 1][n - 1];
-                }
-
-                // 更新
-                for (int[] direction : directions) {
-                    int newX = currentX + direction[0];
-                    int newY = currentY + direction[1];
-                    if (inArea(newX, newY, n) && !visited[newX][newY] &&
-                            Math.max(distTo[currentX][currentY], grid[newX][newY]) < distTo[newX][newY]) {
-                        distTo[newX][newY] = Math.max(distTo[currentX][currentY], grid[newX][newY]);
-                        minHeap.offer(new int[]{newX, newY});
-                    }
-                }
-            }
-            return -1;
+    public int strToInt(String str) {
+        int n = str.length();
+        if(n == 0) {
+            return 0;
         }
-
-        private boolean inArea(int x, int y, int n) {
-            return x >= 0 && x < n && y >= 0 && y < n;
+        char[] charArray = str.toCharArray();
+        int i = 0;
+        while(i<n && charArray[i] == ' ') {
+            i++;
         }
+        if(i == n) {
+            return 0;
+        }
+        boolean isMinus = false;
+        if(charArray[i] == '+' || charArray[i] == '-') {
+            if(charArray[i] == '-') {
+                isMinus = true;
+            }
+            i++;
+        }
+        int res = 0;
+        while(i<n && charArray[i]>='0' && charArray[i]<='9') {
+            int temp = charArray[i]-'0';
+            if(!isMinus&&(res>Integer.MAX_VALUE/10 || (res==Integer.MAX_VALUE%10 && temp>Integer.MAX_VALUE%10))) {
+                return Integer.MAX_VALUE;
+            }
+            else if(isMinus&&(-res<Integer.MIN_VALUE/10 || (-res==Integer.MIN_VALUE%10 && -temp<Integer.MIN_VALUE%10))) {
+                return Integer.MIN_VALUE;
+            }
+            res = res * 10 + temp;
+            ++i;
+        }
+        return isMinus? -res: res;
     }
 }
 

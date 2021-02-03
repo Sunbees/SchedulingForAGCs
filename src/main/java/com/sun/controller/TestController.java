@@ -113,7 +113,7 @@ public class TestController {
         if (algorithmType == 0) {
             SimulatedAnnealing sa = new SimulatedAnnealing();
             sa.initSolution();
-            best = sa.anneal(null);
+            best = sa.anneal(null,10000,0.1,0.1,200);
             model.addAttribute("algorithm", "模拟退火");
         } else if (algorithmType == 1) {
             GeneticAlgorithm ga = new GeneticAlgorithm();

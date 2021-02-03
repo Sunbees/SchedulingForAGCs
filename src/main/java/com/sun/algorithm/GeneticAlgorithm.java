@@ -14,13 +14,14 @@ import java.util.Random;
 
 @Service
 public class GeneticAlgorithm {
-    static public final int SPECIES_NUM = 20; // 种群数
-    static public final int EVOLVE_NUM = 100; // 进化代数
-    static public final float pc = 0.6f; // 交叉概率
-    static public final float pm = 0.2f; // 变异概率
+    public int SPECIES_NUM = 20; // 种群数
+    public int EVOLVE_NUM = 100; // 进化代数
+    public float pc = 0.6f; // 交叉概率
+    public float pm = 0.2f; // 变异概率
 
     // 开始遗传
     public Solution run(Population population) throws IOException, CloneNotSupportedException {
+        SPECIES_NUM = population.getSpeciesNum();
         createBeginningSpecies(population);
         for (int i = 1; i <= EVOLVE_NUM; i++) {
             // 选择
@@ -51,18 +52,18 @@ public class GeneticAlgorithm {
             newPopulation.add(bestSolution.clone());
         }
         calRate(population);
-        int lastNum = SPECIES_NUM-talentNum;
+        int lastNum = SPECIES_NUM - talentNum;
         for (int i = 0; i < lastNum; i++) {
             double p = Math.random();
             boolean flag = false;
             for (Solution solution : population.getPopulation()) {
-                if(p<solution.getRate()&&solution!=bestSolution) {
+                if (p < solution.getRate() && solution != bestSolution) {
                     flag = true;
                     newPopulation.add(solution.clone());
                     break;
                 }
             }
-            if(!flag){
+            if (!flag) {
                 newPopulation.add(population.getPopulation().get(SPECIES_NUM - 1).clone());
             }
         }
@@ -73,11 +74,11 @@ public class GeneticAlgorithm {
     private void calRate(Population population) throws IOException, CloneNotSupportedException {
         double totalFitness = 0;
         for (Solution solution : population.getPopulation()) {
-            totalFitness += 1.0/solution.getConsumeTime();
+            totalFitness += 1.0 / solution.getConsumeTime();
         }
         double tmp = 0.0;
         for (Solution solution : population.getPopulation()) {
-            tmp += (1.0/solution.getConsumeTime())/totalFitness;
+            tmp += (1.0 / solution.getConsumeTime()) / totalFitness;
             solution.setRate(tmp);
         }
 
@@ -145,7 +146,7 @@ public class GeneticAlgorithm {
 
     public static void main(String[] args) throws IOException, CloneNotSupportedException {
         GeneticAlgorithm ga = new GeneticAlgorithm();
-        Population population = new Population(SPECIES_NUM);
+        Population population = new Population(20);
         Solution bestSolution = ga.run(population);
         System.out.println(bestSolution);
         System.out.println(bestSolution.getConsumeTime());
