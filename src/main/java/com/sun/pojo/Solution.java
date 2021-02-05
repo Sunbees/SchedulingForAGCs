@@ -55,10 +55,13 @@ public class Solution {
     @SneakyThrows
     public Solution clone() {
         Solution solution_copy = new Solution();
-        solution_copy.priority.addAll(this.priority);
+        solution_copy.priority = new ArrayList<>(this.priority);
         if (isAllocate) {
             solution_copy.isAllocate = true;
-            solution_copy.allocationNo.addAll(this.allocationNo);
+            solution_copy.allocationNo = new ArrayList<>();
+            for (Set<Integer> set : this.allocationNo) {
+                solution_copy.allocationNo.add(new HashSet<>(set));
+            }
         }
         solution_copy.consumeTime = this.getConsumeTime();
         return solution_copy;
@@ -154,7 +157,8 @@ public class Solution {
         this.priority = list;
         this.consumeTime = 0.0;
     }
-    public void createRandomlyForAllocate(List<Integer> priority,List<Set<Integer>> allocationNo) {
+
+    public void createRandomlyForAllocate(List<Integer> priority, List<Set<Integer>> allocationNo) {
         List<Integer> list = new ArrayList<>(priority);
         Collections.shuffle(list);
         this.priority = list;

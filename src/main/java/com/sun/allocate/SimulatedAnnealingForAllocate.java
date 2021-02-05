@@ -31,7 +31,7 @@ public class SimulatedAnnealingForAllocate {
 
         currentAllocateNo = genIndividual(countForEveryType, TestData.typeStockMap);
         List<Set<Integer>> newAllocateNo;
-        List<Set<Integer>> bestAllocateNo;
+        List<Set<Integer>> bestAllocateNo = null;
         Solution bestSolution = null;
 
         SimulatedAnnealing sa = new SimulatedAnnealing();
@@ -64,8 +64,9 @@ public class SimulatedAnnealingForAllocate {
             }
             currentTemperature *= (1 - coolingRate);
         }
+        return sa.anneal(bestAllocateNo, 10000, 0.1, 0.1, 200);
         //bestSolution.getConsumeTime();
-        return bestSolution;
+        //return bestSolution;
 
     }
 
@@ -143,23 +144,32 @@ public class SimulatedAnnealingForAllocate {
         //    System.out.println();
         //});
 
-        long startTime = System.currentTimeMillis();    //获取开始时间
+        //long startTime = System.currentTimeMillis();    //获取开始时间
 
 
         Solution anneal = solution.anneal(countForEveryType);
 
-        long endTime = System.currentTimeMillis();    //获取结束时间
+        //long endTime = System.currentTimeMillis();    //获取结束时间
 
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
+        //System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
         //TestData.stockLocationMap.values().forEach(System.out::println);
         System.out.println(anneal);
+        int correctCount = 0;
+        for (int i = 1; i < 50; i++) {
+            anneal = solution.anneal(countForEveryType);
+            System.out.println(anneal);
+            if (anneal.getConsumeTime() < 1457.0) {
+                ++correctCount;
+            }
+        }
+        System.out.println(correctCount);
 
         SimulatedAnnealingForAllocate solution2 = new SimulatedAnnealingForAllocate();
-        startTime = System.currentTimeMillis();    //获取开始时间
-        Solution anneal2 = solution2.anneal(countForEveryType);
-        endTime = System.currentTimeMillis();    //获取结束时间
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
-        System.out.println(anneal2);
+        //startTime = System.currentTimeMillis();    //获取开始时间
+        //Solution anneal2 = solution.anneal(countForEveryType);
+        ////endTime = System.currentTimeMillis();    //获取结束时间
+        ////System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
+        //System.out.println(anneal2);
 
     }
 }

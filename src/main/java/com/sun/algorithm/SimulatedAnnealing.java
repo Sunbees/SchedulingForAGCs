@@ -28,6 +28,7 @@ public class SimulatedAnnealing {
             bestSolution = new Solution(currentSolution.getPriority());
         } else {
             currentSolution.setAllocationNo(allocationNo);
+            currentSolution.setConsumeTime(0.0);
             bestSolution = new Solution(currentSolution.getPriority(), allocationNo);
         }
 
@@ -75,34 +76,35 @@ public class SimulatedAnnealing {
         set3.add(13);
         set3.add(14);
         List<Set<Integer>> allocationNo = Arrays.asList(set1, set2, set3);
-        Solution best = sa.anneal(allocationNo, 10000, 0.1, 0.1, 200);
-        //Solution best = new Solution();
+        //Solution best = sa.anneal(allocationNo, 10000, 0.1, 0.1, 200);
+        Solution best = new Solution();
         //best.setAllocationNo(allocationNo);
         //best.setPriority(Arrays.asList(5, 2, 0, 6, 4, 1, 7, 8, 3));
-        System.out.println(best);
-        System.out.println("最短时间：" + best.getConsumeTime());
+        //System.out.println(best);
+        //System.out.println("最短时间：" + best.getConsumeTime());
 
 
         set1 = new HashSet<>();
-        set1.add(2);
+        set1.add(0);
         set1.add(1);
         set2 = new HashSet<>();
-        set2.add(9);
-        set2.add(8);
         set2.add(5);
+        set2.add(8);
+        set2.add(7);
         set3 = new HashSet<>();
         set3.add(10);
-        set3.add(12);
+        set3.add(11);
         set3.add(13);
         set3.add(14);
 
         TestData.initSolution(9);
         sa.initSolution();
-        TestData.clearTaskMap();
+        //TestData.clearTaskMap();
         List<Set<Integer>> allocationNo2 = Arrays.asList(set1, set2, set3);
-        best = sa.anneal(allocationNo2, 10000, 0.1, 0.2, 200);
-        //best.setAllocationNo(allocationNo2);
-        //best.setPriority(Arrays.asList(6, 3, 1, 7, 2, 0, 5, 8, 4));
+        //best = sa.anneal(allocationNo2, 100000, 0.1, 0.2, 200);
+        best = new Solution();
+        best.setAllocationNo(allocationNo2);
+        best.setPriority(Arrays.asList(6, 2, 0, 7, 3, 1, 5, 8, 4));
         System.out.println(best);
         System.out.println("最短时间：" + best.getConsumeTime());
 
