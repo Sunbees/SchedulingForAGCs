@@ -1,6 +1,7 @@
 package com.sun.pojo;
 
-import com.sun.collision_dec.Collision;
+
+import com.sun.solution.Collision;
 
 import java.io.IOException;
 import java.util.ArrayList;

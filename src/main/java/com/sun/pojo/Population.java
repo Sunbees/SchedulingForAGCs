@@ -1,5 +1,7 @@
 package com.sun.pojo;
 
+import com.sun.solution.Solution;
+
 import java.util.ArrayList;
 import java.util.List;
 

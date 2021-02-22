@@ -1,11 +1,12 @@
 package com.sun.allocate;
 
-import com.sun.collision_dec.Crane;
-import com.sun.collision_dec.Location;
-import com.sun.collision_dec.Task;
-import com.sun.data.Data;
-import com.sun.pojo.Solution;
-import com.sun.pojo.StockArea;
+
+import com.sun.init.Data;
+import com.sun.pojo.Crane;
+import com.sun.pojo.Location;
+import com.sun.pojo.Store;
+import com.sun.pojo.Task;
+import com.sun.solution.Solution;
 import com.sun.util.Util;
 
 import java.io.IOException;
@@ -83,11 +84,11 @@ public class TestData {
         stockList.forEach(e -> {
             list.add(e[0]);
             if (isInitial) {
-                StockArea stockArea = new StockArea(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
+                Store stockArea = new Store(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
                 Data.stockAreas.add(stockArea);
             }
         });
-        List<StockArea> endList = new ArrayList<>(Data.stockAreas);
+        List<Store> endList = new ArrayList<>(Data.stockAreas);
         for (int j = 0; j < countForEveryType.size(); j++) {
             int pre = stockLocationMap.size();
             for (int i = 0; i < countForEveryType.get(j); i++) {

@@ -1,10 +1,11 @@
 package com.sun.util;
 
-import com.sun.collision_dec.Location;
-import com.sun.collision_dec.Task;
-import com.sun.data.Data;
+import com.sun.init.Data;
+import com.sun.pojo.Location;
 import com.sun.pojo.Order;
-import com.sun.pojo.StockArea;
+import com.sun.pojo.Step;
+import com.sun.pojo.Store;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
@@ -13,7 +14,6 @@ import java.util.*;
 public class Util {
     public static void readCsv(String readPath, ArrayList<String[]> Valueslist) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource(readPath);
-
         File file = classPathResource.getFile();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line = null;
@@ -27,28 +27,154 @@ public class Util {
             }
             Valueslist.add(temp);
         }
-        Valueslist.remove(0);
+        if (Valueslist.size() > 0)
+            Valueslist.remove(0);
     }
 
-    public static void writeCsvForLocation(String writePath, String[] names, String[] types, String[] x, String[] y, String[] widths, String[] heights) throws IOException {
+    public static Map<String, Object> readStoreLocation() {
+        Map<String, Object> map = new HashMap<>();
+        String path = "./source/StoreLocation.csv";
+        ArrayList<String[]> valuesList = new ArrayList<>();
+        try {
+            readCsv(path, valuesList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<Store> list = new ArrayList<>();
+        valuesList.forEach(e -> {
+            Store store = new Store(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
+            list.add(store);
+        });
+        map.put("data", list);
+        return map;
+    }
+
+    public static Map<String, Object> readOrderInfo() {
+        Map<String, Object> map = new HashMap<>();
+        String path = "./source/order.csv";
+        ArrayList<String[]> valuesList = new ArrayList<>();
+        try {
+            readCsv(path, valuesList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<Order> list = new ArrayList<>();
+        valuesList.forEach(e -> {
+            double[] start = Arrays.stream(e[4].substring(1, e[4].length() - 1).split("-")).mapToDouble(Double::parseDouble).toArray();
+            double[] end = Arrays.stream(e[5].substring(1, e[5].length() - 1).split("-")).mapToDouble(Double::parseDouble).toArray();
+            Order order = new Order(e[0], Integer.parseInt(e[1]), e[2], Integer.parseInt(e[3]), start, end, e[6], Double.parseDouble(e[7]));
+            //System.out.println(order);
+            list.add(order);
+        });
+        map.put("data", list);
+        return map;
+    }
+
+    public static Map<String, Object> readPath() {
+        Map<String, Object> map = new HashMap<>();
+        String[] paths = new String[]{"./source/20201102_1_1.csv", "./source/20201102_1_2.csv", "./source/20201102_1_3.csv"};
+        String[] keys = new String[]{"path1", "path2", "path3"};
+        for (int i = 0; i < 3; i++) {
+            ArrayList<String[]> valuesList = new ArrayList<>();
+            try {
+                readCsv(paths[i], valuesList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            List<Step> list = new ArrayList<>();
+            valuesList.forEach(e -> {
+                Step step = new Step(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
+                //System.out.println(order);
+                list.add(step);
+            });
+            map.put(keys[i], list);
+        }
+        return map;
+    }
+
+    public static Map<String, Object> readStockForNo() {
+        Map<String, Object> map = new HashMap<>();
+        String path = "./source/StoreLocation.csv";
+        ArrayList<String[]> valuesList = new ArrayList<>();
+        try {
+            readCsv(path, valuesList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<String> list = new ArrayList<>();
+        int index = 0;
+        valuesList.forEach(e -> {
+            list.add(e[0]);
+        });
+        map.put("data", list);
+        return map;
+    }
+
+    public static Map<String, Object> getCraneConfigInfo() {
+        Map<String, Object> map = new HashMap<>();
+        List<Map<String, Object>> craneList = new ArrayList<>();
+        Map<String, Object> crane1 = new HashMap<>();
+        crane1.put("craneName", "crane1");
+        crane1.put("begin", arrayToString(Data.location_1));
+        crane1.put("v1", Data.velocity_1[0]);
+        crane1.put("v2", Data.velocity_1[1]);
+        crane1.put("v3", Data.velocity_1[2]);
+        craneList.add(crane1);
+
+        Map<String, Object> crane2 = new HashMap<>();
+        crane2.put("craneName", "crane2");
+        crane2.put("begin", arrayToString(Data.location_2));
+        crane2.put("v1", Data.velocity_2[0]);
+        crane2.put("v2", Data.velocity_2[1]);
+        crane2.put("v3", Data.velocity_2[2]);
+        craneList.add(crane2);
+
+        Map<String, Object> crane3 = new HashMap<>();
+        crane3.put("craneName", "crane3");
+        crane3.put("begin", arrayToString(Data.location_3));
+        crane3.put("v1", Data.velocity_3[0]);
+        crane3.put("v2", Data.velocity_3[1]);
+        crane3.put("v3", Data.velocity_3[2]);
+        craneList.add(crane3);
+
+        map.put("craneList", craneList);
+        map.put("distance", Data.SafeDistance);
+
+        return map;
+    }
+
+    public static void writeCsvForOrder() throws IOException {
+        String writePath = "./source/order.csv";
         ClassPathResource classPathResource = new ClassPathResource(writePath);
         File file = classPathResource.getFile();
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write("name,type,x,y,width,height\n");
-        for (int i = 0; i < names.length; i++) {
-            fileWriter.write(names[i] + ",");
-            fileWriter.write(types[i] + ",");
-            fileWriter.write(x[i] + ",");
-            fileWriter.write(y[i] + ",");
-            fileWriter.write(widths[i] + ",");
-            fileWriter.write(heights[i]);
-            if (i < names.length - 1) {
-                fileWriter.write("\n");
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
             }
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write("");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FileWriter fileWriter = new FileWriter(file, true);
+        if (file.length() == 0) {
+            fileWriter.write("orderNo,type,crane,flag,start,end,coilNo,startTime,\n");
+        }
+        for (Order order : Data.orderList) {
+            fileWriter.write(order.getOrderNo() + ",");
+            fileWriter.write(order.getType() + ",");
+            fileWriter.write(order.getCrane() + ",");
+            fileWriter.write(order.getCrane().charAt(order.getCrane().length() - 1) + ",");
+            fileWriter.write(Arrays.toString(order.getStart()).replaceAll(", ", "-") + ",");
+            fileWriter.write(Arrays.toString(order.getEnd()).replaceAll(", ", "-") + ",");
+            fileWriter.write(order.getCoilNo() + ",");
+            fileWriter.write(order.getStartTime() + ",\n");
         }
         fileWriter.flush();
         fileWriter.close();
-        //System.out.println("hello world!");
     }
 
     public static void writeCsvForPath(List<Double> timeList, Map<String, List<Location>> path, Map<String, List<Integer>> taskNo) throws IOException {
@@ -59,14 +185,19 @@ public class Util {
 
         for (String key : craneNoMap) {
             String key2 = "crane" + (key.equals("1_1") ? "1-1" : key.equals("1_2") ? "1-2" : "1-3");
-            String writePath = "./static/data/20201102_" + key + ".csv";
+            String writePath = "./source/20201102_" + key + ".csv";
             ClassPathResource classPathResource = new ClassPathResource(writePath);
             File file = classPathResource.getFile();
-            if (file.exists()) {
-                file.delete();
-            }
-            if (!file.exists()) {
-                file.createNewFile();
+            try {
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("");
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             if (!taskNo.containsKey(key2)) {
                 continue;
@@ -88,99 +219,17 @@ public class Util {
         }
     }
 
-    public static void writeCsvForOrder() throws IOException {
-        String writePath = "./static/data/order.csv";
-        ClassPathResource classPathResource = new ClassPathResource(writePath);
-        File file = classPathResource.getFile();
-        if (file.exists()) {
-            file.delete();
+    public static String arrayToString(double[] nums) {
+        StringBuilder sb = new StringBuilder();
+        for (double num : nums) {
+            sb.append(num);
+            sb.append(',');
         }
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        FileWriter fileWriter = new FileWriter(file, true);
-        if (file.length() == 0) {
-            fileWriter.write("orderNo,type,crane,flag,start,end,coilNo,startTime,\n");
-        }
-        for (Order order : Data.orderList) {
-            fileWriter.write(order.getOrderNo() + ",");
-            fileWriter.write(order.getType() + ",");
-            fileWriter.write(order.getCrane() + ",");
-            fileWriter.write(order.getCrane().charAt(order.getCrane().length() - 1) + ",");
-            fileWriter.write(order.getStart() + ",");
-            fileWriter.write(order.getEnd() + ",");
-            fileWriter.write(order.getCoilNo() + ",");
-            fileWriter.write(order.getStartTime() + ",\n");
-        }
-        fileWriter.flush();
-        fileWriter.close();
+        return sb.deleteCharAt(sb.length() - 1).toString();
     }
 
-    public static List<Task> createRandomTask(int type, int num, String beginS, String endS) throws IOException {
-        int stkNum = Data.stockAreas.size();
-        if (stkNum == 0) {
-            String path = "./static/data/StoreLocation.csv";
-            ArrayList<String[]> stockList = new ArrayList<>();
-            readCsv(path, stockList);
-            stockList.forEach(e -> {
-                StockArea stockArea = new StockArea(e[0], e[1], Double.parseDouble(e[2]), Double.parseDouble(e[3]), Double.parseDouble(e[4]), Double.parseDouble(e[5]));
-                Data.stockAreas.add(stockArea);
-            });
-            stkNum = Data.stockAreas.size();
-        }
-        if (stkNum == 0) {
-            return null;
-        }
-        List<StockArea> beginList = new ArrayList<>();
-        List<StockArea> endList = new ArrayList<>();
-        for (String s : beginS.split(",")) {
-            beginList.add(Data.stockAreas.get(Integer.parseInt(s)));
-        }
-        for (String s : endS.split(",")) {
-            endList.add(Data.stockAreas.get(Integer.parseInt(s)));
-        }
-        int beginNum = beginList.size();
-        int endNum = endList.size();
-        List<Task> taskList = new ArrayList<>();
-        int preTaskNum = Data.taskMap.size();
-        for (int i = 0; i < num; i++) {
-            int stkNoS = (int) (beginNum * Math.random());
-            int stkNoE = (int) (endNum * Math.random());
-            double xS = beginList.get(stkNoS).getX() + (int) (Math.random() * beginList.get(stkNoS).getWidth());
-            double xE = endList.get(stkNoE).getX() + (int) (Math.random() * endList.get(stkNoE).getWidth());
-            double yS = beginList.get(stkNoS).getY() - (int) (Math.random() * beginList.get(stkNoS).getHeight());
-            double yE = endList.get(stkNoE).getY() - (int) (Math.random() * endList.get(stkNoE).getHeight());
-            xS = Math.round(xS * 1000);
-            xE = Math.round(xE * 1000);
-            yS = Math.round(yS * 1000);
-            yE = Math.round(yE * 1000);
-            //System.out.println(xS);
-            Location start = new Location(xS, yS, 1000);
-            Location end = new Location(xE, yE, 1000);
-            Task task = new Task(i + preTaskNum, 0, start, end, type);
-            Data.taskMap.put((Integer) (i + preTaskNum), task);
-            taskList.add(task);
-        }
 
-        return taskList;
-    }
-
-    public static List<Set<Integer>> convertToSet(List<Integer> countForEveryType, List<Integer> allocateNo) {
-        Set<Integer> set1 = new HashSet<>();
-        Set<Integer> set2 = new HashSet<>();
-        Set<Integer> set3 = new HashSet<>();
-        int pre = 0;
-        for (int i = 0; i < 3; i++) {
-            int count = countForEveryType.get(i);
-            if (i == 0)
-                set1.addAll(allocateNo.subList(pre, pre + count));
-            else if (i == 1)
-                set2.addAll(allocateNo.subList(pre, pre + count));
-            else
-                set3.addAll(allocateNo.subList(pre, pre + count));
-            pre += count;
-        }
-
-        return Arrays.asList(set1, set2, set3);
+    public static void main(String[] args) {
+        readPath();
     }
 }

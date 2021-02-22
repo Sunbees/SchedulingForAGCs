@@ -1,7 +1,10 @@
 server:
-  servlet:
-    encoding:
-      force: true
-      charset: utf-8
-      enabled: true
-  port: 8080
+  port: 8848
+
+spring:
+  devtools:
+    restart:
+      enabled: false
+  thymeleaf:
+    cache: false
+    prefix: classpath:/static/
