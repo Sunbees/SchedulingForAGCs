@@ -1,8 +1,10 @@
 package com.sun;
 
+import com.sun.util.Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.util.*;
 
 @SpringBootTest
@@ -10,9 +12,12 @@ class UseVueApplicationTests {
 
 
     @Test
-    public void test() {
+    public void test() throws IOException {
+        //Util.writeCsvForOrder();
         System.out.println(addStrings("1b", "2x"));
         System.out.println(addStrings("1z", "1"));
+        Map<String, Object> stringObjectMap = Util.readOrderInfo();
+        System.out.println("2");
     }
 
     public String addStrings(String num1, String num2) {

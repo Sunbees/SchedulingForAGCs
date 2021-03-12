@@ -12,11 +12,33 @@ import java.io.*;
 import java.util.*;
 
 public class Util {
+    public static String csvPath = "C:\\Users\\SunQJ\\Documents\\agc";
+
     public static void readCsv(String readPath, ArrayList<String[]> Valueslist) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource(readPath);
         InputStream inputStream = classPathResource.getInputStream();
         //File file = classPathResource.getFile();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] splitline = line.split(",");
+            int Dim = splitline.length;
+            //将splitline中的每个元素保存到double类型的数组中
+            String[] temp = new String[Dim];
+            for (int i = 0; i < Dim; i++) {
+                temp[i] = splitline[i];
+            }
+            Valueslist.add(temp);
+        }
+        if (Valueslist.size() > 0)
+            Valueslist.remove(0);
+    }
+
+    public static void readCsv2(String readPath, ArrayList<String[]> Valueslist) throws IOException {
+        //ClassPathResource classPathResource = new ClassPathResource(readPath);
+        //InputStream inputStream = classPathResource.getInputStream();
+        File file = new File(csvPath + readPath);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line = null;
         while ((line = bufferedReader.readLine()) != null) {
             String[] splitline = line.split(",");
@@ -52,10 +74,10 @@ public class Util {
 
     public static Map<String, Object> readOrderInfo() {
         Map<String, Object> map = new HashMap<>();
-        String path = "./source/order.csv";
+        String path = "\\order.csv";
         ArrayList<String[]> valuesList = new ArrayList<>();
         try {
-            readCsv(path, valuesList);
+            readCsv2(path, valuesList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,12 +95,12 @@ public class Util {
 
     public static Map<String, Object> readPath() {
         Map<String, Object> map = new HashMap<>();
-        String[] paths = new String[]{"./source/20201102_1_1.csv", "./source/20201102_1_2.csv", "./source/20201102_1_3.csv"};
+        String[] paths = new String[]{"\\20201102_1_1.csv", "\\20201102_1_2.csv", "\\20201102_1_3.csv"};
         String[] keys = new String[]{"path1", "path2", "path3"};
         for (int i = 0; i < 3; i++) {
             ArrayList<String[]> valuesList = new ArrayList<>();
             try {
-                readCsv(paths[i], valuesList);
+                readCsv2(paths[i], valuesList);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -145,9 +167,12 @@ public class Util {
     }
 
     public static void writeCsvForOrder() throws IOException {
-        String writePath = "./source/order.csv";
-        ClassPathResource classPathResource = new ClassPathResource(writePath);
-        File file = classPathResource.getFile();
+        //String writePath = "./source/order.csv";
+        //ClassPathResource classPathResource = new ClassPathResource(writePath);
+        //
+        //
+        //File file = classPathResource.getFile();
+        File file = new File(csvPath+"\\order.csv");
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -186,9 +211,10 @@ public class Util {
 
         for (String key : craneNoMap) {
             String key2 = "crane" + (key.equals("1_1") ? "1-1" : key.equals("1_2") ? "1-2" : "1-3");
-            String writePath = "./source/20201102_" + key + ".csv";
-            ClassPathResource classPathResource = new ClassPathResource(writePath);
-            File file = classPathResource.getFile();
+            String writePath = "\\20201102_" + key + ".csv";
+            //ClassPathResource classPathResource = new ClassPathResource(writePath);
+            //File file = classPathResource.getFile();
+            File file = new File(csvPath+writePath);
             try {
                 if (!file.exists()) {
                     file.createNewFile();
