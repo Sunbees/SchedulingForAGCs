@@ -4,7 +4,7 @@
 - 输入格式可见样例
 - x，y分别代表库区左上角的坐标
 - width,height分别代表库区的宽度和高度 
-
+#### 修改application.yml中的util.csvPath字段
 #### 运行Demo02Application的main方法
 
 #### 浏览器中输入 **http://localhost:8848/schedule/**  进入查询页面

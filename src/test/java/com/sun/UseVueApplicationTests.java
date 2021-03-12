@@ -2,6 +2,7 @@ package com.sun;
 
 import com.sun.util.Util;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -9,15 +10,35 @@ import java.util.*;
 
 @SpringBootTest
 class UseVueApplicationTests {
-
+    @Autowired
+    Util util;
 
     @Test
     public void test() throws IOException {
         //Util.writeCsvForOrder();
-        System.out.println(addStrings("1b", "2x"));
-        System.out.println(addStrings("1z", "1"));
-        Map<String, Object> stringObjectMap = Util.readOrderInfo();
+        //System.out.println(addStrings("1b", "2x"));
+        //System.out.println(addStrings("1z", "1"));
+        Map<String, Object> stringObjectMap = util.readOrderInfo();
         System.out.println("2");
+        //System.out.println(reverse("safwq123"));
+    }
+
+    StringBuilder sb = new StringBuilder();
+
+    public String reverse(String a) {
+        int n = a.length();
+
+        helper(a, 0);
+
+        return sb.toString();
+    }
+
+    public void helper(String a, int i) {
+        if (i == a.length()) {
+            return;
+        }
+        helper(a, i + 1);
+        sb.append(a.charAt(i));
     }
 
     public String addStrings(String num1, String num2) {

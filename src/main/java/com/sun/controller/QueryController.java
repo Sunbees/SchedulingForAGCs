@@ -9,6 +9,8 @@ import com.sun.schedule.SimulatedAnnealing;
 import com.sun.solution.Collision;
 import com.sun.solution.Solution;
 import com.sun.solution.Track;
+import com.sun.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,6 +23,13 @@ import static com.sun.util.Util.*;
 @RestController
 @CrossOrigin
 public class QueryController {
+    private Util util;
+
+    @Autowired
+    public QueryController(Util util) {
+        this.util = util;
+    }
+
     @PostMapping("/query")
     public Map<String, Object> query(@RequestBody Map<String, Object> data) throws IOException, CloneNotSupportedException {
         //for (String s : data.keySet()) {
@@ -59,8 +68,8 @@ public class QueryController {
         assert best != null;
         Track track = new Collision().getTrack(best.getPriority());
 
-        writeCsvForOrder();
-        writeCsvForPath(track.getTimeList(), track.getPath(), track.getTaskNo());
+        util.writeCsvForOrder();
+        util.writeCsvForPath(track.getTimeList(), track.getPath(), track.getTaskNo());
 
         //System.out.println(Data.SafeDistance);
 

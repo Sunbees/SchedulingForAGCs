@@ -5,14 +5,28 @@ import com.sun.pojo.Location;
 import com.sun.pojo.Order;
 import com.sun.pojo.Step;
 import com.sun.pojo.Store;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.*;
 
+@Component
+@ConfigurationProperties(prefix = "util")
 public class Util {
-    public static String csvPath = "C:\\Users\\SunQJ\\Documents\\agc";
+    public String csvPath;
+
+    public Util() {
+    }
+
+    public Util(String csvPath) {
+        this.csvPath = csvPath;
+    }
+    public void setCsvPath(String csvPath) {
+        this.csvPath = csvPath;
+    }
 
     public static void readCsv(String readPath, ArrayList<String[]> Valueslist) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource(readPath);
@@ -34,10 +48,10 @@ public class Util {
             Valueslist.remove(0);
     }
 
-    public static void readCsv2(String readPath, ArrayList<String[]> Valueslist) throws IOException {
+    public void readCsv2(String readPath, ArrayList<String[]> Valueslist) throws IOException {
         //ClassPathResource classPathResource = new ClassPathResource(readPath);
         //InputStream inputStream = classPathResource.getInputStream();
-        File file = new File(csvPath + readPath);
+        File file = new File(this.csvPath + readPath);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line = null;
         while ((line = bufferedReader.readLine()) != null) {
@@ -72,9 +86,9 @@ public class Util {
         return map;
     }
 
-    public static Map<String, Object> readOrderInfo() {
+    public Map<String, Object> readOrderInfo() {
         Map<String, Object> map = new HashMap<>();
-        String path = "\\order.csv";
+        String path = "/order.csv";
         ArrayList<String[]> valuesList = new ArrayList<>();
         try {
             readCsv2(path, valuesList);
@@ -93,9 +107,9 @@ public class Util {
         return map;
     }
 
-    public static Map<String, Object> readPath() {
+    public Map<String, Object> readPath() {
         Map<String, Object> map = new HashMap<>();
-        String[] paths = new String[]{"\\20201102_1_1.csv", "\\20201102_1_2.csv", "\\20201102_1_3.csv"};
+        String[] paths = new String[]{"/20201102_1_1.csv", "/20201102_1_2.csv", "/20201102_1_3.csv"};
         String[] keys = new String[]{"path1", "path2", "path3"};
         for (int i = 0; i < 3; i++) {
             ArrayList<String[]> valuesList = new ArrayList<>();
@@ -166,13 +180,13 @@ public class Util {
         return map;
     }
 
-    public static void writeCsvForOrder() throws IOException {
+    public void writeCsvForOrder() throws IOException {
         //String writePath = "./source/order.csv";
         //ClassPathResource classPathResource = new ClassPathResource(writePath);
         //
         //
         //File file = classPathResource.getFile();
-        File file = new File(csvPath+"\\order.csv");
+        File file = new File(this.csvPath+"/order.csv");
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -203,7 +217,7 @@ public class Util {
         fileWriter.close();
     }
 
-    public static void writeCsvForPath(List<Double> timeList, Map<String, List<Location>> path, Map<String, List<Integer>> taskNo) throws IOException {
+    public void writeCsvForPath(List<Double> timeList, Map<String, List<Location>> path, Map<String, List<Integer>> taskNo) throws IOException {
         List<String> craneNoMap = new ArrayList<>();
         craneNoMap.add("1_1");
         craneNoMap.add("1_2");
@@ -211,10 +225,10 @@ public class Util {
 
         for (String key : craneNoMap) {
             String key2 = "crane" + (key.equals("1_1") ? "1-1" : key.equals("1_2") ? "1-2" : "1-3");
-            String writePath = "\\20201102_" + key + ".csv";
+            String writePath = "/20201102_" + key + ".csv";
             //ClassPathResource classPathResource = new ClassPathResource(writePath);
             //File file = classPathResource.getFile();
-            File file = new File(csvPath+writePath);
+            File file = new File(this.csvPath+writePath);
             try {
                 if (!file.exists()) {
                     file.createNewFile();
@@ -276,6 +290,5 @@ public class Util {
 
 
     public static void main(String[] args) {
-        readPath();
     }
 }

@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "util.csvPath",
+      "type": "java.lang.String",
+      "description": "Description for util.csvPath."
+  }
+] }
