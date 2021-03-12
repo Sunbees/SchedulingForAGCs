@@ -14,8 +14,9 @@ import java.util.*;
 public class Util {
     public static void readCsv(String readPath, ArrayList<String[]> Valueslist) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource(readPath);
-        File file = classPathResource.getFile();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        InputStream inputStream = classPathResource.getInputStream();
+        //File file = classPathResource.getFile();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = null;
         while ((line = bufferedReader.readLine()) != null) {
             String[] splitline = line.split(",");
@@ -226,6 +227,25 @@ public class Util {
             sb.append(',');
         }
         return sb.deleteCharAt(sb.length() - 1).toString();
+    }
+
+    public static List<Set<Integer>> convertToSet(List<Integer> countForEveryType, List<Integer> allocateNo) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        Set<Integer> set3 = new HashSet<>();
+        int pre = 0;
+        for (int i = 0; i < 3; i++) {
+            int count = countForEveryType.get(i);
+            if (i == 0)
+                set1.addAll(allocateNo.subList(pre, pre + count));
+            else if (i == 1)
+                set2.addAll(allocateNo.subList(pre, pre + count));
+            else
+                set3.addAll(allocateNo.subList(pre, pre + count));
+            pre += count;
+        }
+
+        return Arrays.asList(set1, set2, set3);
     }
 
 
