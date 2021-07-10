@@ -497,6 +497,7 @@ public class Collision {
 
     private static Crane selectCrane(List<Crane> craneList, int curTask, HashMap<Integer, Task> taskMap, boolean isPrint, Track track) {
         Location startPoint = taskMap.get(curTask).getStart();
+        Location endPoint = taskMap.get(curTask).getEnd();
         double startTime = taskMap.get(curTask).getStartTime();
         int taskType = taskMap.get(curTask).getType();
         List<Crane> allocatedList = new ArrayList<>();
@@ -506,6 +507,9 @@ public class Collision {
         for (Crane tempCrane : craneList) {
             if (!tempCrane.isUsed()) {
                 if (tempCrane.getTypeList().contains(taskType)) {
+                    if((startPoint.getX()-safeDistance<0 || endPoint.getX()-safeDistance<0) && !tempCrane.getId().equals("crane1-1")) {
+                        continue;
+                    }
                     allocatedList.add(tempCrane);
                 }
             } else {
